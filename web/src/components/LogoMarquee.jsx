@@ -23,8 +23,6 @@ const LogoMarquee = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Perspective Reveal on Scroll
-      // We start flat and small, then skew and scale into the "Logo Wall"
       gsap.fromTo(containerRef.current, 
         { 
           skewY: 0,
@@ -32,8 +30,8 @@ const LogoMarquee = () => {
           opacity: 0,
         },
         {
-          skewY: -2,
-          scale: 1.02,
+          skewY: -1.5,
+          scale: 1.01,
           opacity: 1,
           duration: 0.8,
           ease: 'power3.out',
@@ -46,21 +44,17 @@ const LogoMarquee = () => {
         }
       )
 
-      // 2. Continuous Marquee Motion
-      // Row 1 - Slides Left
-      // Mathematical Loop: with 4 sets of logos, one full shift is exactly 25% of the total width
       gsap.to(row1Ref.current, {
         x: '-25%', 
-        duration: 20, // Increased speed for premium momentum
+        duration: 22,
         ease: 'none',
         repeat: -1,
       })
 
-      // Row 2 - Slides Right
       gsap.set(row2Ref.current, { x: '-25%' })
       gsap.to(row2Ref.current, {
         x: '0%',
-        duration: 20,
+        duration: 22,
         ease: 'none',
         repeat: -1,
       })
@@ -74,16 +68,21 @@ const LogoMarquee = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative py-20 md:py-20 bg-dark z-10 select-none cursor-default overflow-hidden" 
+      className="relative py-16 md:py-20 bg-white z-10 select-none cursor-default overflow-hidden border-y border-slate-200/80" 
     >
-      
-      {/* The Tilt Container - Perspective shift animates via GSAP ScrollTrigger */}
+      <div className="text-center mb-8">
+        <span className="font-jetbrains text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-[0.25em]">
+          Media Coverage & Institutional Insights
+        </span>
+      </div>
+
+      {/* The Tilt Container */}
       <div 
         ref={containerRef} 
-        className="flex flex-col gap-6 md:gap-10 will-change-transform"
+        className="flex flex-col gap-6 md:gap-8 will-change-transform"
       >
         
-        {/* Row 1: High-Density Left */}
+        {/* Row 1 */}
         <div className="relative flex whitespace-nowrap overflow-hidden">
           <div 
             ref={row1Ref} 
@@ -94,13 +93,13 @@ const LogoMarquee = () => {
                 key={`r1-${index}`}
                 src={logo.path} 
                 alt={logo.name} 
-                className="pointer-events-auto h-10 md:h-16 lg:h-20 w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 hover:scale-110 transition-all duration-700 cursor-pointer"
+                className="pointer-events-auto h-8 md:h-12 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:scale-105 transition-all duration-500 cursor-pointer"
               />
             ))}
           </div>
         </div>
 
-        {/* Row 2: High-Density Right */}
+        {/* Row 2 */}
         <div className="relative flex whitespace-nowrap overflow-hidden">
           <div 
             ref={row2Ref} 
@@ -111,7 +110,7 @@ const LogoMarquee = () => {
                 key={`r2-${index}`}
                 src={logo.path} 
                 alt={logo.name} 
-                className="pointer-events-auto h-10 md:h-16 lg:h-20 w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 hover:scale-110 transition-all duration-700 cursor-pointer"
+                className="pointer-events-auto h-8 md:h-12 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:scale-105 transition-all duration-500 cursor-pointer"
               />
             ))}
           </div>
@@ -119,12 +118,11 @@ const LogoMarquee = () => {
 
       </div>
 
-      {/* Edge Gradient Masks to blend into background */}
-      <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-dark to-transparent z-20" />
-      <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-dark to-transparent z-20" />
+      {/* Edge Gradient Masks to blend into white background */}
+      <div className="absolute top-0 left-0 w-24 sm:w-36 h-full bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-24 sm:w-36 h-full bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
     </section>
   )
 }
 
 export default LogoMarquee
-// Force Vite HMR refresh

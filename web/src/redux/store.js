@@ -15,6 +15,7 @@ import chatReducer from './slices/chat';
 import dashboardReducer from './slices/dashboardSlice';
 import eventReducer from './slices/eventSlice';
 import notificationReducer from './slices/notificationSlice';
+import consultationReducer from './slices/consultationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     dashboard: dashboardReducer,
     events: eventReducer,
     notifications: notificationReducer,
+    consultation: consultationReducer,
   },
 });
 

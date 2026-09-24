@@ -118,7 +118,7 @@ const Signup = () => {
       <div className="signup-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="signup-logo flex items-center gap-2.5">
-            <img src="/logo/bankers_logo.jpeg" alt="Bankers Grade Logo" className="h-10 w-auto object-contain rounded-lg" />
+            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 w-auto object-contain rounded-lg" />
           </Link>
         </div>
 
@@ -308,7 +308,7 @@ const Signup = () => {
         </div>
 
         <div className="signup-footer">
-          © 2024 EDRILLA V2.0. ALL RIGHTS RESERVED.
+          © 2026 IAS DCS. ALL RIGHTS RESERVED.
         </div>
       </div>
 
@@ -327,7 +327,7 @@ const Signup = () => {
 
         <div className="testimonial-card">
           <p className="testimonial-quote">
-            "Joining Edrilla isn't just about learning; it's about entering an ecosystem designed for those who refuse to settle for the ordinary."
+            "Joining IAS DCS isn't just about learning; it's about entering an ecosystem designed for those who refuse to settle for the ordinary."
           </p>
         </div>
 

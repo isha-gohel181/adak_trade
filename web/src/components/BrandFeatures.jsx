@@ -1,157 +1,87 @@
 import React, { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLanguage } from '../context/LanguageContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const BrandFeatures = () => {
   const containerRef = useRef(null)
-  const { t } = useLanguage()
 
   const features = [
     {
-      tag: "Focus 01",
-      title: t('focus01Title'),
-      desc: t('focus01Desc'),
-      visual: (
-        <div className="relative w-full h-full flex items-center justify-center p-8">
-          {/* Node Graph Visual */}
-          <div className="relative w-full aspect-square border border-accent/10 rounded-full flex items-center justify-center animate-spin-slow">
-             <div className="absolute inset-0 border-t border-accent/40 rounded-full blur-[2px]" />
-             <div className="w-24 h-24 border border-accent/30 rounded-full flex items-center justify-center">
-                <div className="w-12 h-12 bg-accent/20 rounded-full animate-pulse" />
-             </div>
-             {[0, 60, 120, 180, 240, 300].map((deg) => (
-               <div key={deg} className="absolute w-2 h-2 bg-accent shadow-[0_0_10px_#8B5CF6]" style={{ transform: `rotate(${deg}deg) translate(80px)` }} />
-             ))}
-          </div>
-          <div className="absolute inset-x-8 bottom-12 flex justify-between px-4">
-             <div className="space-y-1">
-                <div className="h-[2px] w-12 bg-accent/40" />
-                <p className="font-jetbrains text-[7px] text-accent/60 uppercase tracking-widest">Growth / 98%</p>
-             </div>
-             <div className="space-y-1 text-right">
-                <div className="h-[2px] w-12 bg-accent/40 ml-auto" />
-                <p className="font-jetbrains text-[7px] text-accent/60 uppercase tracking-widest">Logic / V2.0</p>
-             </div>
-          </div>
-        </div>
-      )
+      tag: "Medical Research",
+      scheme: "Dr. Padam Singh Scheme",
+      title: "Biostatistics & Clinical Trial Methodology",
+      desc: "Comprehensive research guidance in clinical protocol design, sample size estimation, survival analysis, and epidemiological modeling for healthcare and medical faculties.",
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        </svg>
+      ),
+      points: ["Clinical Trial Protocol Design", "Meta-Analysis & Systematic Review", "Medical Journal Publication Support"]
     },
     {
-      tag: "Focus 02",
-      title: t('focus02Title'),
-      desc: t('focus02Desc'),
-      visual: (
-        <div className="relative w-full h-full flex flex-col items-center justify-center gap-4 p-8">
-          {/* Frequency Wave Visual */}
-          <div className="flex items-end gap-1 h-32">
-             {[40, 70, 45, 90, 60, 100, 50, 80, 40, 60, 90, 30].map((h, i) => (
-               <div 
-                 key={i} 
-                 className="w-1.5 bg-accent/40 relative overflow-hidden" 
-                 style={{ height: `${h}%` }}
-               >
-                  <div className="absolute inset-0 bg-accent animate-[bounce_2s_infinite_ease-in-out]" style={{ animationDelay: `${i * 100}ms` }} />
-               </div>
-             ))}
-          </div>
-          <div className="bg-dark/80 backdrop-blur-md border border-white/10 px-6 py-4 flex flex-col items-center gap-2">
-             <span className="font-jetbrains text-[8px] text-accent tracking-[0.4em] uppercase">Quality Check</span>
-             <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                <span className="font-jetbrains text-[9px] text-normal tracking-widest font-black">STABLE / AUTHENTIC</span>
-             </div>
-          </div>
-        </div>
-      )
+      tag: "Traditional Medicine",
+      scheme: "Maharshi Charak Scheme",
+      title: "Ayurveda & AYUSH Research Analytics",
+      desc: "Promoting evidence-based research across Ayurveda, Homoeopathy (Dr. C.F.S. Hahnemann Scheme), Unani, and Yoga through empirical validation and statistical rigor.",
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      ),
+      points: ["Empirical Validation of Traditional Medicine", "AYUSH Clinical Research Methods", "Standardized Data Management"]
     },
     {
-      tag: "Focus 03",
-      title: t('focus03Title'),
-      desc: t('focus03Desc'),
-      visual: (
-        <div className="relative w-full h-full p-8 flex flex-col justify-end gap-6">
-          {/* Mini Dashboard HUD */}
-          <div className="grid grid-cols-2 gap-4">
-             <div className="border border-white/10 p-4 bg-white/[0.02] space-y-3">
-                <div className="flex justify-between items-center">
-                   <span className="font-jetbrains text-[8px] text-description uppercase italic">Margin</span>
-                   <span className="font-jetbrains text-[8px] text-accent">82%</span>
-                </div>
-                <div className="h-1 bg-white/5 relative overflow-hidden">
-                   <div className="absolute top-0 left-0 h-full bg-accent w-[82%]" />
-                </div>
-             </div>
-             <div className="border border-white/10 p-4 bg-white/[0.02] space-y-3">
-                <div className="flex justify-between items-center">
-                   <span className="font-jetbrains text-[8px] text-description uppercase italic">ROAS</span>
-                   <span className="font-jetbrains text-[8px] text-accent">12.1X</span>
-                </div>
-                <div className="h-1 bg-white/5 relative overflow-hidden">
-                   <div className="absolute top-0 left-0 h-full bg-accent w-[90%]" />
-                </div>
-             </div>
-          </div>
-          <div className="border border-accent/20 bg-accent/[0.03] p-6 flex items-center justify-between">
-             <div className="space-y-1">
-                <p className="font-newsreader italic text-xl text-normal leading-none">$2.4k</p>
-                <p className="font-jetbrains text-[7px] text-description tracking-widest uppercase">Target / Daily</p>
-             </div>
-             <div className="w-12 h-12 border border-accent/40 rounded-full flex items-center justify-center">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
-             </div>
-          </div>
-        </div>
-      )
+      tag: "Capacity Building",
+      scheme: "Institutional Cells",
+      title: "Onsite Workshops & Joint Training Centers",
+      desc: "Establishing Joint Training Centers and conducting structured STTPs, CMEs, and faculty development programs tailored to universities, hospitals, and research institutes.",
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+      points: ["Customized Onsite Institutional Training", "CME & CNE Accredited Modules", "3-6 Month Research Internships"]
     },
     {
-      tag: "Focus 04",
-      title: t('focus04Title'),
-      desc: t('focus04Desc'),
-      visual: (
-        <div className="relative w-full h-full flex items-center justify-center p-12">
-          {/* Pyramidal Layer Visual */}
-          <div className="relative w-full aspect-square flex flex-col items-center justify-center gap-2">
-             <div className="w-[40%] aspect-[3/1] bg-accent/40 border border-accent/60 flex items-center justify-center">
-                <span className="font-jetbrains text-[7px] text-dark font-black tracking-widest">PREMIUM</span>
-             </div>
-             <div className="w-[70%] aspect-[4/1] bg-white/[0.05] border border-white/10 flex items-center justify-center">
-                <span className="font-jetbrains text-[7px] text-description tracking-widest">MID-TIER</span>
-             </div>
-             <div className="w-[100%] aspect-[5/1] bg-white/[0.02] border border-white/5 flex items-center justify-center">
-                <span className="font-jetbrains text-[7px] text-description/80 tracking-widest uppercase">Foundation / Entry</span>
-             </div>
-             {/* Connecting Line */}
-             <div className="absolute left-1/2 -ml-[1px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent to-transparent z-[-1] opacity-20" />
-          </div>
-        </div>
-      )
+      tag: "Data Science & AI",
+      scheme: "Sir M. Visvesvaraya Scheme",
+      title: "AI, Machine Learning & Computational Analytics",
+      desc: "Bridging statistical theory with computational data engineering, Python, R, predictive modeling, and machine learning algorithms for modern multidisciplinary challenges.",
+      icon: (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+      ),
+      points: ["Predictive & Algorithmic Modeling", "Statistical Computing in R & Python", "High-Dimensional Data Engineering"]
     }
   ]
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Set initial states - subtle micro-motion (90% lighter: y: 4px)
-      gsap.set(['.features-header', '.feature-card-main'], { autoAlpha: 0, y: 4 })
+      gsap.set(['.features-header', '.feature-card-main'], { autoAlpha: 0, y: 15 })
 
-      // 1. Heading reveal (Snappy 0.3s duration)
       gsap.to('.features-header', { 
-        y: 0, autoAlpha: 1, duration: 0.3, ease: 'power3.out',
+        y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out',
         scrollTrigger: {
           trigger: '.features-header',
-          start: 'top 96%'
+          start: 'top 92%'
         }
       })
 
-      // 2. Cards reveal (Snappy 0.25s duration, 0.02s stagger)
       gsap.utils.toArray('.feature-card-main').forEach((card, i) => {
         gsap.to(card, {
-          y: 0, autoAlpha: 1, duration: 0.25, ease: 'power3.out', delay: i * 0.02,
+          y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', delay: i * 0.05,
           scrollTrigger: {
             trigger: card,
-            start: 'top 98%'
+            start: 'top 94%'
           }
         })
       })
@@ -161,60 +91,81 @@ const BrandFeatures = () => {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative py-12 pb-16 px-4 bg-dark overflow-hidden z-20">
-      <div className="max-w-7xl mx-auto space-y-20">
+    <section ref={containerRef} className="relative py-16 md:py-24 px-4 sm:px-6 md:px-12 bg-slate-50 overflow-hidden z-20 border-t border-slate-200">
+      <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header Segment */}
-        <div className="features-header text-center space-y-8 mx-auto">
-           <div className="space-y-4">
-              <span className="font-jetbrains text-[9px] text-amber-700 tracking-[0.8em] font-black uppercase">{t('howWeHelp')}</span>
-              <h2 className="font-newsreader text-[clamp(3.5rem,8vw,6rem)] italic leading-[0.9] text-normal mb-8">
-                 {t('designedToGrow')}
-              </h2>
-           </div>
+        <div className="features-header text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-widest font-jetbrains">
+            Specialized R&D Schemes & Cells
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+            Multidisciplinary Research & <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900">
+              Capacity Building Frameworks
+            </span>
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+            IAS operates dedicated research schemes in collaboration with universities, medical colleges, and research institutions nationwide to foster an evidence-based culture.
+          </p>
         </div>
 
-        {/* 2x2 Grid Architecture */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-           {features.map((feature, i) => (
-              <div 
-                key={i} 
-                className="feature-card-main group relative bg-white border border-slate-200 p-10 md:p-12 overflow-hidden flex flex-col md:flex-row gap-10 min-h-[500px] transition-all duration-500 hover:border-amber-400 hover:shadow-xl rounded-2xl"
-              >
-                 {/* Visual Area */}
-                 <div className="md:order-2 flex-1 relative bg-slate-50 border border-slate-200 overflow-hidden group-hover:border-amber-300 transition-colors shadow-inner rounded-xl">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {feature.visual}
-                 </div>
+        {/* 2x2 Grid Architecture with Strict Overflow Safety */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {features.map((feature, i) => (
+            <div 
+              key={i} 
+              className="feature-card-main group relative bg-white border border-slate-200/90 p-7 md:p-9 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-blue-400 hover:shadow-lg rounded-2xl min-w-0"
+            >
+              <div className="space-y-5 min-w-0">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center flex-shrink-0 group-hover:bg-[#011753] group-hover:text-white transition-colors duration-300">
+                    {feature.icon}
+                  </div>
+                  <div className="flex flex-col items-end text-right min-w-0">
+                    <span className="font-jetbrains text-[9px] text-blue-700 font-bold uppercase tracking-wider truncate max-w-[150px]">
+                      {feature.tag}
+                    </span>
+                    <span className="font-jetbrains text-[8px] text-slate-400 uppercase tracking-widest truncate max-w-[150px]">
+                      {feature.scheme}
+                    </span>
+                  </div>
+                </div>
 
-                 {/* Textual Area */}
-                 <div className="md:order-1 md:w-1/2 flex flex-col justify-between py-4 pb-12 z-10 relative">
-                    <div className="space-y-8">
-                       <div className="space-y-4">
-                          <span className="font-jetbrains text-[9px] text-amber-700 tracking-[0.5em] font-black uppercase">{feature.tag}</span>
-                          <h3 className="font-newsreader italic text-4xl md:text-5xl text-slate-900 font-extralight leading-none tracking-tight group-hover:text-amber-600 transition-colors duration-500">
-                             {feature.title}
-                          </h3>
-                       </div>
-                       <p className="font-jetbrains text-[10px] md:text-[11px] text-slate-600 tracking-widest leading-[2] uppercase">
-                          {feature.desc}
-                       </p>
+                <div className="space-y-2 min-w-0">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug group-hover:text-blue-700 transition-colors duration-300 break-words">
+                    {feature.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words font-normal">
+                    {feature.desc}
+                  </p>
+                </div>
+
+                {/* Key Points */}
+                <div className="pt-2 border-t border-slate-100 space-y-2">
+                  {feature.points.map((pt, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-700">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
+                      <span className="truncate">{pt}</span>
                     </div>
-
-                    <div className="pt-8">
-                       <div className="h-[1px] w-12 bg-amber-400/40 group-hover:w-full transition-all duration-700" />
-                       <div className="flex justify-between items-center pt-4 opacity-90 group-hover:opacity-100 transition-opacity">
-                          <span className="font-jetbrains text-[8px] text-slate-700 uppercase tracking-widest font-bold">Ready / Start Now</span>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-800"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-                       </div>
-                    </div>
-                 </div>
-
-                 {/* HUD corner markers */}
-                 <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-slate-300 group-hover:border-amber-400 transition-colors" />
-                 <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-slate-300 group-hover:border-amber-400 transition-colors" />
+                  ))}
+                </div>
               </div>
-           ))}
+
+              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+                <Link 
+                  to="/courses"
+                  className="font-jetbrains text-xs font-bold text-[#011753] group-hover:text-blue-600 uppercase tracking-wider flex items-center gap-2"
+                >
+                  Explore Programs
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Link>
+                <span className="text-[10px] text-slate-400 font-jetbrains">IAS R&D Cell</span>
+              </div>
+            </div>
+          ))}
         </div>
 
       </div>

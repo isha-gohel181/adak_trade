@@ -21,6 +21,7 @@ const translations = {
     allCourses: 'All Courses',
     jobPostings: 'Job Postings',
     support: 'Support & Help',
+    aboutUs: 'About Us',
 
     // Profile & User Info
     security: 'Security',
@@ -541,6 +542,7 @@ const translations = {
     allCourses: 'सभी कोर्स',
     jobPostings: 'जॉब पोस्टिंग',
     support: 'सहायता और सहायता केंद्र',
+    aboutUs: 'हमारे बारे में',
 
     // Profile & User Info
     security: 'सुरक्षा',

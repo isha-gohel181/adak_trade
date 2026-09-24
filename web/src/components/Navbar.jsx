@@ -27,10 +27,10 @@ const Navbar = ({ isLoaded }) => {
   const navLinks = [
     { key: 'home', name: t('home'), path: '/' },
     { key: 'ourCourses', name: t('ourCourses'), path: '/courses' },
-    // { key: 'forum', name: t('forum'), path: '/forum' },
-    { key: 'about Us', name: t('about Us'), path: '/about-us' },
-    // { key: 'gig', name: t('gig'), path: '/gig' },
-    // { key: 'news', name: t('news'), path: '/news' },
+    { key: 'forum', name: t('forum'), path: '/forum' },
+    { key: 'aboutUs', name: t('aboutUs'), path: '/about-us' },
+    { key: 'gig', name: t('gig'), path: '/gig' },
+    { key: 'news', name: t('news'), path: '/news' },
   ]
 
   const socialLinks = [
@@ -267,7 +267,7 @@ const Navbar = ({ isLoaded }) => {
         >
 
           <Link to="/" ref={logoRef} className="flex items-center hover:opacity-80 transition-opacity gap-2.5 text-slate-900">
-            <img src="/logo/bankers_logo.jpeg" alt="Bankers Grade Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
+            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
           </Link>
 
           <div
@@ -331,7 +331,7 @@ const Navbar = ({ isLoaded }) => {
           {/* Internal Menu Header */}
           <header className="menu-header absolute top-0 left-0 w-full px-8 md:px-12 py-8 md:py-10 flex items-center justify-between z-50">
             <Link to="/" onClick={toggleMenu} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src="/logo/bankers_logo.jpeg" alt="Bankers Grade Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
+              <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
             </Link>
 
             <button
@@ -400,7 +400,7 @@ const Navbar = ({ isLoaded }) => {
                 </div>
                 <div className="flex flex-col gap-2 items-center text-center w-full">
                   <p className="font-jetbrains text-[9px] tracking-[0.3em] sm:tracking-[0.6em] text-slate-500 uppercase italic whitespace-normal">Where Ambition Meets Execution</p>
-                  <p className="font-jetbrains text-[8px] tracking-[0.1em] sm:tracking-[0.2em] text-slate-400 uppercase whitespace-normal">© 2026 EDRILLA</p>
+                  <p className="font-jetbrains text-[8px] tracking-[0.1em] sm:tracking-[0.2em] text-slate-400 uppercase whitespace-normal">© 2026 IAS DCS</p>
                 </div>
               </div>
             </div>

@@ -22,7 +22,7 @@ router.delete('/slots/:id', accessTokenAutoRefresh, passport.authenticate('jwt',
 router.get('/bookings', accessTokenAutoRefresh, passport.authenticate('jwt', { session: false }), isAdmin, getAdminBookings);
 
 // --- Student/Frontend Routes ---
-router.get('/slots/available', accessTokenAutoRefresh, passport.authenticate('jwt', { session: false }), getAvailableSlots);
+router.get('/slots/available', getAvailableSlots);
 router.post('/create-order', accessTokenAutoRefresh, passport.authenticate('jwt', { session: false }), createConsultationOrder);
 
 // `upload.fields` handles multiple file uploads, here we expect 'fileUpload'

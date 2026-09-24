@@ -1,4 +1,5 @@
 import Hero from '../components/Hero'
+import ConsultationBanner from '../components/consultation/ConsultationBanner'
 import AboutSnapshot from '../components/AboutSnapshot'
 import LogoMarquee from '../components/LogoMarquee'
 import EventHero from '../components/EventHero'
@@ -12,6 +13,7 @@ const Home = ({ isLoaded }) => {
   return (
     <div className="w-full">
       <Hero isLoaded={isLoaded} />
+      <ConsultationBanner />
       <AboutSnapshot />
       <CourseSlider />
 

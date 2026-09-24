@@ -110,7 +110,7 @@ const Login = () => {
       <div className="login-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="login-logo flex items-center gap-2.5">
-            <img src="/logo/bankers_logo.jpeg" alt="Bankers Grade Logo" className="h-10 w-auto object-contain rounded-lg" />
+            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 w-auto object-contain rounded-lg" />
           </Link>
         </div>
 
@@ -238,7 +238,7 @@ const Login = () => {
 
         <div className="testimonial-card">
           <p className="testimonial-quote">
-            "The precision of Edrilla's curriculum isn't just educational—it's transformative. It's the standard for those who reject the average."
+            "The precision of IAS DCS curriculum isn't just educational—it's transformative. It's the standard for those who reject the average."
           </p>
         </div>
 
