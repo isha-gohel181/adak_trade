@@ -193,14 +193,14 @@ const Signup = () => {
                 required
                 autoComplete="email"
               />
-              <div className="mt-2 flex items-center gap-3">
-                <button type="button" onClick={handleSendOtp} disabled={sendingOtp} className={`px-4 py-2 bg-amber-400 text-white rounded-xl font-bold font-jetbrains text-xs ${sendingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <div className="mt-2.5 flex flex-wrap items-center gap-2.5">
+                <button type="button" onClick={handleSendOtp} disabled={sendingOtp} className={`px-4 py-2 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-bold font-jetbrains text-[11px] transition-all shadow-xs ${sendingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   {sendingOtp ? t('sendingOtpBtn') : (otpSent ? t('resendOtpBtn') : t('sendOtpBtn'))}
                 </button>
                 {otpSent && (
                   <div className="flex items-center gap-2">
-                    <input value={otpCode} onChange={(e) => setOtpCode(e.target.value)} placeholder={t('enterOtpPlaceholder')} className="signup-input !p-2 !h-9 !w-40" />
-                    <button type="button" onClick={handleVerifyOtp} disabled={verifyingOtp} className={`px-3 py-2 bg-amber-400 text-white rounded-xl font-bold font-jetbrains text-xs ${verifyingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                    <input value={otpCode} onChange={(e) => setOtpCode(e.target.value)} placeholder={t('enterOtpPlaceholder')} className="signup-input !p-2 !h-9 !w-32 border-b border-slate-300" />
+                    <button type="button" onClick={handleVerifyOtp} disabled={verifyingOtp} className={`px-4 py-2 bg-[#BFD419] hover:bg-[#A8BC14] text-slate-900 rounded-full font-bold font-jetbrains text-[11px] transition-all shadow-xs ${verifyingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
                       {verifyingOtp ? t('verifyingBtn') : (otpVerifiedStore ? t('verifiedBtn') : t('verifyBtn'))}
                     </button>
                   </div>
@@ -312,51 +312,69 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Right Section: Visual/Info */}
-      <div className="signup-right">
-        <div className="system-status">
-          <div className="status-dot"></div>
-          ENROLLMENT ACTIVE
+      {/* Right Section: Visual Showcase with Landing Page Illustration */}
+      <div className="signup-right relative flex flex-col justify-between p-8 lg:p-12 overflow-hidden bg-gradient-to-br from-slate-50 via-[#EBF5FA]/60 to-[#F6F9D7]/30">
+        {/* Ambient decorative glows */}
+        <div className="absolute top-[-10%] right-[-10%] w-[320px] h-[320px] bg-[#017DC3]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[320px] h-[320px] bg-[#BFD419]/12 rounded-full blur-[100px] pointer-events-none" />
+
+        {/* Top Badges */}
+        <div className="relative z-10 flex items-center justify-between w-full">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#017DC3]/25 text-[#017DC3] text-[10px] font-extrabold uppercase tracking-widest font-jetbrains shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-[#017DC3] animate-pulse"></span>
+            <span>RESEARCH & SCHOLAR PORTAL</span>
+          </div>
+          <span className="text-[10px] font-jetbrains text-slate-500 font-bold uppercase tracking-wider bg-white/80 px-3 py-1 rounded-full border border-slate-200">
+            IAS DCS V2.0
+          </span>
         </div>
 
-        <div className="bg-text-wrap">
-          <div className="bg-text">Build.</div>
-          <div className="bg-text">Build.</div>
-          <div className="bg-text">Build.</div>
+        {/* Center Illustration Showcase */}
+        <div className="relative z-10 w-full my-auto flex flex-col items-center justify-center py-6">
+          <div className="relative w-full max-w-md flex items-center justify-center group">
+            {/* Soft backdrop glow card */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#017DC3]/10 via-white/50 to-[#BFD419]/10 rounded-3xl blur-md" />
+            
+            {/* Landing page Hero Banner illustration */}
+            <img 
+              src="/hero_banner.png" 
+              alt="IAS DCS Statistical Science & Research" 
+              className="relative z-10 w-auto h-auto max-h-[320px] lg:max-h-[360px] max-w-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+
+            {/* Floating Metric Badge 1 (Bottom-left) */}
+            <div className="absolute -bottom-2 -left-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl flex items-center gap-3 transition-transform duration-500 hover:-translate-y-1">
+              <div className="w-9 h-9 rounded-xl bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center font-black font-jetbrains text-xs">
+                12K+
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-slate-900 leading-tight">Active Scholars</span>
+                <span className="text-[10px] text-slate-500 font-medium">Applied Statistics</span>
+              </div>
+            </div>
+
+            {/* Floating Metric Badge 2 (Top-right) */}
+            <div className="absolute -top-2 -right-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl px-3 py-2 shadow-xl flex items-center gap-2.5 transition-transform duration-500 hover:translate-y-1">
+              <div className="w-6 h-6 rounded-full bg-[#F6F9D7] text-[#6B770A] border border-[#BFD419]/50 flex items-center justify-center font-bold text-xs">
+                ✓
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-slate-900 leading-tight">98.2%</span>
+                <span className="text-[9px] text-slate-500 font-medium uppercase tracking-wider">Completion</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="testimonial-card">
-          <p className="testimonial-quote">
-            "Joining IAS DCS isn't just about learning; it's about entering an ecosystem designed for those who refuse to settle for the ordinary."
+        {/* Bottom Testimonial / Brand Note */}
+        <div className="relative z-10 bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 lg:p-5 shadow-xs">
+          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed italic">
+            "Advancing scientific research through empirical statistical methods, clinical trials, and certified academic mentorship."
           </p>
-        </div>
-
-        <div className="stats-wrap">
-          <div className="stat-item">
-            <span className="stat-value">84k+</span>
-            <span className="stat-label">{t('studentsEnrolled')}</span>
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 text-[11px] font-semibold text-slate-500">
+            <span className="text-[#017DC3] font-bold">Institute of Applied Statistics</span>
+            <span className="font-jetbrains text-[10px] text-slate-400">RESEARCH HUB</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-value">Elite</span>
-            <span className="stat-label">{t('accessTier')}</span>
-          </div>
-        </div>
-
-        <p className="right-description">
-          Unlock your potential within a community that values deep work and tactical precision.
-        </p>
-
-        <div className="nav-arrows">
-          <button type="button" className="arrow-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-          </button>
-          <button type="button" className="arrow-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </button>
         </div>
       </div>
     </div>

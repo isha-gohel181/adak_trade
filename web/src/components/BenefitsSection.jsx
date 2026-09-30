@@ -63,7 +63,7 @@ BenefitsSection = ({ course, section }) => {
               <span className="font-jetbrains text-[40px] font-black text-accent">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <div className="flex items-center gap-6">
-              <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_8px_#8B5CF6]" />
+              <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_8px_#017DC3]" />
               <span className="font-montserrat text-[12px] text-normal font-bold tracking-[0.2em] uppercase leading-relaxed">
                 {feat}
               </span>

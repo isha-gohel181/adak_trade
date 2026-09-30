@@ -144,7 +144,7 @@ const Preloader = ({ onComplete }) => {
             >
               <div className="flex flex-col items-center gap-4">
                  <div className="h-[1px] w-48 bg-white/5 relative overflow-hidden">
-                    <div ref={progressRef} className="absolute inset-0 bg-accent scale-x-0 origin-left shadow-[0_0_15px_#8B5CF6]" />
+                    <div ref={progressRef} className="absolute inset-0 bg-accent scale-x-0 origin-left shadow-[0_0_15px_#017DC3]" />
                  </div>
                  <span className="font-montserrat text-[14px] font-bold text-accent tracking-[0.8em]">{counter.toString().padStart(3, '0')}</span>
               </div>

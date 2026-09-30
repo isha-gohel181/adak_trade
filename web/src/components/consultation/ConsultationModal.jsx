@@ -272,7 +272,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               email: authUser?.email || '',
               contact: authUser?.phone || '',
             },
-            theme: { color: '#011753' },
+            theme: { color: '#017DC3' },
           };
 
           if (window.Razorpay) {
@@ -450,7 +450,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                         onClick={() => handleSelectDay(day)}
                         className={`h-9 sm:h-10 w-full rounded-xl font-inter text-xs flex flex-col items-center justify-center relative transition-all ${
                           isSelected
-                            ? 'bg-[#011753] text-white shadow-md font-bold ring-2 ring-blue-700/40 scale-[1.02]'
+                            ? 'bg-[#017DC3] text-white shadow-md font-bold ring-2 ring-blue-700/40 scale-[1.02]'
                             : isPast
                             ? 'text-slate-300 opacity-40 cursor-not-allowed'
                             : isToday
@@ -503,7 +503,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
                 {loading ? (
                   <div className="py-10 text-center text-slate-400 font-inter text-xs flex flex-col items-center justify-center gap-2 bg-slate-50 rounded-2xl border border-slate-200">
-                    <div className="w-5 h-5 border-2 border-[#011753] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-[#017DC3] border-t-transparent rounded-full animate-spin" />
                     <span>Loading available slots...</span>
                   </div>
                 ) : slots.length === 0 ? (
@@ -538,7 +538,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                           onClick={() => dispatch(setSelectedSlot(slot))}
                           className={`p-3.5 rounded-2xl border text-left transition-all relative flex flex-col justify-between ${
                             isSelected
-                              ? 'bg-blue-50/90 border-[#011753] ring-2 ring-[#011753]/20 shadow-sm'
+                              ? 'bg-blue-50/90 border-[#017DC3] ring-2 ring-[#017DC3]/20 shadow-sm'
                               : isDisabled
                               ? 'bg-slate-100 border-slate-200 opacity-60 cursor-not-allowed'
                               : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/30'
@@ -549,7 +549,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                               {formatSlotTime(slot.startTime)} - {formatSlotTime(slot.endTime)}
                             </span>
                             {isSelected ? (
-                              <span className="w-5 h-5 rounded-full bg-[#011753] text-white flex items-center justify-center text-[10px] font-bold">
+                              <span className="w-5 h-5 rounded-full bg-[#017DC3] text-white flex items-center justify-center text-[10px] font-bold">
                                 ✓
                               </span>
                             ) : null}
@@ -632,7 +632,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="e.g. Dr. Rajesh Sharma"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                       formErrors.fullName ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -661,7 +661,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.designation}
                       onChange={handleInputChange}
                       placeholder="e.g. Student / Researcher / Faculty"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                         formErrors.designation ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -687,7 +687,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.department}
                       onChange={handleInputChange}
                       placeholder="e.g. Biostatistics / Medicine / Science"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                         formErrors.department ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -718,7 +718,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.institute}
                     onChange={handleInputChange}
                     placeholder="e.g. IAS DCS / AIIMS / Delhi University"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                       formErrors.institute ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -739,7 +739,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   value={formData.query}
                   onChange={handleInputChange}
                   placeholder="Describe your statistical problem, study design query, sample size calculation, or research guidance requirement..."
-                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 resize-none ${
+                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 resize-none ${
                     formErrors.query ? 'border-rose-300' : 'border-slate-200'
                   }`}
                 />
@@ -880,7 +880,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 type="button"
                 disabled={!selectedSlot}
                 onClick={handleProceedToDetails}
-                className="bg-[#011753] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-full transition-all shadow-md flex items-center gap-2 shrink-0"
+                className="bg-[#017DC3] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-full transition-all shadow-md flex items-center gap-2 shrink-0"
               >
                 <span>Continue to Details</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -903,7 +903,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 type="button"
                 disabled={bookingLoading}
                 onClick={handleConfirmBooking}
-                className="bg-[#011753] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
+                className="bg-[#017DC3] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
               >
                 {bookingLoading ? (
                   <>
@@ -921,7 +921,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="w-full bg-[#011753] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-full transition-all shadow-md"
+              className="w-full bg-[#017DC3] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-full transition-all shadow-md"
             >
               Done
             </button>

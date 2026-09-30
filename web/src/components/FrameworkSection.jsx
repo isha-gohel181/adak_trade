@@ -129,7 +129,7 @@ const FrameworkSection = ({ course, section }) => {
         
         {/* Central Road Line */}
         <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[1px] bg-white/10">
-           <div className="roadmap-line-inner w-full bg-accent shadow-[0_0_15px_#8B5CF6] origin-top" />
+           <div className="roadmap-line-inner w-full bg-accent shadow-[0_0_15px_#017DC3] origin-top" />
         </div>
 
         <div className="space-y-6">
@@ -141,7 +141,7 @@ const FrameworkSection = ({ course, section }) => {
               
               {/* Content Card */}
               <div className="w-full md:w-[46%] group">
-                <div className="relative p-5 md:p-7 lg:p-10 border border-accent/30 bg-[#0E0E0E] backdrop-blur-3xl rounded-none transition-all duration-500 hover:bg-[#121212] hover:border-accent/60 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(139, 92, 246,0.12)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_60px_rgba(139, 92, 246,0.2)]">
+                <div className="relative p-5 md:p-7 lg:p-10 border border-accent/30 bg-[#0E0E0E] backdrop-blur-3xl rounded-none transition-all duration-500 hover:bg-[#121212] hover:border-accent/60 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(1, 125, 195,0.12)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_60px_rgba(1, 125, 195,0.2)]">
                   
                   {/* Side Accent Line */}
                   <div className={`absolute top-0 bottom-0 w-[2px] bg-accent transition-all duration-500 ${index % 2 !== 0 ? 'right-0' : 'left-0'}`} />
@@ -169,7 +169,7 @@ const FrameworkSection = ({ course, section }) => {
                     </p>
 
                     <div className="pt-4 flex items-center gap-3 opacity-100 transition-all duration-500">
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_12px_#8B5CF6]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_12px_#017DC3]" />
                       <span className="font-jetbrains text-[8px] tracking-[0.5em] text-white uppercase font-bold">SYSTEM PROTOCOL 0{index + 1}</span>
                     </div>
                   </div>
@@ -178,7 +178,7 @@ const FrameworkSection = ({ course, section }) => {
               </div>
 
               {/* Connector Dot */}
-              <div className="absolute left-[24px] md:left-1/2 top-8 md:top-1/2 w-2.5 h-2.5 bg-dark border-2 border-accent rounded-full md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-[0_0_8px_#8B5CF6]" />
+              <div className="absolute left-[24px] md:left-1/2 top-8 md:top-1/2 w-2.5 h-2.5 bg-dark border-2 border-accent rounded-full md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-[0_0_8px_#017DC3]" />
 
               <div className="hidden md:block w-[46%]" />
 

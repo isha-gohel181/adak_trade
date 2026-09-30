@@ -93,7 +93,7 @@ const DashboardReading = () => {
                         {reading.summary && (
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(139, 92, 246,0.5)]" />
+                                    <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(1, 125, 195,0.5)]" />
                                     <h3 className="font-jetbrains text-xl text-accent uppercase tracking-widest font-black">Summary</h3>
                                 </div>
                                 <div className="p-8 bg-white/[0.02] border-l-2 border-accent/40 font-newsreader italic text-md text-normal/80 leading-relaxed break-all">
@@ -104,7 +104,7 @@ const DashboardReading = () => {
                         
                         <div className="space-y-6">
                             <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(139, 92, 246,0.5)]" />
+                                <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(1, 125, 195,0.5)]" />
                                 <h3 className="font-jetbrains text-xl text-accent uppercase tracking-widest font-black">Intelligence</h3>
                             </div>
                             <div 
@@ -156,7 +156,7 @@ const DashboardReading = () => {
             </main>
 
             <style>{`
-                .dashboard-reading-content a { color: var(--accent-color, #8B5CF6); text-decoration: underline; text-underline-offset: 4px; }
+                .dashboard-reading-content a { color: var(--accent-color, #017DC3); text-decoration: underline; text-underline-offset: 4px; }
                 .dashboard-reading-content strong { color: white; font-weight: 600; }
                 .dashboard-reading-content ul { list-style: disc; padding-left: 1.5rem; }
                 .dashboard-reading-content ol { list-style: decimal; padding-left: 1.5rem; }

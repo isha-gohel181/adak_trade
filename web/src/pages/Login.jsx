@@ -223,51 +223,69 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Section: Visual/Info */}
-      <div className="login-right">
-        <div className="system-status">
-          <div className="status-dot"></div>
-          SYSTEM OPERATIONAL
+      {/* Right Section: Visual Showcase with Landing Page Illustration */}
+      <div className="login-right relative flex flex-col justify-between p-8 lg:p-12 overflow-hidden bg-gradient-to-br from-slate-50 via-[#EBF5FA]/60 to-[#F6F9D7]/30">
+        {/* Ambient decorative glows */}
+        <div className="absolute top-[-10%] right-[-10%] w-[320px] h-[320px] bg-[#017DC3]/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[320px] h-[320px] bg-[#BFD419]/12 rounded-full blur-[100px] pointer-events-none" />
+
+        {/* Top Badges */}
+        <div className="relative z-10 flex items-center justify-between w-full">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#017DC3]/25 text-[#017DC3] text-[10px] font-extrabold uppercase tracking-widest font-jetbrains shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-[#017DC3] animate-pulse"></span>
+            <span>RESEARCH & SCHOLAR PORTAL</span>
+          </div>
+          <span className="text-[10px] font-jetbrains text-slate-500 font-bold uppercase tracking-wider bg-white/80 px-3 py-1 rounded-full border border-slate-200">
+            IAS DCS V2.0
+          </span>
         </div>
 
-        <div className="bg-text-wrap">
-          <div className="bg-text">Learn.</div>
-          <div className="bg-text">Learn.</div>
-          <div className="bg-text">Learn.</div>
+        {/* Center Illustration Showcase */}
+        <div className="relative z-10 w-full my-auto flex flex-col items-center justify-center py-6">
+          <div className="relative w-full max-w-md flex items-center justify-center group">
+            {/* Soft backdrop glow card */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#017DC3]/10 via-white/50 to-[#BFD419]/10 rounded-3xl blur-md" />
+            
+            {/* Landing page Hero Banner illustration */}
+            <img 
+              src="/hero_banner.png" 
+              alt="IAS DCS Statistical Science & Research" 
+              className="relative z-10 w-auto h-auto max-h-[320px] lg:max-h-[360px] max-w-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+
+            {/* Floating Metric Badge 1 (Bottom-left) */}
+            <div className="absolute -bottom-2 -left-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl flex items-center gap-3 transition-transform duration-500 hover:-translate-y-1">
+              <div className="w-9 h-9 rounded-xl bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center font-black font-jetbrains text-xs">
+                12K+
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-slate-900 leading-tight">Active Scholars</span>
+                <span className="text-[10px] text-slate-500 font-medium">Applied Statistics</span>
+              </div>
+            </div>
+
+            {/* Floating Metric Badge 2 (Top-right) */}
+            <div className="absolute -top-2 -right-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl px-3 py-2 shadow-xl flex items-center gap-2.5 transition-transform duration-500 hover:translate-y-1">
+              <div className="w-6 h-6 rounded-full bg-[#F6F9D7] text-[#6B770A] border border-[#BFD419]/50 flex items-center justify-center font-bold text-xs">
+                ✓
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs font-bold text-slate-900 leading-tight">98.2%</span>
+                <span className="text-[9px] text-slate-500 font-medium uppercase tracking-wider">Completion</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="testimonial-card">
-          <p className="testimonial-quote">
-            "The precision of IAS DCS curriculum isn't just educational—it's transformative. It's the standard for those who reject the average."
+        {/* Bottom Testimonial / Brand Note */}
+        <div className="relative z-10 bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 lg:p-5 shadow-xs">
+          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed italic">
+            "Advancing scientific research through empirical statistical methods, clinical trials, and certified academic mentorship."
           </p>
-        </div>
-
-        <div className="stats-wrap">
-          <div className="stat-item">
-            <span className="stat-value">12.4k</span>
-            <span className="stat-label">{t('activeLearners')}</span>
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 text-[11px] font-semibold text-slate-500">
+            <span className="text-[#017DC3] font-bold">Institute of Applied Statistics</span>
+            <span className="font-jetbrains text-[10px] text-slate-400">RESEARCH HUB</span>
           </div>
-          <div className="stat-item">
-            <span className="stat-value">98.2%</span>
-            <span className="stat-label">{t('completionRate')}</span>
-          </div>
-        </div>
-
-        <p className="right-description">
-          Join an elite network of practitioners bridging the gap between theory and mastery.
-        </p>
-
-        <div className="nav-arrows">
-          <button type="button" className="arrow-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-          </button>
-          <button type="button" className="arrow-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </button>
         </div>
       </div>
 

@@ -65,7 +65,7 @@ const MobileExclusiveModal = ({ isOpen, onClose }) => {
 
                 {/* Actions */}
                 <div className="space-y-6 pt-4">
-                    <button className="w-full bg-accent text-dark py-5 rounded-2xl font-montserrat text-[14px] font-black uppercase tracking-[0.4em] flex items-center justify-center gap-3 hover:scale-[1.03] active:scale-95 transition-all shadow-[0_15px_40px_rgba(139, 92, 246,0.15)] group/btn relative overflow-hidden">
+                    <button className="w-full bg-accent text-dark py-5 rounded-2xl font-montserrat text-[14px] font-black uppercase tracking-[0.4em] flex items-center justify-center gap-3 hover:scale-[1.03] active:scale-95 transition-all shadow-[0_15px_40px_rgba(1, 125, 195,0.15)] group/btn relative overflow-hidden">
                         <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out skew-x-12" />
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                         Download App

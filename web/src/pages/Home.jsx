@@ -1,6 +1,7 @@
 import Hero from '../components/Hero'
 import ConsultationBanner from '../components/consultation/ConsultationBanner'
 import AboutSnapshot from '../components/AboutSnapshot'
+import MissionPillars from '../components/MissionPillars'
 import LogoMarquee from '../components/LogoMarquee'
 import EventHero from '../components/EventHero'
 import StackingBanners from '../components/StackingBanners'
@@ -14,13 +15,14 @@ const Home = ({ isLoaded }) => {
     <div className="w-full">
       <Hero isLoaded={isLoaded} />
       <AboutSnapshot />
+      <MissionPillars />
       <CourseSlider />
 
       {/* Dynamic Event Showcase */}
       {/* <EventHero events={eventData} /> */}
       
       <LogoMarquee />
-      <StackingBanners />
+      {/* <StackingBanners /> */}
       <BrandFeatures />
       <GrowthSection />
       <ConsultationBanner />

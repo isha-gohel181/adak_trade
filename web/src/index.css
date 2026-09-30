@@ -46,44 +46,51 @@ input, textarea, [contenteditable="true"] {
   --font-anton: "Inter", sans-serif;
   --font-signature: "Mrs Saint Delafield", cursive;
 
-  /* Modern deep blue Bankers Grade Palette */
-  --color-accent: #011753; /* Deep Blue Accent */
-  --color-accent-secondary: #06B6D4; /* Cyan */
-  --color-dark: #f4f6fe; /* Lighter shade of #011753 for main bg */
+  /* IAS DCS Brand Color Palette derived exactly from Logo */
+  --color-accent: #017DC3; /* Logo Cerulean / Azure Blue (The 'D') */
+  --color-accent-hover: #006AA7;
+  --color-accent-light: #EBF5FA;
+  --color-accent-secondary: #BFD419; /* Logo Lime Green (The Dynamic Figure) */
+  --color-accent-green: #BFD419;
+  --color-accent-green-hover: #A8BC14;
+  --color-accent-green-light: #F6F9D7;
+  --color-accent-grey: #7B858B; /* Logo Orbital Grey */
+  --color-dark: #F8FAFC; /* Clean Crisp Page Background */
   --color-normal: #0F172A; /* Slate 900 High Contrast Text */
   --color-description: #475569; /* Slate 600 Body Description Text */
-  --color-border: rgba(1, 23, 83, 0.08); /* Subtle border matching the new palette */
+  --color-border: rgba(1, 125, 195, 0.12); /* Subtle IAS blue tint border */
   --color-card: #FFFFFF; /* Pure White Elevated Card */
-  --color-card-border: rgba(1, 23, 83, 0.06); /* Subtle card edge matching the new palette */
+  --color-card-border: rgba(1, 125, 195, 0.08); /* Subtle card edge */
 
-  --shadow-accent-large: 0 10px 30px -10px rgba(1, 23, 83, 0.4);
-  --shadow-accent-soft: 0 4px 20px -2px rgba(1, 23, 83, 0.3);
+  --shadow-accent-large: 0 10px 30px -10px rgba(1, 125, 195, 0.4);
+  --shadow-accent-soft: 0 4px 20px -2px rgba(1, 125, 195, 0.3);
+  --shadow-green-soft: 0 4px 20px -2px rgba(191, 212, 25, 0.35);
 
   /* Override color palettes dynamically */
-  --color-amber-50: #f4f6fe;
-  --color-amber-100: #e6edff;
-  --color-amber-200: #ccd9ff;
-  --color-amber-300: #99b2ff;
-  --color-amber-400: #011753;
-  --color-amber-500: #011447;
-  --color-amber-600: #01113b;
-  --color-amber-700: #000c2a;
-  --color-amber-800: #00071a;
-  --color-amber-900: #00030d;
+  --color-amber-50: #EBF5FA;
+  --color-amber-100: #D0EAF7;
+  --color-amber-200: #A2D5EF;
+  --color-amber-300: #5BB7E5;
+  --color-amber-400: #017DC3;
+  --color-amber-500: #016AA7;
+  --color-amber-600: #005688;
+  --color-amber-700: #00446D;
+  --color-amber-800: #003657;
+  --color-amber-900: #00253D;
 
-  --color-yellow-50: #f4f6fe;
-  --color-yellow-100: #e6edff;
-  --color-yellow-200: #ccd9ff;
-  --color-yellow-300: #99b2ff;
-  --color-yellow-400: #011753;
-  --color-yellow-500: #011447;
-  --color-yellow-600: #01113b;
-  --color-yellow-700: #000c2a;
-  --color-yellow-800: #00071a;
-  --color-yellow-900: #00030d;
+  --color-yellow-50: #F6F9D7;
+  --color-yellow-100: #EDF5B2;
+  --color-yellow-200: #DFEE71;
+  --color-yellow-300: #CFE43B;
+  --color-yellow-400: #BFD419;
+  --color-yellow-500: #A6B913;
+  --color-yellow-600: #88980E;
+  --color-yellow-700: #6B770A;
+  --color-yellow-800: #505908;
+  --color-yellow-900: #383F05;
 
-  --color-slate-50: #f4f6fe;
-  --color-slate-100: #eef2ff;
+  --color-slate-50: #F8FAFC;
+  --color-slate-100: #F1F5F9;
 
   --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
 
@@ -387,29 +394,37 @@ button{
   @apply border-l-2 border-accent/30 bg-accent/5 p-8 italic text-lg text-accent/80 my-10;
 }
 
-/* Custom contrast helper overrides for the deep blue theme */
+/* Custom contrast helper overrides for the IAS Blue theme */
 .bg-accent, 
 .bg-amber-400,
-.bg-yellow-400,
 .hover\:bg-accent:hover, 
 .hover\:bg-amber-400:hover, 
-.hover\:bg-yellow-400:hover,
 .group:hover .group-hover\:bg-accent, 
-.group:hover .group-hover\:bg-amber-400,
-.group:hover .group-hover\:bg-yellow-400 {
+.group:hover .group-hover\:bg-amber-400 {
   color: #ffffff !important;
 }
 
-/* Ensure text children inside deep blue buttons/components also inherit or display as white */
+/* Ensure text children inside IAS blue buttons/components also inherit or display as white */
 .bg-accent *, 
 .bg-amber-400 *, 
-.bg-yellow-400 *,
 .hover\:bg-accent:hover *, 
 .hover\:bg-amber-400:hover *, 
-.hover\:bg-yellow-400:hover *,
 .group:hover .group-hover\:bg-accent *,
 .group:hover .group-hover\:bg-amber-400 * {
   color: #ffffff !important;
+}
+
+/* For green accent badges and buttons: dark text provides optimal legibility */
+.bg-yellow-400,
+.hover\:bg-yellow-400:hover,
+.group:hover .group-hover\:bg-yellow-400 {
+  color: #0F172A !important;
+}
+
+.bg-yellow-400 *,
+.hover\:bg-yellow-400:hover *,
+.group:hover .group-hover\:bg-yellow-400 * {
+  color: #0F172A !important;
 }
 
 /* Fix specific contrast edge-cases like yellow-900 or amber-900 text on dark buttons */
@@ -422,7 +437,8 @@ button{
   color: #ffffff !important;
 }
 
-/* Specific button and input focus outlines to use deep blue */
+/* Specific button and input focus outlines to use IAS logo blue */
 input:focus, textarea:focus, select:focus {
-  border-color: #011753 !important;
+  border-color: #017DC3 !important;
 }
+

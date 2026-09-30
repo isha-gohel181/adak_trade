@@ -235,9 +235,9 @@ const ComparisonSection = ({ course, section }) => {
             </div>
 
             {/* Our Program Column (Vibrant Green - Glowing) */}
-            <div className="flex items-center gap-4 px-4 md:px-6 lg:px-12 py-4 bg-accent/[0.2] border-l-2 border-accent shadow-[0_0_30px_rgba(139, 92, 246,0.08)] transition-all duration-700">
-              <div className="w-9 h-9 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(139, 92, 246,0.5)]">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
+            <div className="flex items-center gap-4 px-4 md:px-6 lg:px-12 py-4 bg-accent/[0.2] border-l-2 border-accent shadow-[0_0_30px_rgba(1, 125, 195,0.08)] transition-all duration-700">
+              <div className="w-9 h-9 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(1, 125, 195,0.5)]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
               </div>
               <p className="font-montserrat text-[12px] md:text-[9px] lg:text-xs text-accent font-normal tracking-[0.05em] uppercase">{sanitizeDisplay(item.our)}</p>
             </div>
@@ -258,7 +258,7 @@ const ComparisonSection = ({ course, section }) => {
               <span className="font-jetbrains text-[40px] font-black text-accent">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <div className="flex items-start gap-5">
-              <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0 shadow-[0_0_8px_#8B5CF6]" />
+              <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2 shrink-0 shadow-[0_0_8px_#017DC3]" />
               <span className="font-montserrat text-sm md:text-sm text-white/90 font-medium tracking-wide leading-relaxed">
                 {feat}
               </span>
@@ -274,14 +274,14 @@ const ComparisonSection = ({ course, section }) => {
         </h4>
 
         <div className="flex items-center justify-center gap-8 md:gap-12">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.5" className="opacity-60 hidden md:block"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="1.5" className="opacity-60 hidden md:block"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
           <button 
             onClick={() => document.getElementById('pricing-section')?.scrollIntoView({ behavior: 'smooth' })}
             className="group relative bg-accent px-12 md:px-20 py-8 md:py-10 transition-all duration-700 hover:scale-[1.03] active:scale-95 flex flex-col items-center gap-3"
           >
             <span className="relative z-10 font-jetbrains text-dark text-[11px] md:text-[13px] font-black tracking-[0.4em] uppercase">YES, I WANT TO BE CEO OF MY LIFE</span>
           </button>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.5" className="opacity-60 hidden md:block rotate-180"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="1.5" className="opacity-60 hidden md:block rotate-180"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
         </div>
       </div>
 

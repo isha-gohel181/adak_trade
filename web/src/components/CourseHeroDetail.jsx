@@ -85,7 +85,7 @@ const CourseHeroDetail = ({ course, section }) => {
           {highlights.map((check, i) => (
             <div key={i} className="flex items-center gap-3 group">
                <div className="reveal-checkmark w-4 h-4 rounded-full border border-accent/40 flex items-center justify-center shrink-0">
-                  <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
+                  <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
                </div>
                <span className="reveal-text font-jetbrains text-[8px] md:text-[9px] text-description/70 font-bold tracking-widest uppercase group-hover:text-accent transition-colors">
                   {check}

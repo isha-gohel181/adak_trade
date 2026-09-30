@@ -553,7 +553,7 @@ const DashboardForum = () => {
       {/* Global Success Notification */}
       {showSuccessMessage && (
         <div className="fixed inset-0 z-[30000] flex items-center justify-center pointer-events-none">
-          <div className="bg-accent text-dark px-12 py-8 rounded-sm shadow-[0_30px_100px_rgba(139, 92, 246,0.3)] flex flex-col items-center gap-4">
+          <div className="bg-accent text-dark px-12 py-8 rounded-sm shadow-[0_30px_100px_rgba(1, 125, 195,0.3)] flex flex-col items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-dark/10 flex items-center justify-center">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
             </div>
