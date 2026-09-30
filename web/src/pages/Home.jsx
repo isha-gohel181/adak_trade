@@ -1,4 +1,5 @@
 import Hero from '../components/Hero'
+import FeatureHighlightBar from '../components/FeatureHighlightBar'
 import ConsultationBanner from '../components/consultation/ConsultationBanner'
 import AboutSnapshot from '../components/AboutSnapshot'
 import MissionPillars from '../components/MissionPillars'
@@ -14,6 +15,7 @@ const Home = ({ isLoaded }) => {
   return (
     <div className="w-full">
       <Hero isLoaded={isLoaded} />
+      <FeatureHighlightBar />
       <AboutSnapshot />
       <MissionPillars />
       <CourseSlider />
