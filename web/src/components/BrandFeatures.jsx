@@ -1,87 +1,126 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const schemesData = [
+  {
+    id: 'mcard',
+    image: '/scheme/mcard_scheme.png',
+    title: 'MAHARSHI CHARAK AYURVEDA R&D SCHEME',
+    shortName: 'Maharshi Charak Scheme',
+    category: 'Ayurveda & AYUSH Research',
+    desc: 'Promoting empirical validation, clinical trials, and statistical methodologies in Ayurvedic and traditional medicine systems.',
+    points: [
+      'Clinical Trial Protocol Design & Standardization',
+      'AYUSH Research Data Management & Analytics',
+      'Empirical Evidence Generation for Herbal Formulations',
+      'Publication & Scientific Documentation Mentorship'
+    ]
+  },
+  {
+    id: 'psrd',
+    image: '/scheme/psrd_scheme.png',
+    title: 'DR. PADAM SINGH RESEARCH & DEVELOPMENT SCHEME',
+    shortName: 'Dr. Padam Singh Scheme',
+    category: 'Biostatistics & Health Sciences',
+    desc: 'Pioneering biostatistics, clinical trial methodologies, sample size estimation, and epidemiological research for medical sciences.',
+    points: [
+      'Sample Size Estimation & Statistical Power Analysis',
+      'Observational, Cohort & Case-Control Study Design',
+      'Survival Analysis & Multivariable Regression Modeling',
+      'ICMR / GCP Guidelines & Protocol Drafting'
+    ]
+  },
+  {
+    id: 'dcfshhrd',
+    image: '/scheme/dcfshhrd_scheme.png',
+    title: 'DR. C.F.S. HAHNEMANN HOMOEOPATHY R&D SCHEME',
+    shortName: 'Dr. C.F.S. Hahnemann Scheme',
+    category: 'Homoeopathic Research Analytics',
+    desc: 'Fostering rigorous clinical research, statistical modeling, and evidence-based efficacy studies in Homoeopathy.',
+    points: [
+      'Homoeopathic Clinical Research Methodologies',
+      'Quantitative & Qualitative Outcome Measurement',
+      'Systematic Reviews & Meta-Analyses in Homoeopathy',
+      'Standardized Pharmacovigilance Data Tracking'
+    ]
+  },
+  {
+    id: 'fnnrd',
+    image: '/scheme/fnnrd_scheme.png',
+    title: 'FLORENCE NIGHTINGALE NURSING R&D SCHEME',
+    shortName: 'Florence Nightingale Scheme',
+    category: 'Nursing & Patient Care Analytics',
+    desc: 'Advancing research methodologies, clinical audits, evidence-based nursing practice, and healthcare quality analytics.',
+    points: [
+      'Evidence-Based Nursing Research Protocols',
+      'Patient Safety & Clinical Quality Improvement Audits',
+      'Nursing Dissertation & Publication Support',
+      'CNE Accredited Analytical Workshops'
+    ]
+  },
+  {
+    id: 'dradrd',
+    image: '/scheme/dradrd_scheme.png',
+    title: 'DR. RAFIUDDIN AHMED DENTAL R&D SCHEME',
+    shortName: 'Dr. Rafiuddin Ahmed Scheme',
+    category: 'Dental & Oral Health Sciences',
+    desc: 'Empowering dental researchers with statistical protocol design, epidemiological oral health surveys, and clinical studies.',
+    points: [
+      'Dental Epidemiological Surveys & Field Studies',
+      'In-Vitro & In-Vivo Dental Trial Methodologies',
+      'MDS Thesis & Dissertation Data Analysis',
+      'Diagnostic Accuracy & Reliability Assessment'
+    ]
+  },
+  {
+    id: 'smverd',
+    image: '/scheme/smverd_scheme.png',
+    title: 'SIR M. VISVESVARAYA ENGINEERING R&D SCHEME',
+    shortName: 'Sir M. Visvesvaraya Scheme',
+    category: 'Engineering, Data Science & AI',
+    desc: 'Bridging statistical theory with computational data engineering, machine learning algorithms, and predictive analytics.',
+    points: [
+      'Machine Learning & Predictive Statistical Modeling',
+      'Statistical Computing & Data Wrangling in R & Python',
+      'High-Dimensional Industrial Data Analytics',
+      'Interdisciplinary Engineering Research Guidance'
+    ]
+  }
+]
+
 const BrandFeatures = () => {
   const containerRef = useRef(null)
-
-  const features = [
-    {
-      tag: "Medical Research",
-      scheme: "Dr. Padam Singh Scheme",
-      title: "Biostatistics & Clinical Trial Methodology",
-      desc: "Comprehensive research guidance in clinical protocol design, sample size estimation, survival analysis, and epidemiological modeling for healthcare and medical faculties.",
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-        </svg>
-      ),
-      points: ["Clinical Trial Protocol Design", "Meta-Analysis & Systematic Review", "Medical Journal Publication Support"]
-    },
-    {
-      tag: "Traditional Medicine",
-      scheme: "Maharshi Charak Scheme",
-      title: "Ayurveda & AYUSH Research Analytics",
-      desc: "Promoting evidence-based research across Ayurveda, Homoeopathy (Dr. C.F.S. Hahnemann Scheme), Unani, and Yoga through empirical validation and statistical rigor.",
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-        </svg>
-      ),
-      points: ["Empirical Validation of Traditional Medicine", "AYUSH Clinical Research Methods", "Standardized Data Management"]
-    },
-    {
-      tag: "Capacity Building",
-      scheme: "Institutional Cells",
-      title: "Onsite Workshops & Joint Training Centers",
-      desc: "Establishing Joint Training Centers and conducting structured STTPs, CMEs, and faculty development programs tailored to universities, hospitals, and research institutes.",
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      ),
-      points: ["Customized Onsite Institutional Training", "CME & CNE Accredited Modules", "3-6 Month Research Internships"]
-    },
-    {
-      tag: "Data Science & AI",
-      scheme: "Sir M. Visvesvaraya Scheme",
-      title: "AI, Machine Learning & Computational Analytics",
-      desc: "Bridging statistical theory with computational data engineering, Python, R, predictive modeling, and machine learning algorithms for modern multidisciplinary challenges.",
-      icon: (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-      points: ["Predictive & Algorithmic Modeling", "Statistical Computing in R & Python", "High-Dimensional Data Engineering"]
-    }
-  ]
+  const [selectedScheme, setSelectedScheme] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set(['.features-header', '.feature-card-main'], { autoAlpha: 0, y: 15 })
+      gsap.set(['.schemes-header', '.scheme-card-item'], { autoAlpha: 0, y: 20 })
 
-      gsap.to('.features-header', { 
-        y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out',
+      gsap.to('.schemes-header', { 
+        y: 0, 
+        autoAlpha: 1, 
+        duration: 0.6, 
+        ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.features-header',
-          start: 'top 92%'
+          trigger: '.schemes-header',
+          start: 'top 90%'
         }
       })
 
-      gsap.utils.toArray('.feature-card-main').forEach((card, i) => {
+      gsap.utils.toArray('.scheme-card-item').forEach((card, i) => {
         gsap.to(card, {
-          y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', delay: i * 0.05,
+          y: 0, 
+          autoAlpha: 1, 
+          duration: 0.5, 
+          ease: 'power3.out', 
+          delay: i * 0.06,
           scrollTrigger: {
             trigger: card,
-            start: 'top 94%'
+            start: 'top 93%'
           }
         })
       })
@@ -95,80 +134,143 @@ const BrandFeatures = () => {
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header Segment */}
-        <div className="features-header text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-[11px] font-bold uppercase tracking-widest font-jetbrains">
+        <div className="schemes-header text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest font-jetbrains">
+            <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse shadow-[0_0_6px_#BFD419]" />
             Specialized R&D Schemes & Cells
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-            Multidisciplinary Research & <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900">
-              Capacity Building Frameworks
+            Our Research & <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#017DC3] via-[#028DDb] to-[#005B8E]">
+              Development Schemes
             </span>
           </h2>
           <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-            IAS operates dedicated research schemes in collaboration with universities, medical colleges, and research institutions nationwide to foster an evidence-based culture.
+            IAS operates dedicated specialized research schemes in collaboration with universities, medical colleges, and research institutions nationwide to foster an empirical, evidence-based culture.
           </p>
         </div>
 
-        {/* 2x2 Grid Architecture with Strict Overflow Safety */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {features.map((feature, i) => (
+        {/* 6 Schemes Card Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 lg:gap-6">
+          {schemesData.map((scheme) => (
             <div 
-              key={i} 
-              className="feature-card-main group relative bg-white border border-slate-200/90 p-7 md:p-9 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-blue-400 hover:shadow-lg rounded-2xl min-w-0"
+              key={scheme.id}
+              className="scheme-card-item group relative bg-white border border-slate-200/90 rounded-3xl p-5 md:p-6 flex flex-col items-center justify-between transition-all duration-300 hover:border-[#017DC3]/40 hover:shadow-xl hover:-translate-y-1.5 shadow-sm"
             >
-              <div className="space-y-5 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center flex-shrink-0 group-hover:bg-[#011753] group-hover:text-white transition-colors duration-300">
-                    {feature.icon}
-                  </div>
-                  <div className="flex flex-col items-end text-right min-w-0">
-                    <span className="font-jetbrains text-[9px] text-blue-700 font-bold uppercase tracking-wider truncate max-w-[150px]">
-                      {feature.tag}
-                    </span>
-                    <span className="font-jetbrains text-[8px] text-slate-400 uppercase tracking-widest truncate max-w-[150px]">
-                      {feature.scheme}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 min-w-0">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-snug group-hover:text-blue-700 transition-colors duration-300 break-words">
-                    {feature.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words font-normal">
-                    {feature.desc}
-                  </p>
-                </div>
-
-                {/* Key Points */}
-                <div className="pt-2 border-t border-slate-100 space-y-2">
-                  {feature.points.map((pt, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-700">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
-                      <span className="truncate">{pt}</span>
-                    </div>
-                  ))}
-                </div>
+              {/* Top Medallion Seal Image */}
+              <div className="w-full flex items-center justify-center pt-2 pb-4">
+                <img 
+                  src={scheme.image} 
+                  alt={scheme.title}
+                  className="w-28 h-28 sm:w-32 sm:h-32 object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                <Link 
-                  to="/courses"
-                  className="font-jetbrains text-xs font-bold text-[#011753] group-hover:text-blue-600 uppercase tracking-wider flex items-center gap-2"
+              {/* Title Content */}
+              <div className="w-full flex flex-col items-center text-center space-y-2 flex-grow justify-center py-2">
+                <h3 className="font-inter font-bold text-xs sm:text-[13px] text-slate-800 leading-snug group-hover:text-[#017DC3] transition-colors line-clamp-3">
+                  {scheme.title}
+                </h3>
+              </div>
+
+              {/* Read More Action Button */}
+              <div className="w-full pt-4 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setSelectedScheme(scheme)}
+                  className="w-full max-w-[140px] py-2 px-4 rounded-full bg-[#017DC3] hover:bg-[#006AA7] text-white font-bold text-[11px] uppercase tracking-wider shadow-sm hover:shadow-[0_4px_15px_rgba(1,125,195,0.35)] transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >
-                  Explore Programs
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </Link>
-                <span className="text-[10px] text-slate-400 font-jetbrains">IAS R&D Cell</span>
+                  Read More
+                </button>
               </div>
             </div>
           ))}
         </div>
 
       </div>
+
+      {/* Scheme Details Modal */}
+      {selectedScheme && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setSelectedScheme(null)}
+        >
+          <div 
+            className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 sm:p-8 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedScheme(null)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Close Modal"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            {/* Modal Body */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 pt-2">
+              <img 
+                src={selectedScheme.image} 
+                alt={selectedScheme.title} 
+                className="w-28 h-28 sm:w-36 sm:h-36 object-contain drop-shadow-lg flex-shrink-0"
+              />
+              <div className="space-y-3 min-w-0 text-center sm:text-left">
+                <span className="inline-block px-3 py-1 rounded-full bg-[#EBF5FA] text-[#017DC3] border border-[#017DC3]/20 text-[10px] font-bold uppercase tracking-wider font-jetbrains">
+                  {selectedScheme.category}
+                </span>
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
+                  {selectedScheme.title}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {selectedScheme.desc}
+                </p>
+              </div>
+            </div>
+
+            {/* Focus Research Areas */}
+            <div className="mt-6 pt-6 border-t border-slate-100 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 font-jetbrains">
+                Key Initiatives & Focus Areas
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {selectedScheme.points.map((pt, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-200/60">
+                    <div className="w-2 h-2 rounded-full bg-[#BFD419] shadow-[0_0_4px_#BFD419] mt-1 flex-shrink-0" />
+                    <span>{pt}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="mt-6 pt-4 flex flex-col sm:flex-row items-center justify-end gap-3 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setSelectedScheme(null)}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Close
+              </button>
+              <Link
+                to="/courses"
+                onClick={() => setSelectedScheme(null)}
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#017DC3] text-white hover:bg-[#006AA7] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+              >
+                <span>Explore Associated Courses</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   )
 }

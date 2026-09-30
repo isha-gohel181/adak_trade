@@ -124,9 +124,9 @@ const SolutionSection = ({ course, section }) => {
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
           {section?.points?.map((p, i) => (
-            <div key={i} className="sol-point group flex items-center gap-5 px-6 py-5 bg-accent/[0.2] border-l-2 border-accent shadow-[0_0_30px_rgba(139, 92, 246,0.08)] transition-all duration-500">
-              <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(139, 92, 246,0.5)]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
+            <div key={i} className="sol-point group flex items-center gap-5 px-6 py-5 bg-accent/[0.2] border-l-2 border-accent shadow-[0_0_30px_rgba(1, 125, 195,0.08)] transition-all duration-500">
+              <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(1, 125, 195,0.5)]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
               </div>
               <span className="font-montserrat text-sm text-accent font-normal tracking-wide uppercase">{sanitizeDisplay(p)}</span>
             </div>

@@ -217,7 +217,7 @@ const AboutUs = () => {
               key={i} 
               className="bg-white border border-slate-200/90 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col items-center justify-center text-center hover:shadow-md hover:border-blue-400 transition-all duration-300 min-w-0"
             >
-              <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#011753] mb-1 font-inter truncate w-full">
+              <span className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#017DC3] mb-1 font-inter truncate w-full">
                 {stat.value}
               </span>
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider font-jetbrains truncate w-full">
@@ -348,31 +348,31 @@ const AboutUs = () => {
         </div>
 
         {/* 6 Mission Pillars Grid with strict overflow safeguards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
           {missionPillars.map((pillar, i) => (
             <div 
               key={i} 
-              className="bg-white border border-slate-200/90 rounded-2xl p-6 md:p-7 flex flex-col justify-between hover:border-blue-400 hover:shadow-md transition-all duration-300 shadow-xs min-w-0"
+              className="bg-white border-[1.5px] border-slate-800 rounded-2xl md:rounded-3xl p-6 md:p-7 flex flex-col justify-between shadow-[4px_4px_0px_0px_#1E293B] hover:bg-[#EFF7CE] hover:shadow-[6px_6px_0px_0px_#1E293B] hover:-translate-y-1 hover:-translate-x-0.5 transition-all duration-300 min-w-0 group cursor-pointer"
             >
-              <div className="min-w-0">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center flex-shrink-0">
+              <div className="min-w-0 space-y-3.5">
+                <div className="flex items-center justify-between">
+                  <div className="w-11 h-11 rounded-xl bg-white border-[1.5px] border-slate-800 text-[#017DC3] flex items-center justify-center flex-shrink-0 group-hover:bg-slate-900 group-hover:text-[#BFD419] transition-colors duration-300 shadow-[1.5px_1.5px_0px_0px_#1E293B]">
                     {pillar.icon}
                   </div>
-                  <span className="font-jetbrains text-xs font-bold text-slate-400">
+                  <span className="font-jetbrains text-sm font-bold text-slate-800 group-hover:text-[#017DC3] transition-colors">
                     {pillar.num}
                   </span>
                 </div>
 
-                <div className="inline-block px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider mb-3">
+                <div className="inline-block px-2.5 py-0.5 rounded-lg bg-white border border-slate-700 text-slate-900 text-[10px] font-bold uppercase tracking-wider font-jetbrains shadow-[1px_1px_0px_0px_#1E293B]">
                   {pillar.badge}
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2.5 leading-snug">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#017DC3] transition-colors">
                   {pillar.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words font-normal">
                   {pillar.desc}
                 </p>
               </div>
@@ -409,7 +409,7 @@ const AboutUs = () => {
 
       {/* 6. CALL TO ACTION / ENGAGE WITH IAS */}
       <section className="scroll-section px-6 py-8 max-w-7xl mx-auto text-center">
-        <div className="rounded-3xl bg-[#011753] text-white p-8 md:p-14 flex flex-col items-center justify-center relative overflow-hidden shadow-xl">
+        <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-[#017DC3] to-[#004A75] text-white p-8 md:p-14 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl border border-[#017DC3]/30">
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-4 max-w-2xl leading-tight">
             Partner with IAS for Training, Research & Consultancy
@@ -422,13 +422,13 @@ const AboutUs = () => {
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link 
               to="/courses" 
-              className="px-6 py-3.5 rounded-full bg-white text-[#011753] font-bold uppercase tracking-wider text-xs hover:bg-slate-100 transition-all shadow-md hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 rounded-full bg-[#BFD419] text-slate-900 font-bold uppercase tracking-wider text-xs hover:bg-[#A8BC14] transition-all shadow-[0_4px_20px_rgba(191,212,25,0.35)] hover:scale-105 active:scale-95"
             >
               Explore Training Programs
             </Link>
             <Link 
               to="/contact" 
-              className="px-6 py-3.5 rounded-full bg-blue-600 border border-blue-500 text-white font-bold uppercase tracking-wider text-xs hover:bg-blue-500 transition-all shadow-md hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 rounded-full bg-white text-[#017DC3] font-bold uppercase tracking-wider text-xs hover:bg-[#EBF5FA] transition-all shadow-md hover:scale-105 active:scale-95"
             >
               Institutional Consultation
             </Link>

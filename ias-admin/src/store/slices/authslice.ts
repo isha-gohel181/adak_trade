@@ -13,7 +13,7 @@ import type {
 } from "../../types/auth";
 
 // API base URL
-const API_BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3000/";
+const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
 
 // Helper function to handle API errors
 const handleApiError = (error: unknown): string => {
@@ -132,7 +132,7 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
         localStorage.getItem("accessToken") || localStorage.getItem("token");
 
       if (token) {
-        await fetch(`${API_BASE_URL}api/v1/logout`, {
+        await fetch(`${API_BASE_URL}/logout`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -435,7 +435,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loginStatus = "failed";
-        state.error = action.payload || "Login failed";
+        state.error = (action.payload as string) || "Login failed";
         state.isAuthenticated = false;
         state.user = null;
         state.token = null;

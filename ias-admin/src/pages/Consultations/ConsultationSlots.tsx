@@ -186,10 +186,30 @@ const ConsultationSlots = () => {
     }
   };
 
+  // Filters for Existing Database Slots
+  const [slotSearchDate, setSlotSearchDate] = useState("");
+  const [slotStatusFilter, setSlotStatusFilter] = useState<"all" | "available" | "booked">("all");
+
+  const filteredExistingSlots = (slots || []).filter((slot) => {
+    const slotDateStr = new Date(slot.startTime).toISOString().split("T")[0];
+    const matchesDate = slotSearchDate ? slotDateStr === slotSearchDate : true;
+    const matchesStatus =
+      slotStatusFilter === "all"
+        ? true
+        : slotStatusFilter === "booked"
+        ? slot.isBooked
+        : !slot.isBooked;
+
+    return matchesDate && matchesStatus;
+  });
+
   return (
     <div className="p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Manage Consultation Slots</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Manage Consultation Slots</h1>
+          <p className="text-xs text-gray-500 mt-0.5">Configure 15-min free or 30-min paid consultation schedule</p>
+        </div>
         
         {/* Tab Navigation */}
         <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
@@ -197,7 +217,7 @@ const ConsultationSlots = () => {
             onClick={() => setActiveTab("single")}
             className={`px-4 py-2 rounded-md font-medium text-sm transition ${
               activeTab === "single" 
-                ? "bg-white dark:bg-gray-700 shadow text-primary" 
+                ? "bg-white dark:bg-gray-700 shadow text-primary font-bold" 
                 : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
             }`}
           >
@@ -207,7 +227,7 @@ const ConsultationSlots = () => {
             onClick={() => setActiveTab("bulk")}
             className={`px-4 py-2 rounded-md font-medium text-sm transition ${
               activeTab === "bulk" 
-                ? "bg-white dark:bg-gray-700 shadow text-primary" 
+                ? "bg-white dark:bg-gray-700 shadow text-primary font-bold" 
                 : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
             }`}
           >
@@ -430,7 +450,6 @@ const ConsultationSlots = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 max-h-96 overflow-y-auto p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
                 {previewSlots.map((slot) => {
                   const sDate = new Date(slot.startTime);
-                  const eDate = new Date(slot.endTime);
                   return (
                     <div key={slot._tempId} className="p-3 bg-white dark:bg-gray-800 border rounded shadow-sm text-center relative group">
                       <button 
@@ -460,15 +479,73 @@ const ConsultationSlots = () => {
 
       {/* EXISTING SLOTS GRID */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-        <div className="flex justify-between items-center p-6 border-b border-stroke dark:border-strokedark">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Existing Database Slots</h2>
-          <span className="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full">Total: {slots.length}</span>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-5 sm:p-6 border-b border-stroke dark:border-strokedark gap-4">
+          <div className="flex items-center gap-3">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Existing Database Slots</h2>
+            <span className="text-xs bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 py-1 px-3 rounded-full font-bold">
+              Total: {slots.length} (Showing {filteredExistingSlots.length})
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+            <input
+              type="date"
+              value={slotSearchDate}
+              onChange={(e) => setSlotSearchDate(e.target.value)}
+              className="rounded border border-stroke dark:border-strokedark bg-transparent py-1.5 px-3 text-xs outline-none focus:border-primary"
+              title="Filter slots by date"
+            />
+            {slotSearchDate && (
+              <button
+                onClick={() => setSlotSearchDate("")}
+                className="text-xs text-red-500 hover:underline"
+              >
+                Clear Date
+              </button>
+            )}
+
+            <div className="flex bg-gray-100 dark:bg-gray-700 p-0.5 rounded-lg text-xs">
+              <button
+                onClick={() => setSlotStatusFilter("all")}
+                className={`px-2.5 py-1 rounded ${
+                  slotStatusFilter === "all" ? "bg-white dark:bg-gray-800 font-bold shadow-2xs" : "text-gray-500"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setSlotStatusFilter("available")}
+                className={`px-2.5 py-1 rounded ${
+                  slotStatusFilter === "available" ? "bg-white dark:bg-gray-800 text-emerald-600 font-bold shadow-2xs" : "text-gray-500"
+                }`}
+              >
+                Available
+              </button>
+              <button
+                onClick={() => setSlotStatusFilter("booked")}
+                className={`px-2.5 py-1 rounded ${
+                  slotStatusFilter === "booked" ? "bg-white dark:bg-gray-800 text-rose-600 font-bold shadow-2xs" : "text-gray-500"
+                }`}
+              >
+                Booked
+              </button>
+            </div>
+
+            <button
+              onClick={() => dispatch(fetchAdminSlots())}
+              disabled={loading}
+              className="p-1.5 rounded border border-stroke hover:bg-gray-50 dark:border-strokedark text-xs text-gray-600 dark:text-gray-300"
+              title="Refresh Slots"
+            >
+              🔄
+            </button>
+          </div>
         </div>
         
         {error && <div className="p-6 text-red-500">{error}</div>}
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6 max-h-[800px] overflow-y-auto">
-          {slots.map((slot) => {
+          {filteredExistingSlots.map((slot) => {
             const startDate = new Date(slot.startTime);
             const endDate = new Date(slot.endTime);
             const isBooked = slot.isBooked;
@@ -483,7 +560,7 @@ const ConsultationSlots = () => {
                 }`}
               >
                 <div className="text-sm font-bold text-gray-800 dark:text-white mb-2 border-b pb-1">
-                  {startDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {startDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                 </div>
                 <div className="text-sm text-gray-800 dark:text-gray-200 font-medium">
                   {startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} -{" "}
@@ -509,8 +586,12 @@ const ConsultationSlots = () => {
               </div>
             );
           })}
-          {slots.length === 0 && !loading && (
-            <div className="col-span-full text-center py-10 text-gray-500">No slots available. Start by creating some above!</div>
+          {filteredExistingSlots.length === 0 && !loading && (
+            <div className="col-span-full text-center py-10 text-gray-500">
+              {slotSearchDate || slotStatusFilter !== "all"
+                ? "No slots match the selected date or filter."
+                : "No slots available. Start by creating some above!"}
+            </div>
           )}
         </div>
       </div>

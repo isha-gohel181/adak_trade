@@ -88,7 +88,7 @@ const MySubmissions = () => {
 
    const getStatusColor = (status) => {
       switch (status?.toLowerCase()) {
-         case 'submitted': return 'bg-[#8B5CF6] text-dark border-[#8B5CF6]';
+         case 'submitted': return 'bg-[#017DC3] text-dark border-[#017DC3]';
          case 'graded': return 'bg-blue-500 text-white border-blue-500';
          case 'pending': return 'bg-orange-500 text-white border-orange-500';
          default: return 'bg-white/10 text-normal border-white/20';

@@ -1,18 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authorizedFetch } from '../../utils/apiClient';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+// Helper to get local date string YYYY-MM-DD
+const getLocalDateString = (d = new Date()) => {
+  const dateObj = typeof d === 'string' || typeof d === 'number' ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) return new Date().toISOString().split('T')[0];
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
 
-// ── Fetch Available Slots ───────────────────────────────────────────────────
+// ── Fetch Available Slots (Filtered by date or future) ───────────────────────
 export const fetchAvailableSlots = createAsyncThunk(
   'consultation/fetchAvailableSlots',
   async ({ date } = {}, { rejectWithValue }) => {
     try {
-      const url = date 
-        ? `${BASE_URL}/consultations/slots/available?date=${encodeURIComponent(date)}`
-        : `${BASE_URL}/consultations/slots/available`;
+      const endpoint = date 
+        ? `/consultations/slots/available?date=${encodeURIComponent(date)}`
+        : '/consultations/slots/available';
 
-      const res = await authorizedFetch(url, { method: 'GET' });
+      const res = await authorizedFetch(endpoint, { method: 'GET' });
       const data = await res.json();
 
       if (!res.ok) {
@@ -25,12 +33,30 @@ export const fetchAvailableSlots = createAsyncThunk(
   }
 );
 
+// ── Fetch All Upcoming Slots for Calendar Indicator Badges ──────────────────
+export const fetchAllUpcomingSlots = createAsyncThunk(
+  'consultation/fetchAllUpcomingSlots',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authorizedFetch('/consultations/slots/available', { method: 'GET' });
+      const data = await res.json();
+
+      if (!res.ok) {
+        return rejectWithValue(data?.message || 'Failed to fetch all slots');
+      }
+      return data?.data || [];
+    } catch (err) {
+      return rejectWithValue(err.message || 'Network error fetching all slots');
+    }
+  }
+);
+
 // ── Create Order for Paid Consultation ───────────────────────────────────────
 export const createConsultationOrder = createAsyncThunk(
   'consultation/createConsultationOrder',
   async ({ slotId }, { rejectWithValue }) => {
     try {
-      const res = await authorizedFetch(`${BASE_URL}/consultations/create-order`, {
+      const res = await authorizedFetch('/consultations/create-order', {
         method: 'POST',
         body: JSON.stringify({ slotId }),
       });
@@ -51,7 +77,7 @@ export const bookConsultation = createAsyncThunk(
   'consultation/bookConsultation',
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await authorizedFetch(`${BASE_URL}/consultations/book`, {
+      const res = await authorizedFetch('/consultations/book', {
         method: 'POST',
         body: formData, // FormData handles multipart/form-data directly
       });
@@ -69,9 +95,11 @@ export const bookConsultation = createAsyncThunk(
 
 const initialState = {
   slots: [],
-  selectedDate: new Date().toISOString().split('T')[0],
+  allUpcomingSlots: [],
+  selectedDate: getLocalDateString(),
   selectedSlot: null,
   loading: false,
+  allSlotsLoading: false,
   bookingLoading: false,
   error: null,
   bookingSuccess: false,
@@ -93,6 +121,7 @@ const consultationSlice = createSlice({
       state.lastBooking = null;
       state.error = null;
       state.bookingLoading = false;
+      state.selectedSlot = null;
     },
     clearError: (state) => {
       state.error = null;
@@ -100,7 +129,7 @@ const consultationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch Slots
+      // Fetch Date Slots
       .addCase(fetchAvailableSlots.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -113,6 +142,19 @@ const consultationSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // Fetch All Upcoming Slots
+      .addCase(fetchAllUpcomingSlots.pending, (state) => {
+        state.allSlotsLoading = true;
+      })
+      .addCase(fetchAllUpcomingSlots.fulfilled, (state, action) => {
+        state.allSlotsLoading = false;
+        state.allUpcomingSlots = action.payload || [];
+      })
+      .addCase(fetchAllUpcomingSlots.rejected, (state) => {
+        state.allSlotsLoading = false;
+      })
+
       // Book Consultation
       .addCase(bookConsultation.pending, (state) => {
         state.bookingLoading = true;
@@ -126,6 +168,9 @@ const consultationSlice = createSlice({
         // Mark slot as booked locally
         if (state.selectedSlot) {
           state.slots = state.slots.map((s) =>
+            s._id === state.selectedSlot._id ? { ...s, isBooked: true } : s
+          );
+          state.allUpcomingSlots = state.allUpcomingSlots.map((s) =>
             s._id === state.selectedSlot._id ? { ...s, isBooked: true } : s
           );
         }

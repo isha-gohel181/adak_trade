@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = (import.meta.env.VITE_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
 
 // ── Helper: persist auth data ────────────────────────────────────────────────
 const persistAuth = (response) => {

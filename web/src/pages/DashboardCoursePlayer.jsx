@@ -372,7 +372,7 @@ const DashboardCoursePlayer = () => {
                            </h1>
                            <div className="flex items-center gap-6 pt-2">
                                <div className="flex items-center gap-2">
-                                   <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(139, 92, 246,0.5)]" />
+                                   <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(1, 125, 195,0.5)]" />
                                    <span className="font-jetbrains text-[9px] text-accent font-black uppercase tracking-widest leading-none">
                                        {selectedLesson ? `Viewing: ${selectedLesson.title}` : 'Session Protocol Active'}
                                    </span>

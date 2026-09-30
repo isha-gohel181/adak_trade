@@ -140,6 +140,10 @@ router.use("/zoom", zoomRouter); // Zoom routes
 router.use("/admin-activity-logs", adminActivityLogRouter);
 router.use("/consultations", consultationRouter);
 
+// Frontend Activity Logger endpoints
+router.post("/activity-logs", (req, res) => res.status(200).json({ success: true }));
+router.post("/activity-logs/beacon", (req, res) => res.status(200).json({ success: true }));
+
 // Image upload route for EditorJS (requires authentication)
 const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {

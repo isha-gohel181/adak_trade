@@ -85,10 +85,10 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-[#050814] text-white pt-16 md:pt-20 pb-10 px-6 md:px-12 lg:px-20 overflow-hidden flex flex-col justify-between border-t border-slate-800/80"
+      className="relative w-full bg-[#F3F9D2] text-slate-900 pt-16 md:pt-20 pb-10 px-6 md:px-12 lg:px-20 overflow-hidden flex flex-col justify-between border-t border-[#BFD419]/40"
     >
-      {/* Top Subtle Blue/Amber Accent Gradient Bar */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-75" />
+      {/* Top Accent Divider */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#BFD419] to-transparent" />
 
       {/* Main Footer Content Grid */}
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 relative z-10 pb-14">
@@ -99,20 +99,25 @@ const Footer = () => {
             <img
               src="/logo/iasdcs-logo.png"
               alt="IAS DCS Logo"
-              className="h-12 md:h-14 w-auto object-contain rounded-xl shadow-md group-hover:scale-105 transition-transform duration-300 bg-white/5 p-1 border border-white/10"
+              className="h-11 md:h-12 w-auto object-contain rounded-xl shadow-xs group-hover:scale-105 transition-transform duration-300 bg-white p-1 border border-slate-200"
             />
             <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-bold tracking-tight text-white font-inter">IAS DCS</span>
-              <span className="text-[10px] md:text-[11px] font-bold text-blue-400 tracking-[0.18em] uppercase">Institute of Applied Statistics</span>
+              <span className="text-xl md:text-2xl font-black tracking-tight text-slate-900 font-inter">IAS DCS</span>
+              <span className="text-[10px] md:text-[11px] font-bold text-[#017DC3] tracking-[0.18em] uppercase">Institute of Applied Statistics</span>
             </div>
           </Link>
 
-          <p className="text-sm text-slate-400 leading-relaxed max-w-sm mb-6 font-normal">
-            Empowering learners to master Applied Statistics, Data Science, and Research Analytics with practical fluency, engaging interactive modules, and personalized mentorship.
+          <p className="text-sm text-slate-700 leading-relaxed max-w-sm mb-4 font-normal">
+            Empowering scholars and institutions to master Applied Statistics, Data Science, and Research Analytics with practical fluency and expert mentorship.
           </p>
 
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#BFD419]/50 shadow-xs mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#BFD419] shadow-[0_0_6px_#BFD419] animate-pulse" />
+            <span className="text-[10px] text-slate-800 font-jetbrains uppercase tracking-wider font-bold">DPIIT Recognized • ISO Certified</span>
+          </div>
+
           <div className="w-full">
-            <p className="text-[11px] font-bold tracking-[0.2em] text-slate-400 uppercase font-jetbrains mb-3">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-slate-600 uppercase font-jetbrains mb-3">
               CONNECT WITH US
             </p>
             <div className="flex items-center gap-3">
@@ -122,7 +127,7 @@ const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-slate-900/90 border border-slate-800/90 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-slate-800 transition-all duration-300 shadow-sm hover:scale-110 active:scale-95"
+                  className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-[#017DC3] hover:border-[#017DC3]/60 hover:bg-[#EBF5FA] transition-all duration-300 shadow-xs hover:scale-110 active:scale-95"
                   aria-label={social.name}
                 >
                   <svg
@@ -153,7 +158,7 @@ const Footer = () => {
 
         {/* Column 2: EXPLORE */}
         <div className="footer-reveal lg:col-span-2 lg:ml-auto flex flex-col items-start text-left">
-          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-200 mb-4 font-jetbrains">
+          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-900 mb-4 font-jetbrains">
             EXPLORE
           </h3>
           <ul className="space-y-2.5">
@@ -161,7 +166,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-400 hover:text-white transition-colors duration-200 block capitalize"
+                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block capitalize font-medium"
                 >
                   {link.name}
                 </Link>
@@ -172,7 +177,7 @@ const Footer = () => {
 
         {/* Column 3: SERVICES */}
         <div className="footer-reveal lg:col-span-3 flex flex-col items-start text-left">
-          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-200 mb-4 font-jetbrains">
+          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-900 mb-4 font-jetbrains">
             SERVICES
           </h3>
           <ul className="space-y-2.5">
@@ -180,7 +185,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-400 hover:text-white transition-colors duration-200 block"
+                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block font-medium"
                 >
                   {link.name}
                 </Link>
@@ -191,7 +196,7 @@ const Footer = () => {
 
         {/* Column 4: SUPPORT & COMPANY */}
         <div className="footer-reveal lg:col-span-3 flex flex-col items-start text-left">
-          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-200 mb-4 font-jetbrains">
+          <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-slate-900 mb-4 font-jetbrains">
             SUPPORT & COMPANY
           </h3>
           <ul className="space-y-2.5">
@@ -199,7 +204,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-400 hover:text-white transition-colors duration-200 block"
+                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block font-medium"
                 >
                   {link.name}
                 </Link>
@@ -211,40 +216,34 @@ const Footer = () => {
       </div>
 
       {/* Bottom Copyright & Legal Links Bar */}
-      <div className="footer-reveal max-w-7xl mx-auto w-full pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10 text-xs text-slate-400">
+      <div className="footer-reveal max-w-7xl mx-auto w-full pt-8 border-t border-[#BFD419]/40 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10 text-xs text-slate-600">
 
         {/* Copyright & Slogan */}
         <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
-          <p className="font-jetbrains font-medium text-slate-400">
+          <p className="font-jetbrains font-bold text-slate-700">
             © 2026 IAS DCS (Institute of Applied Statistics). All rights reserved.
           </p>
-          <span className="hidden md:inline text-slate-600">•</span>
-          <p className="font-jetbrains text-slate-500 italic">
+          <span className="hidden md:inline text-slate-400">•</span>
+          <p className="font-jetbrains text-slate-600 italic">
             Where Ambition Meets Execution
           </p>
         </div>
 
         {/* Legal Links */}
         <div className="flex items-center gap-4 font-jetbrains text-xs">
-          <Link to="/privacy-policy" className="hover:text-blue-400 transition-colors">
+          <Link to="/privacy-policy" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
             Privacy Policy
           </Link>
-          <span className="text-slate-700">•</span>
-          <Link to="/terms-conditions" className="hover:text-blue-400 transition-colors">
+          <span className="text-slate-400">•</span>
+          <Link to="/terms-conditions" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
             Terms & Conditions
           </Link>
-          <span className="text-slate-700">•</span>
-          <Link to="/refund-policy" className="hover:text-blue-400 transition-colors">
+          <span className="text-slate-400">•</span>
+          <Link to="/refund-policy" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
             Refund Policy
           </Link>
         </div>
 
-      </div>
-
-      {/* Background Radial Glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-25">
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-blue-600/10 blur-[130px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[200px] bg-indigo-500/10 blur-[120px] rounded-full" />
       </div>
     </footer>
   )

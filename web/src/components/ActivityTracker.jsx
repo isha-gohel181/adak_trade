@@ -42,20 +42,15 @@ export const TrackerProvider = ({ children }) => {
     eventQueue.current = []; // Clear queue immediately to prevent race conditions
 
     try {
-      const response = await fetch(`${BASE}/activity-logs`, {
+      await fetch(`${BASE}/activity-logs`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ logs: batch }),
       });
-      if (!response.ok) {
-        console.warn('[ActivityTracker] Server rejected logs with status:', response.status);
-      }
     } catch (error) {
-      console.error('[ActivityTracker] Error sending logs:', error);
-      // Re-queue logs at the beginning of the queue if send failed
-      eventQueue.current = [...batch, ...eventQueue.current];
+      // Silently discard to prevent network choking and infinite loops
     }
   };
 

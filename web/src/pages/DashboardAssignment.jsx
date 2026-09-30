@@ -191,7 +191,7 @@ const DashboardAssignment = () => {
                                 <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                                     <div className="space-y-8">
                                         <div className="flex items-center gap-2">
-                                            <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(139, 92, 246,0.5)]" />
+                                            <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(1, 125, 195,0.5)]" />
                                             <h3 className="font-jetbrains text-[12px] text-accent uppercase tracking-widest font-black">Assignment Instructions</h3>
                                         </div>
                                         <div className="p-8 bg-white/[0.02] border border-white/5 font-newsreader italic text-md md:text-md text-normal/70 leading-relaxed space-y-6 break-all">
@@ -205,7 +205,7 @@ const DashboardAssignment = () => {
                                     {(assignment.documentFile || assignment.attachmentFile) && (
                                         <div className="space-y-8">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(139, 92, 246,0.5)]" />
+                                                <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_rgba(1, 125, 195,0.5)]" />
                                                 <h3 className="font-jetbrains text-[12px] text-accent uppercase tracking-widest font-black">Resources & Materials</h3>
                                             </div>
                                             <div className="space-y-4">
@@ -425,7 +425,7 @@ const DashboardAssignment = () => {
 
                                 <button 
                                     onClick={() => setActiveTab('submission')}
-                                    className="w-full py-5 bg-accent text-dark font-jetbrains font-black uppercase tracking-[0.2em] text-[11px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(139, 92, 246,0.15)]"
+                                    className="w-full py-5 bg-accent text-dark font-jetbrains font-black uppercase tracking-[0.2em] text-[11px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(1, 125, 195,0.15)]"
                                 >
                                     Initiate Submission
                                 </button>

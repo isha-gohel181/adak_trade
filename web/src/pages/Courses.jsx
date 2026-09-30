@@ -138,15 +138,10 @@ const Courses = () => {
     window.scrollTo(0, 0)
 
     const ctx = gsap.context(() => {
-      // 1. Hero Entrance
-      gsap.from('.courses-hero > *', {
-        y: 60, opacity: 0, filter: 'blur(15px)', stagger: 0.15, duration: 1.5, ease: 'expo.out'
-      })
-
-      // 2. Filter Row Entrance
+      // 1. Filter Row Entrance
       gsap.fromTo('.course-filter-reveal',
-        { y: 30, opacity: 0, filter: 'blur(10px)' },
-        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1, ease: 'power3.out', stagger: 0.08, delay: 0.2 }
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', stagger: 0.06 }
       )
 
       // 3. Grid Entrance (ScrollTrigger)
@@ -179,26 +174,20 @@ const Courses = () => {
       {eventList && eventList.length > 0 && <EventHero events={eventList} />}
 
       {/* 2. Page Content Wrapper */}
-      <div className="px-4 md:px-12">
-        <div className="courses-hero max-w-7xl mx-auto mb-0 pt-24">
-          <h1 className="font-newsreader text-[clamp(4rem,10vw,8rem)] leading-tight font-extralight">
-            {t('ourCourses')}
-          </h1>
-        </div>
-
-        {/* 2. Filter Row Header (Replicating Screenshot Layout) */}
-        <div className="max-w-7xl mx-auto mb-12">
+      <div className={`px-4 md:px-12 ${eventList && eventList.length > 0 ? 'pt-8 md:pt-12' : 'pt-28 md:pt-32'}`}>
+        {/* Filter Row Header */}
+        <div className="max-w-7xl mx-auto mb-10">
           {/* Desktop Header Grid */}
-          <div className="hidden md:grid grid-cols-12 items-end gap-12 w-full pb-8 border-b border-white/5">
+          <div className="hidden md:grid grid-cols-12 items-center gap-8 w-full pb-6 border-b border-slate-200/80">
             {/* Section 1: Filters (Cols 1-8) */}
-            <div className="col-span-8 flex items-center gap-3">
+            <div className="col-span-8 flex flex-wrap items-center gap-3">
               {['ALL COURSES', 'BUSINESS', 'DIGITAL MARKETING'].map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`course-filter-reveal opacity-0 px-6 py-3 font-montserrat text-[11px] font-bold tracking-[0.2em] border transition-all duration-500 uppercase ${activeFilter === filter
-                    ? 'bg-accent text-dark border-accent'
-                    : 'text-description border-white/10 hover:border-white/30 hover:text-normal'
+                  className={`course-filter-reveal opacity-0 px-6 py-2.5 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${activeFilter === filter
+                    ? 'bg-accent text-white border-accent shadow-sm shadow-[#017DC3]/25'
+                    : 'text-slate-600 bg-white border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                 >
                   <RollingText text={filter} />
@@ -207,16 +196,16 @@ const Courses = () => {
             </div>
 
             {/* Section 2: Info & More (Cols 9-12) */}
-            <div className="col-span-4 flex flex-col items-end gap-10 course-filter-reveal opacity-0">
-               <span className="font-montserrat text-[11px] text-description/80 uppercase tracking-[0.15em] font-bold">
+            <div className="col-span-4 flex items-center justify-end gap-6 course-filter-reveal opacity-0">
+               <span className="font-montserrat text-[11px] text-slate-500 uppercase tracking-[0.15em] font-bold">
                  {filteredCourses.length} COURSE{filteredCourses.length === 1 ? '' : 'S'} AVAILABLE
                </span>
 
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className={`flex items-center gap-3 font-montserrat text-[11px] text-description font-bold tracking-[0.2em] transition-colors group/filters ${showAdvanced ? 'text-accent' : 'hover:text-accent'}`}
+                className={`flex items-center gap-2.5 px-4 py-2 rounded-full border border-slate-200 bg-white font-montserrat text-[11px] font-bold tracking-[0.15em] transition-all duration-300 group/filters ${showAdvanced ? 'text-accent border-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:border-accent/50'}`}
               >
-                <svg width="18" height="12" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-500 ${showAdvanced ? 'rotate-180 scale-110' : 'group-hover/filters:scale-110'}`}>
+                <svg width="16" height="12" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-300 ${showAdvanced ? 'rotate-180 scale-105 text-accent' : 'group-hover/filters:scale-105'}`}>
                   <path d="M4 4H20M7 8H17M10 12H14" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                 </svg>
                 <RollingText text={showAdvanced ? "HIDE FILTERS" : "MORE FILTERS"} />
@@ -227,28 +216,28 @@ const Courses = () => {
           {/* Collapsible Advanced Filters Drawer */}
           <div
             ref={advancedRef}
-            className={`overflow-hidden transition-all duration-700 ease-memo ${showAdvanced ? 'max-h-[600px] opacity-100 mt-12 mb-12' : 'max-h-0 opacity-0'}`}
+            className={`overflow-hidden transition-all duration-500 ease-in-out ${showAdvanced ? 'max-h-[600px] opacity-100 mt-8 mb-8' : 'max-h-0 opacity-0'}`}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 py-12 border-t border-white/5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 py-8 px-6 bg-white rounded-3xl border border-slate-200/80 shadow-sm">
               {/* 1. Difficulty Section */}
-              <div className="flex flex-col gap-8">
-                <div className="flex items-center gap-4">
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center gap-3">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-accent">
                     <path d="M13 18L13 6M13 6L11 9M13 6L15 9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M5 18L5 12M5 12L3 15M5 12L7 15" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M21 18L21 2M21 2L19 5M21 2L23 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <h3 className="font-newsreader text-2xl italic text-normal">Difficulty</h3>
+                  <h3 className="font-newsreader text-xl font-bold text-slate-900">Difficulty</h3>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2.5">
                   {['All', 'Beginner', 'Intermediate', 'Advanced'].map((level) => (
                     <button
                       key={level}
                       onClick={() => setSelectedDifficulty(level)}
-                      className={`px-8 py-4 font-montserrat text-[11px] font-bold tracking-[0.2em] border transition-all duration-500 uppercase ${selectedDifficulty === level
-                        ? 'bg-accent text-dark border-accent'
-                        : 'text-description border-white/10 hover:border-white/20 hover:text-normal'
+                      className={`px-5 py-2 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${selectedDifficulty === level
+                        ? 'bg-accent text-white border-accent shadow-sm'
+                        : 'text-slate-600 bg-slate-50 border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-white'
                         }`}
                     >
                       {level}
@@ -258,28 +247,28 @@ const Courses = () => {
               </div>
 
               {/* 2. Duration Section */}
-              <div className="flex flex-col gap-8">
-                <div className="flex items-center gap-4">
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center gap-3">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-accent">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.5" />
                     <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <h3 className="font-newsreader text-2xl italic text-normal">Duration</h3>
+                  <h3 className="font-newsreader text-xl font-bold text-slate-900">Duration</h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                   {['All hours', '0-2 hours', '2-5 hours', '5-10 hours', '10-20 hours', '20+ hours'].map((range) => (
                     <div
                       key={range}
                       onClick={() => setSelectedDuration(range)}
-                      className="flex items-center gap-4 cursor-pointer group/dur"
+                      className="flex items-center gap-3 cursor-pointer group/dur select-none"
                     >
-                      <div className={`w-4 h-4 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${selectedDuration === range ? 'border-accent bg-accent/10' : 'border-white/10 group-hover/dur:border-white/30'
+                      <div className={`w-4 h-4 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${selectedDuration === range ? 'border-accent bg-accent/10' : 'border-slate-300 group-hover/dur:border-accent'
                         }`}>
                         <div className={`w-1.5 h-1.5 rounded-full bg-accent transition-transform duration-300 ${selectedDuration === range ? 'scale-100' : 'scale-0'
                           }`} />
                       </div>
-                      <span className={`font-montserrat text-[11px] tracking-[0.1em] transition-colors ${selectedDuration === range ? 'text-normal font-bold' : 'text-description group-hover/dur:text-normal'
+                      <span className={`font-montserrat text-[11px] tracking-[0.05em] transition-colors ${selectedDuration === range ? 'text-slate-900 font-bold' : 'text-slate-600 group-hover/dur:text-slate-900'
                         }`}>
                         {range}
                       </span>
@@ -291,16 +280,16 @@ const Courses = () => {
           </div>
 
           {/* Mobile Layout */}
-          <div className="md:hidden flex flex-col gap-8">
+          <div className="md:hidden flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <span className="font-jetbrains text-[8px] text-description/80 uppercase tracking-[0.2em] font-bold">
+              <span className="font-jetbrains text-[9px] text-slate-500 uppercase tracking-[0.15em] font-bold">
                 {filteredCourses.length} COURSE{filteredCourses.length === 1 ? '' : 'S'} AVAILABLE
               </span>
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className={`flex items-center gap-2 font-jetbrains text-[9px] font-bold tracking-[0.2em] transition-colors ${showAdvanced ? 'text-accent' : 'text-description hover:text-accent'}`}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white font-jetbrains text-[9px] font-bold tracking-[0.15em] transition-colors ${showAdvanced ? 'text-accent border-accent' : 'text-slate-600'}`}
               >
-                <svg width="14" height="10" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-500 ${showAdvanced ? 'rotate-180 scale-110' : ''}`}>
+                <svg width="12" height="8" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-300 ${showAdvanced ? 'rotate-180 scale-110' : ''}`}>
                   <path d="M4 4H20M7 8H17M10 12H14" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                 </svg>
                 {showAdvanced ? "CLOSE" : "FILTERS"}
@@ -310,20 +299,20 @@ const Courses = () => {
             <div className="relative group">
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="w-full flex items-center justify-between px-6 py-5 bg-white/5 border border-white/10 font-montserrat text-[11px] font-bold tracking-[0.2em]"
+                className="w-full flex items-center justify-between px-5 py-3.5 bg-white border border-slate-200 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] shadow-sm"
               >
                 <span>CATEGORY: {activeFilter}</span>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className={isFilterOpen ? 'rotate-180' : ''} stroke="currentColor">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={`transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} stroke="currentColor">
                   <path d="M6 9l6 6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
               {isFilterOpen && (
-                <div className="absolute top-full left-0 w-full z-50 bg-[#0A0A0A] border-x border-b border-white/10">
+                <div className="absolute top-full left-0 w-full z-50 bg-white border border-slate-200 rounded-2xl shadow-xl mt-2 overflow-hidden">
                   {['ALL COURSES', 'BUSINESS', 'DIGITAL MARKETING'].map((filter) => (
                     <button
                       key={filter}
                       onClick={() => { setActiveFilter(filter); setIsFilterOpen(false); }}
-                      className="w-full px-8 py-5 text-left font-montserrat text-[11px] border-b border-white/5 text-description hover:text-accent"
+                      className={`w-full px-6 py-3.5 text-left font-montserrat text-[11px] font-bold border-b border-slate-100 last:border-b-0 transition-colors ${activeFilter === filter ? 'text-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:bg-slate-50'}`}
                     >
                       {filter}
                     </button>
@@ -361,7 +350,7 @@ const Courses = () => {
         </div>
 
         {/* 4. Upcoming Events Section */}
-        <div className="events-section max-w-7xl mx-auto pt-24 border-t border-white/5">
+        <div className="events-section max-w-7xl mx-auto pt-24 border-t border-slate-200/80">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <h2 className="font-newsreader text-5xl md:text-6xl italic text-normal mb-4">Upcoming Events</h2>

@@ -191,7 +191,7 @@ const DashboardPersonality = () => {
          <div className="max-w-[1600px] mx-auto relative z-10">
             {/* 1. Profile Summary Header */}
             <div className="flex flex-col md:flex-row items-center md:items-start gap-12 lg:gap-20 mb-24 result-reveal opacity-0 invisible">
-                <div className="w-48 h-48 bg-accent rounded-[3rem] flex items-center justify-center shadow-[0_0_80px_rgba(139, 92, 246,0.3)] shrink-0 group hover:scale-105 transition-transform duration-500">
+                <div className="w-48 h-48 bg-accent rounded-[3rem] flex items-center justify-center shadow-[0_0_80px_rgba(1, 125, 195,0.3)] shrink-0 group hover:scale-105 transition-transform duration-500">
                    <div className="text-center">
                      <span className="block text-dark font-jetbrains text-5xl font-bold tracking-tighter leading-none mb-1">{displayData.type}</span>
                      <span className="block text-dark/60 font-jetbrains text-[9px] font-bold tracking-[0.2em] uppercase">Core Frequency</span>
@@ -220,7 +220,7 @@ const DashboardPersonality = () => {
                 {/* Left: Traits */}
                 <div className="lg:col-span-5 space-y-10 result-reveal opacity-0 invisible">
                    <div className="flex items-center gap-6 mb-12">
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#8B5CF6]" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#017DC3]" />
                       <h3 className="font-jetbrains text-[9px] font-bold tracking-[0.5em] text-normal uppercase">Biological Calibration</h3>
                    </div>
                    {displayData.traits.map((trait, i) => (
@@ -231,7 +231,7 @@ const DashboardPersonality = () => {
                         </div>
                         <div className="h-[1.5px] bg-white/5 rounded-full relative overflow-hidden">
                             <div 
-                              className="absolute h-full bg-accent shadow-[0_0_20px_#8B5CF6] transition-all duration-[2000ms] ease-out"
+                              className="absolute h-full bg-accent shadow-[0_0_20px_#017DC3] transition-all duration-[2000ms] ease-out"
                               style={{ width: `${trait.score}%`, left: trait.activeSide === 'right' ? 'auto' : 0, right: trait.activeSide === 'right' ? 0 : 'auto' }}
                             />
                         </div>
@@ -255,7 +255,7 @@ const DashboardPersonality = () => {
                             >
                                 {tabKey}
                                 {activeTab === tabKey && (
-                                    <div className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent shadow-[0_0_10px_#8B5CF6]" />
+                                    <div className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent shadow-[0_0_10px_#017DC3]" />
                                 )}
                             </button>
                         ))}

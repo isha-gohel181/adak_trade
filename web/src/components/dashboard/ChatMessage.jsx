@@ -98,7 +98,7 @@ const CustomAudioPlayer = ({ src }) => {
                         onChange={handleSeek}
                         className="w-full accent-accent bg-white/10 h-1 rounded-lg appearance-none cursor-pointer outline-none"
                         style={{
-                            background: `linear-gradient(to right, #8B5CF6 0%, #8B5CF6 ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.1) ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.1) 100%)`
+                            background: `linear-gradient(to right, #017DC3 0%, #017DC3 ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.1) ${(currentTime / (duration || 100)) * 100}%, rgba(255,255,255,0.1) 100%)`
                         }}
                     />
                 </div>

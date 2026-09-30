@@ -106,7 +106,7 @@ const GuaranteeSection = () => {
                    <div className="absolute inset-8 border border-white/5 rounded-full" />
                    
                    <div className="text-center space-y-2 relative z-10">
-                      <span className="font-newsreader italic text-7xl md:text-8xl text-accent drop-shadow-[0_0_20px_rgba(139, 92, 246,0.3)]">100</span>
+                      <span className="font-newsreader italic text-7xl md:text-8xl text-accent drop-shadow-[0_0_20px_rgba(1, 125, 195,0.3)]">100</span>
                       <p className="font-montserrat text-[14px] tracking-[0.8em] text-description uppercase font-black">Guarantee</p>
                    </div>
                 </div>

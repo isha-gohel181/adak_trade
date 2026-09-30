@@ -86,7 +86,7 @@ const LessonTrackItem = ({ title, progress, isActive, onPlay, unlocked = true, t
                             </div>
                         <div className="h-1.5 bg-white/[0.05] relative overflow-hidden">
                                 <div 
-                                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-accent to-accent/60 transition-all duration-1000 ease-out-quint shadow-[0_0_15px_rgba(139, 92, 246,0.4)]" 
+                                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-accent to-accent/60 transition-all duration-1000 ease-out-quint shadow-[0_0_15px_rgba(1, 125, 195,0.4)]" 
                                     style={{ width: `${Math.min(100, Math.max(0, Number(progress) || 0))}%` }} 
                                 />
                         </div>
@@ -98,7 +98,7 @@ const LessonTrackItem = ({ title, progress, isActive, onPlay, unlocked = true, t
                 {unlocked ? (
                     <button 
                         onClick={onPlay}
-                        className="relative bg-accent text-dark px-10 py-3.5 font-montserrat text-[14px] font-black uppercase tracking-[0.4em] hover:scale-[1.05] active:scale-95 transition-all shadow-[0_0_20px_rgba(139, 92, 246,0.1)] group/btn overflow-hidden"
+                        className="relative bg-accent text-dark px-10 py-3.5 font-montserrat text-[14px] font-black uppercase tracking-[0.4em] hover:scale-[1.05] active:scale-95 transition-all shadow-[0_0_20px_rgba(1, 125, 195,0.1)] group/btn overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-in-out skew-x-12" />
                         {getButtonText()}

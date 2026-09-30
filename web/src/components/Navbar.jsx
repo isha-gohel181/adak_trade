@@ -53,93 +53,30 @@ const Navbar = ({ isLoaded }) => {
     const ctx = gsap.context(() => {
       const internalTl = gsap.timeline()
 
-      // 1. Initial Entrance
+      // Initial Entrance
       internalTl.fromTo(navContainerRef.current,
-        { y: -15, opacity: 0 },
+        { y: -20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
           autoAlpha: 1,
           pointerEvents: "auto",
-          duration: 0.35,
+          duration: 0.4,
           ease: 'power3.out'
         }
       )
 
-      internalTl.fromTo(logoRef.current, { x: -4, opacity: 0 }, { x: 0, opacity: 1, duration: 0.25 }, '-=0.15')
+      internalTl.fromTo(logoRef.current, { x: -4, opacity: 0 }, { x: 0, opacity: 1, duration: 0.25 }, '-=0.2')
       internalTl.fromTo('.nav-link-item',
-        { y: 3, opacity: 0, scale: 0.99 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.02, duration: 0.35, ease: 'power3.out' },
-        '-=0.15'
+        { y: 3, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.03, duration: 0.35, ease: 'power3.out' },
+        '-=0.2'
       )
-      internalTl.fromTo(buttonsWrapRef.current, { x: 4, opacity: 0 }, { x: 0, opacity: 1, duration: 0.25 }, '-=0.15')
+      internalTl.fromTo(buttonsWrapRef.current, { x: 4, opacity: 0 }, { x: 0, opacity: 1, duration: 0.25 }, '-=0.2')
     })
 
     return () => ctx.revert()
   }, [isLoaded])
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Set the initial pill state for Light Glass UI
-      gsap.set(navContainerRef.current, {
-        top: '1.5rem',
-        width: '94%',
-        maxWidth: '1200px',
-        left: '50%',
-        xPercent: -50,
-      })
-      gsap.set(innerNavRef.current, {
-        borderRadius: '999px',
-        paddingTop: '0.85rem',
-        paddingBottom: '0.85rem',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        backdropFilter: 'blur(16px)'
-      })
-
-      if (window.innerWidth >= 1024) {
-        ScrollTrigger.create({
-          trigger: 'body',
-          start: 'top -40',
-          onEnter: () => {
-            gsap.to(navContainerRef.current, {
-              top: '1rem',
-              width: '90%',
-              maxWidth: '1400px',
-              duration: 0.4,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            })
-            gsap.to(innerNavRef.current, {
-              backgroundColor: 'rgba(255, 255, 255, 0.96)',
-              backdropFilter: 'blur(24px)',
-              duration: 0.4,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            })
-          },
-          onLeaveBack: () => {
-            gsap.to(navContainerRef.current, {
-              top: '1.5rem',
-              width: '94%',
-              maxWidth: '1200px',
-              duration: 0.4,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            })
-            gsap.to(innerNavRef.current, {
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              backdropFilter: 'blur(16px)',
-              duration: 0.4,
-              ease: 'power3.out',
-              overwrite: 'auto'
-            })
-          }
-        })
-      }
-    })
-
-    return () => ctx.revert()
-  }, [theme])
 
   const updatePillToActive = () => {
     if (!linksWrapRef.current || !pillRef.current) return
@@ -256,29 +193,29 @@ const Navbar = ({ isLoaded }) => {
 
   return (
     <>
-      {/* Navbar Container */}
+      {/* Full Width Top Navbar */}
       <nav
         ref={navContainerRef}
-        className="fixed z-[120] will-change-[transform,top,width] opacity-0 pointer-events-none"
+        className="fixed top-0 left-0 right-0 w-full z-[120] bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs opacity-0 pointer-events-none"
       >
         <div
           ref={innerNavRef}
-          className="flex items-center justify-between bg-white/90 rounded-[2rem] md:rounded-full px-4 md:px-6 !py-3 border border-slate-200/80 shadow-sm backdrop-blur-2xl relative z-20 overflow-hidden will-change-[padding,background-color]"
+          className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between py-3.5 w-full"
         >
 
           <Link to="/" ref={logoRef} className="flex items-center hover:opacity-80 transition-opacity gap-2.5 text-slate-900">
-            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
+            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-11 w-auto object-contain rounded-lg" />
           </Link>
 
           <div
             ref={linksWrapRef}
             onMouseLeave={handleLeave}
-            className="hidden xl:flex items-center gap-2 relative px-1 py-1"
+            className="hidden xl:flex items-center gap-1.5 relative px-1 py-1"
           >
-            {/* Liquid Active Pill Indicator strictly scoped to nav links */}
+            {/* Active Highlight Indicator */}
             <div
               ref={pillRef}
-              className="absolute top-1/2 -translate-y-1/2 h-9 bg-amber-100 border border-amber-300 rounded-full pointer-events-none transition-all duration-300 z-0 opacity-0"
+              className="absolute top-1/2 -translate-y-1/2 h-8 bg-[#EBF5FA] border border-[#017DC3]/30 rounded-lg pointer-events-none transition-all duration-300 z-0 opacity-0"
             />
 
             {navLinks.map((link) => (
@@ -287,7 +224,7 @@ const Navbar = ({ isLoaded }) => {
                 to={link.path}
                 onMouseEnter={handleHover}
                 className={({ isActive }) =>
-                  `nav-link-item group px-5 py-2 rounded-full font-inter text-[10px] font-bold uppercase transition-all duration-300 tracking-[0.2em] relative z-10 ${isActive ? 'text-amber-900 font-black' : 'text-slate-700 hover:text-slate-900'
+                  `nav-link-item group px-4 py-2 rounded-lg font-inter text-[11px] font-bold uppercase transition-all duration-300 tracking-[0.15em] relative z-10 ${isActive ? 'text-[#017DC3] font-black' : 'text-slate-700 hover:text-[#017DC3]'
                   }`
                 }
               >
@@ -300,19 +237,19 @@ const Navbar = ({ isLoaded }) => {
 
             <Link
               to={token ? "/dashboard" : "/login"}
-              className="relative group bg-accent text-slate-950 font-black px-6 py-2.5 rounded-full font-inter text-[10px] uppercase tracking-[0.2em] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-accent-soft flex items-center justify-center gap-2"
+              className="relative group bg-[#017DC3] hover:bg-[#006AA7] text-white font-bold px-6 py-2.5 rounded-full font-inter text-[11px] uppercase tracking-[0.15em] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-[0_4px_15px_rgba(1,125,195,0.35)] flex items-center justify-center gap-2"
             >
               <span className="relative z-10">{token ? t('dashboard') : t('signIn')}</span>
-              <div className="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-12" />
+              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-12" />
             </Link>
 
             <button
               onClick={toggleMenu}
-              className="xl:hidden w-10 h-10 rounded-full bg-slate-100 border border-slate-200 flex flex-col items-center justify-center gap-[5px] relative z-[130] group hover:bg-accent/20 hover:border-accent/40 transition-colors"
+              className="xl:hidden w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center gap-[5px] relative z-[130] group hover:bg-[#EBF5FA] hover:border-[#017DC3]/40 transition-colors"
             >
-              <span ref={line1Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-accent" />
-              <span ref={line2Ref} className="w-5 h-[2px] bg-slate-800 transition-colors group-hover:bg-accent" />
-              <span ref={line3Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-accent" />
+              <span ref={line1Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
+              <span ref={line2Ref} className="w-5 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
+              <span ref={line3Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
             </button>
           </div>
         </div>
@@ -324,7 +261,7 @@ const Navbar = ({ isLoaded }) => {
         className="fixed inset-0 z-[110] h-[100dvh] overflow-hidden opacity-0 invisible"
       >
         <div ref={shutter1Ref} className="absolute inset-0 bg-slate-50 translate-x-full" />
-        <div ref={shutter2Ref} className="absolute inset-0 bg-amber-100/60 translate-x-full border-r border-amber-300/40 backdrop-blur-xl" />
+        <div ref={shutter2Ref} className="absolute inset-0 bg-[#EBF5FA]/80 translate-x-full border-r border-[#017DC3]/30 backdrop-blur-xl" />
         <div ref={shutter3Ref} className="absolute inset-0 bg-white translate-x-full overflow-hidden">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] [background-size:200px_200px]" />
 

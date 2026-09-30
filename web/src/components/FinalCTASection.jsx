@@ -39,7 +39,7 @@ const FinalCTASection = () => {
         {/* 2. Cinematic Visual Strip (Compact) */}
         <div className="relative h-44 md:h-60 overflow-hidden bg-dark">
            <div className="absolute inset-0 bg-gradient-to-tr from-accent/10 via-transparent to-transparent opacity-50" />
-           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139, 92, 246,0.1)_0%,transparent_80%)]" />
+           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(1, 125, 195,0.1)_0%,transparent_80%)]" />
            
            {/* Scanline Animation */}
            <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -67,7 +67,7 @@ const FinalCTASection = () => {
               </div>
            </div>
 
-           <button className="w-full md:w-auto relative group/btn bg-accent px-10 md:px-14 py-6 transition-all duration-700 hover:scale-[1.03] active:scale-95 shadow-[0_0_30px_rgba(139, 92, 246,0.1)]">
+           <button className="w-full md:w-auto relative group/btn bg-accent px-10 md:px-14 py-6 transition-all duration-700 hover:scale-[1.03] active:scale-95 shadow-[0_0_30px_rgba(1, 125, 195,0.1)]">
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 skew-x-12" />
               <div className="flex items-center justify-center gap-6 relative z-10">
                  <span className="font-jetbrains text-dark text-[10px] md:text-xs font-black tracking-[0.6em] uppercase">INITIALIZE / $499</span>

@@ -215,7 +215,7 @@ const Checkout = () => {
                courseId: course._id || '',
                planId: selectedPlan.id || ''
             },
-            theme: { color: '#8B5CF6' }
+            theme: { color: '#017DC3' }
          }
 
          const rzp = new window.Razorpay(options)
@@ -345,7 +345,7 @@ const Checkout = () => {
             </div>
 
             {/* Cinematic Scanning Overlay */}
-            <div ref={scanLineRef} className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent z-10 opacity-40 shadow-[0_0_15px_rgba(139, 92, 246,0.5)]" />
+            <div ref={scanLineRef} className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent z-10 opacity-40 shadow-[0_0_15px_rgba(1, 125, 195,0.5)]" />
             <div className="absolute inset-0 pointer-events-none z-10 p-6 sm:p-12 flex flex-col justify-between">
 
                {/* Top Identity Block */}
@@ -376,7 +376,7 @@ const Checkout = () => {
                   <div className="space-y-4">
                      <p className="font-montserrat text-[14px] text-description uppercase tracking-[0.5em] font-black">Activation Total</p>
                      <div className="flex items-baseline gap-4">
-                        <span className="font-newsreader italic text-[clamp(3rem,8vw,7rem)] text-accent tracking-tighter leading-none drop-shadow-[0_0_20px_rgba(139, 92, 246,0.3)]">
+                        <span className="font-newsreader italic text-[clamp(3rem,8vw,7rem)] text-accent tracking-tighter leading-none drop-shadow-[0_0_20px_rgba(1, 125, 195,0.3)]">
                            ₹{displayTotal}
                         </span>
                         <span className="font-jetbrains text-xs text-accent/40 mb-4">INR</span>
@@ -557,7 +557,7 @@ const Checkout = () => {
                      {/* COMPLETE ACTIVATION CTA */}
                      <div className="pt-10 protocol-reveal grid gap-4">
 
-                        <button onClick={handlePayment} type="button" className="w-full group relative bg-accent py-9 flex items-center justify-center gap-6 hover:scale-[1.01] active:scale-[0.98] transition-all duration-700 overflow-hidden shadow-[0_0_30px_rgba(139, 92, 246,0.1)]">
+                        <button onClick={handlePayment} type="button" className="w-full group relative bg-accent py-9 flex items-center justify-center gap-6 hover:scale-[1.01] active:scale-[0.98] transition-all duration-700 overflow-hidden shadow-[0_0_30px_rgba(1, 125, 195,0.1)]">
                            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 skew-x-12" />
                            <span className="relative z-10 font-jetbrains text-dark text-sm font-black tracking-[0.8em] uppercase">Pay Now</span>
                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="relative z-10 text-dark stroke-dark group-hover:translate-x-3 transition-transform duration-700">
@@ -634,7 +634,7 @@ const Checkout = () => {
          {/* SUCCESS MODAL */}
          {showSuccessModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
-               <div className="bg-dark border border-accent/20 p-8 md:p-12 max-w-lg w-full relative overflow-hidden shadow-[0_0_50px_rgba(139, 92, 246,0.15)] group">
+               <div className="bg-dark border border-accent/20 p-8 md:p-12 max-w-lg w-full relative overflow-hidden shadow-[0_0_50px_rgba(1, 125, 195,0.15)] group">
                   {/* Decorative background elements */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />

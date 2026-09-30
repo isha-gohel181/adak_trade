@@ -21,7 +21,7 @@ export interface SignupData {
 export interface AuthResponse {
   user: User;
   accessToken: string;
-  refreshToken: string;
+  refreshToken?: string | null;
 }
 
 export interface ApiResponse<T> {

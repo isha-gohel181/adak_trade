@@ -1,5 +1,4 @@
-// const rawBase = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
-const rawBase = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const rawBase = (import.meta.env.VITE_BASE_URL || 'http://localhost:5000').replace(/\/+$/, '');
 const BASE = rawBase.includes('/api/v1') ? rawBase : `${rawBase}`;
 
 export async function authorizedFetch(path, opts = {}) {

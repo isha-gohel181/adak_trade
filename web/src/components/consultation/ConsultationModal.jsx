@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   fetchAvailableSlots,
+  fetchAllUpcomingSlots,
   createConsultationOrder,
   bookConsultation,
   setSelectedDate,
@@ -11,15 +12,33 @@ import {
   clearError
 } from '../../redux/slices/consultationSlice';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+// Helper to format date as YYYY-MM-DD in local timezone
+const getLocalDateString = (d = new Date()) => {
+  const dateObj = typeof d === 'string' || typeof d === 'number' ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) return new Date().toISOString().split('T')[0];
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
 
 const ConsultationModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { slots, selectedDate, selectedSlot, loading, bookingLoading, error, bookingSuccess, lastBooking } =
-    useSelector((state) => state.consultation);
+  const {
+    slots,
+    allUpcomingSlots,
+    selectedDate,
+    selectedSlot,
+    loading,
+    bookingLoading,
+    error,
+    bookingSuccess,
+    lastBooking
+  } = useSelector((state) => state.consultation);
+
   const authUser = useSelector((state) => state.auth?.user);
   const authToken = useSelector((state) => state.auth?.token) || localStorage.getItem('edrilla_token');
 
@@ -28,7 +47,6 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
   // Calendar View Date state (month/year navigation)
   const [viewDate, setViewDate] = useState(new Date());
-  const [allUpcomingSlots, setAllUpcomingSlots] = useState([]);
 
   // Form Details state
   const [formData, setFormData] = useState({
@@ -41,6 +59,17 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   });
   const [fileName, setFileName] = useState('');
   const [formErrors, setFormErrors] = useState({});
+
+  // Lock background scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [isOpen]);
 
   // Prefill form when auth user is available
   useEffect(() => {
@@ -55,34 +84,29 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     }
   }, [authUser]);
 
-  // Fetch all upcoming slots for calendar indicators
+  // Reset states on modal close/open and fetch live slots
   useEffect(() => {
     if (isOpen) {
-      fetch(`${BASE_URL}/consultations/slots/available`)
-        .then((r) => r.json())
-        .then((d) => {
-          if (d?.data) setAllUpcomingSlots(d.data);
-        })
-        .catch(() => {});
-    }
-  }, [isOpen]);
-
-  // Fetch slots whenever selectedDate changes or modal opens
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(fetchAvailableSlots({ date: selectedDate }));
-    }
-  }, [isOpen, selectedDate, dispatch]);
-
-  // Reset states on modal close/open
-  useEffect(() => {
-    if (!isOpen) {
+      dispatch(clearError());
+      dispatch(fetchAllUpcomingSlots());
+      if (selectedDate) {
+        dispatch(fetchAvailableSlots({ date: selectedDate }));
+      }
+    } else {
       setStep(1);
       dispatch(resetBookingState());
       setFormErrors({});
       setFileName('');
     }
   }, [isOpen, dispatch]);
+
+  // Fetch slots whenever selected date changes while modal is open
+  useEffect(() => {
+    if (isOpen && selectedDate) {
+      dispatch(clearError());
+      dispatch(fetchAvailableSlots({ date: selectedDate }));
+    }
+  }, [isOpen, selectedDate, dispatch]);
 
   if (!isOpen) return null;
 
@@ -105,30 +129,21 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     setViewDate(new Date(year, month + 1, 1));
   };
 
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = getLocalDateString(new Date());
 
+  // Sets of available & booked dates in local timezone
   const availableDatesSet = new Set(
-    allUpcomingSlots
-      .filter((s) => !s.isBooked && s.isActive)
-      .map((s) => {
-        try {
-          return new Date(s.startTime).toISOString().split('T')[0];
-        } catch {
-          return '';
-        }
-      })
+    (allUpcomingSlots || [])
+      .filter((s) => !s.isBooked && s.isActive && new Date(s.startTime) >= new Date(new Date().setHours(0, 0, 0, 0)))
+      .map((s) => getLocalDateString(s.startTime))
+      .filter(Boolean)
   );
 
   const bookedDatesSet = new Set(
-    allUpcomingSlots
-      .filter((s) => s.isBooked)
-      .map((s) => {
-        try {
-          return new Date(s.startTime).toISOString().split('T')[0];
-        } catch {
-          return '';
-        }
-      })
+    (allUpcomingSlots || [])
+      .filter((s) => s.isBooked && new Date(s.startTime) >= new Date(new Date().setHours(0, 0, 0, 0)))
+      .map((s) => getLocalDateString(s.startTime))
+      .filter(Boolean)
   );
 
   const handleSelectDay = (day) => {
@@ -136,7 +151,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     const formattedDay = String(day).padStart(2, '0');
     const dateStr = `${year}-${formattedMonth}-${formattedDay}`;
 
-    // Don't allow past dates before today
+    // Prevent selecting past dates
     if (dateStr < todayStr) return;
 
     dispatch(setSelectedDate(dateStr));
@@ -184,7 +199,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     if (!formData.designation.trim()) errors.designation = 'Designation is required';
     if (!formData.department.trim()) errors.department = 'Department is required';
     if (!formData.institute.trim()) errors.institute = 'Institute / Organization is required';
-    if (!formData.query.trim()) errors.query = 'Query / Guidance is required';
+    if (!formData.query.trim()) errors.query = 'Query / Guidance description is required';
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -198,12 +213,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
     if (!validateForm()) return;
 
     if (!authToken) {
-      // Prompt user to login
       navigate('/login', { state: { returnUrl: location.pathname } });
       return;
     }
 
-    // Build FormData payload
     const submission = new FormData();
     submission.append('slotId', selectedSlot._id);
     submission.append('fullName', formData.fullName.trim());
@@ -221,70 +234,95 @@ const ConsultationModal = ({ isOpen, onClose }) => {
       try {
         const orderResult = await dispatch(createConsultationOrder({ slotId: selectedSlot._id })).unwrap();
         if (orderResult.isFree) {
-          // Fallback to free booking
           const result = await dispatch(bookConsultation(submission)).unwrap();
-          if (result.success) setStep(3);
+          if (result.success) {
+            dispatch(fetchAllUpcomingSlots());
+            if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
+            setStep(3);
+          }
         } else {
-          // Razorpay flow
+          // Razorpay Checkout flow
           const options = {
             key: orderResult.key,
             amount: orderResult.amount,
-            currency: orderResult.currency,
+            currency: orderResult.currency || 'INR',
             name: 'Institute of Applied Statistics',
-            description: `Consultation Slot (${selectedSlot.duration} Mins)`,
+            description: `Consultation Appointment (${selectedSlot.duration} Mins)`,
             order_id: orderResult.orderId,
             handler: async (response) => {
-              submission.append('razorpay_order_id', response.razorpay_order_id);
-              submission.append('razorpay_payment_id', response.razorpay_payment_id);
-              submission.append('razorpay_signature', response.razorpay_signature);
-              const result = await dispatch(bookConsultation(submission)).unwrap();
-              if (result.success) setStep(3);
+              try {
+                submission.append('razorpay_order_id', response.razorpay_order_id);
+                submission.append('razorpay_payment_id', response.razorpay_payment_id);
+                submission.append('razorpay_signature', response.razorpay_signature);
+                const result = await dispatch(bookConsultation(submission)).unwrap();
+                if (result.success) {
+                  dispatch(fetchAllUpcomingSlots());
+                  if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
+                  setStep(3);
+                }
+              } catch (err) {
+                console.error('Paid consultation confirmation error:', err);
+                dispatch(fetchAllUpcomingSlots());
+                if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
+                setStep(1);
+              }
             },
             prefill: {
               name: formData.fullName,
               email: authUser?.email || '',
               contact: authUser?.phone || '',
             },
-            theme: { color: '#011753' },
+            theme: { color: '#017DC3' },
           };
 
           if (window.Razorpay) {
             const rzp = new window.Razorpay(options);
             rzp.open();
           } else {
-            alert('Payment gateway failed to load. Please try again.');
+            alert('Razorpay payment gateway script not loaded. Please try again.');
           }
         }
       } catch (err) {
-        console.error('Consultation order error:', err);
+        console.error('Consultation payment order error:', err);
+        dispatch(fetchAllUpcomingSlots());
+        if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
+        setStep(1);
       }
     } else {
-      // Free 15-min consultation booking
+      // Free consultation booking
       try {
         const result = await dispatch(bookConsultation(submission)).unwrap();
         if (result.success) {
+          dispatch(fetchAllUpcomingSlots());
+          if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
           setStep(3);
         }
       } catch (err) {
         console.error('Consultation booking error:', err);
+        dispatch(fetchAllUpcomingSlots());
+        if (selectedDate) dispatch(fetchAvailableSlots({ date: selectedDate }));
+        setStep(1);
       }
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-sm transition-all duration-300">
+    <div 
+      className="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-slate-950/70 backdrop-blur-md overflow-hidden animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh] my-auto animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col max-h-[90vh] md:max-h-[85vh] my-auto animate-in zoom-in-95 duration-200 select-text"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Top Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80">
-          <div className="flex items-center gap-3">
+        {/* Sticky Header */}
+        <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-slate-100 bg-slate-50/90 backdrop-blur-sm shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
             {step === 2 && (
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-700 transition-colors"
+                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-700 transition-colors shrink-0"
                 title="Back to Date & Slots"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -292,23 +330,27 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 </svg>
               </button>
             )}
-            <div>
-              <h3 className="font-inter font-bold text-slate-900 text-lg leading-snug">
-                {step === 1 && 'DARC Support Helpline'}
-                {step === 2 && 'Consultation Details'}
-                {step === 3 && 'Booking Confirmed'}
-              </h3>
-              <p className="font-inter text-xs text-slate-500">
-                {step === 1 && 'Select a date and available consultation time slot'}
-                {step === 2 && 'Fill in your research guidance requirements'}
-                {step === 3 && 'Your expert consultation appointment is scheduled'}
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <h3 className="font-inter font-bold text-slate-900 text-base sm:text-lg leading-snug truncate">
+                  {step === 1 && 'Book Consultation — DARC Helpline'}
+                  {step === 2 && 'Enter Consultation Details'}
+                  {step === 3 && 'Booking Confirmed!'}
+                </h3>
+              </div>
+              <p className="font-inter text-xs text-slate-500 truncate mt-0.5">
+                {step === 1 && 'Pick an available date & time slot for your 1-on-1 session'}
+                {step === 2 && 'Fill out your research guidance requirement details'}
+                {step === 3 && 'Your expert consultation appointment has been scheduled'}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
+            className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors shrink-0 ml-3"
+            aria-label="Close"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -317,15 +359,22 @@ const ConsultationModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 overflow-y-auto space-y-6 flex-1">
+        {/* Scrollable Modal Body */}
+        <div className="flex-1 overflow-y-auto overscroll-contain p-5 sm:p-7 space-y-6 touch-pan-y">
           {error && (
-            <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center justify-between">
-              <span>{error}</span>
+            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500 shrink-0">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{typeof error === 'string' ? error : 'An error occurred'}</span>
+              </div>
               <button 
                 type="button" 
                 onClick={() => dispatch(clearError())} 
-                className="text-red-500 hover:text-red-800 font-bold ml-2"
+                className="text-red-500 hover:text-red-800 font-bold ml-2 text-sm"
               >
                 ✕
               </button>
@@ -336,16 +385,18 @@ const ConsultationModal = ({ isOpen, onClose }) => {
           {step === 1 && (
             <div className="space-y-6">
               {/* Calendar Container */}
-              <div className="bg-slate-50/90 border border-slate-200 rounded-2xl p-5 shadow-xs">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-inter font-bold text-slate-800 text-sm">
+              <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-xs">
+                {/* Month Navigation */}
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className="font-inter font-bold text-slate-900 text-sm sm:text-base">
                     {monthNames[month]} {year}
                   </span>
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
                       onClick={handlePrevMonth}
-                      className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition-colors"
+                      className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition-colors shadow-2xs"
+                      aria-label="Previous Month"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M15 18l-6-6 6-6" />
@@ -354,7 +405,8 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     <button
                       type="button"
                       onClick={handleNextMonth}
-                      className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition-colors"
+                      className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 transition-colors shadow-2xs"
+                      aria-label="Next Month"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d="M9 18l6-6-6-6" />
@@ -375,9 +427,9 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Days Grid */}
-                <div className="grid grid-cols-7 gap-1.5">
+                <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
                   {Array.from({ length: firstDayOfMonth }).map((_, i) => (
-                    <div key={`empty-${i}`} className="h-10" />
+                    <div key={`empty-${i}`} className="h-9 sm:h-10" />
                   ))}
                   {Array.from({ length: daysInMonth }).map((_, i) => {
                     const day = i + 1;
@@ -396,14 +448,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                         type="button"
                         disabled={isPast}
                         onClick={() => handleSelectDay(day)}
-                        className={`h-10 w-full rounded-xl font-inter text-xs font-semibold flex flex-col items-center justify-center relative transition-all ${
+                        className={`h-9 sm:h-10 w-full rounded-xl font-inter text-xs flex flex-col items-center justify-center relative transition-all ${
                           isSelected
-                            ? 'bg-[#011753] text-white shadow-md font-bold ring-2 ring-blue-600/30'
+                            ? 'bg-[#017DC3] text-white shadow-md font-bold ring-2 ring-blue-700/40 scale-[1.02]'
                             : isPast
-                            ? 'text-slate-300 cursor-not-allowed'
+                            ? 'text-slate-300 opacity-40 cursor-not-allowed'
                             : isToday
-                            ? 'bg-blue-100/70 text-blue-900 border border-blue-300 font-bold'
-                            : 'bg-white text-slate-700 border border-slate-200/80 hover:bg-blue-50 hover:border-blue-200'
+                            ? 'bg-blue-50 text-blue-900 border border-blue-300 font-bold'
+                            : 'bg-white text-slate-700 border border-slate-200/80 hover:bg-blue-50/70 hover:border-blue-300 font-medium'
                         }`}
                       >
                         <span>{day}</span>
@@ -423,14 +475,14 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Status Legend */}
-                <div className="flex items-center justify-center gap-6 mt-4 pt-3 border-t border-slate-200/60 font-inter text-xs text-slate-600">
+                <div className="flex items-center justify-center gap-6 mt-3.5 pt-3 border-t border-slate-200/70 font-inter text-[11px] text-slate-600">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100" />
-                    <span>Available</span>
+                    <span>Slots Available</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-rose-100" />
-                    <span>Booked / Unavailable</span>
+                    <span>Booked / Reserved</span>
                   </div>
                 </div>
               </div>
@@ -438,10 +490,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               {/* Slots Section */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-inter font-bold text-slate-800 text-sm flex items-center gap-2">
-                    <span>Available Slots</span>
+                  <h4 className="font-inter font-bold text-slate-900 text-sm flex items-center gap-2">
+                    <span>Available Consultation Slots</span>
                     <span className="text-xs font-normal text-slate-500">
-                      ({new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })})
+                      ({new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })})
                     </span>
                   </h4>
                   {loading && (
@@ -450,8 +502,9 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 </div>
 
                 {loading ? (
-                  <div className="py-8 text-center text-slate-400 font-inter text-xs">
-                    Fetching consultation slots...
+                  <div className="py-10 text-center text-slate-400 font-inter text-xs flex flex-col items-center justify-center gap-2 bg-slate-50 rounded-2xl border border-slate-200">
+                    <div className="w-5 h-5 border-2 border-[#017DC3] border-t-transparent rounded-full animate-spin" />
+                    <span>Loading available slots...</span>
                   </div>
                 ) : slots.length === 0 ? (
                   <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
@@ -461,15 +514,15 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       <line x1="8" y1="2" x2="8" y2="6" />
                       <line x1="3" y1="10" x2="21" y2="10" />
                     </svg>
-                    <p className="font-inter text-xs text-slate-600 font-medium">
-                      No slots available for this date.
+                    <p className="font-inter text-xs text-slate-700 font-medium">
+                      No consultation slots open for this date.
                     </p>
-                    <p className="font-inter text-[11px] text-slate-400">
-                      Please select another date on the calendar.
+                    <p className="font-inter text-[11px] text-slate-500">
+                      Please select another date indicated with a green dot on the calendar.
                     </p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-56 overflow-y-auto pr-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-60 overflow-y-auto pr-1">
                     {slots.map((slot) => {
                       const isBooked = slot.isBooked;
                       const isPast = new Date(slot.startTime) < new Date();
@@ -485,25 +538,25 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                           onClick={() => dispatch(setSelectedSlot(slot))}
                           className={`p-3.5 rounded-2xl border text-left transition-all relative flex flex-col justify-between ${
                             isSelected
-                              ? 'bg-blue-50/80 border-[#011753] ring-2 ring-[#011753]/20 shadow-sm'
+                              ? 'bg-blue-50/90 border-[#017DC3] ring-2 ring-[#017DC3]/20 shadow-sm'
                               : isDisabled
                               ? 'bg-slate-100 border-slate-200 opacity-60 cursor-not-allowed'
-                              : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-slate-50/50'
+                              : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/30'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2 mb-1.5">
-                            <span className="font-inter font-bold text-xs text-slate-800">
+                            <span className="font-inter font-bold text-xs text-slate-900">
                               {formatSlotTime(slot.startTime)} - {formatSlotTime(slot.endTime)}
                             </span>
-                            {isSelected && (
-                              <span className="w-5 h-5 rounded-full bg-[#011753] text-white flex items-center justify-center text-[10px]">
+                            {isSelected ? (
+                              <span className="w-5 h-5 rounded-full bg-[#017DC3] text-white flex items-center justify-center text-[10px] font-bold">
                                 ✓
                               </span>
-                            )}
+                            ) : null}
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="font-inter text-[10px] text-slate-500 font-medium">
-                              {slot.duration}m
+                              {slot.duration} Mins
                             </span>
                             <span
                               className={`font-inter text-[10px] font-bold px-2 py-0.5 rounded-md ${
@@ -514,9 +567,17 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                             >
                               {isFree ? 'FREE' : `₹${slot.price}`}
                             </span>
-                            {isBooked && (
+                            {isBooked ? (
                               <span className="font-inter text-[10px] text-rose-600 font-semibold ml-auto">
                                 Booked
+                              </span>
+                            ) : isPast ? (
+                              <span className="font-inter text-[10px] text-slate-400 font-medium ml-auto">
+                                Expired
+                              </span>
+                            ) : (
+                              <span className="font-inter text-[10px] text-emerald-600 font-semibold ml-auto">
+                                Available
                               </span>
                             )}
                           </div>
@@ -532,10 +593,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
           {/* ──────────────── STEP 2: Consultation Details Form ──────────────── */}
           {step === 2 && selectedSlot && (
             <div className="space-y-4">
-              {/* Selected Slot Recap */}
+              {/* Selected Slot Recap Card */}
               <div className="p-4 rounded-2xl bg-blue-50/80 border border-blue-200 flex items-center justify-between">
                 <div>
-                  <span className="font-inter text-[11px] text-blue-800 font-bold uppercase tracking-wider block">
+                  <span className="font-inter text-[10px] text-blue-800 font-bold uppercase tracking-wider block">
                     Selected Appointment
                   </span>
                   <span className="font-inter font-bold text-slate-900 text-sm">
@@ -543,6 +604,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       weekday: 'short',
                       month: 'short',
                       day: 'numeric',
+                      year: 'numeric'
                     })}{' '}
                     • {formatSlotTime(selectedSlot.startTime)} - {formatSlotTime(selectedSlot.endTime)}
                   </span>
@@ -570,7 +632,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="e.g. Dr. Rajesh Sharma"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                       formErrors.fullName ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -599,7 +661,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.designation}
                       onChange={handleInputChange}
                       placeholder="e.g. Student / Researcher / Faculty"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                         formErrors.designation ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -624,8 +686,8 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       name="department"
                       value={formData.department}
                       onChange={handleInputChange}
-                      placeholder="e.g. Biostatistics / Medicine / General"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                      placeholder="e.g. Biostatistics / Medicine / Science"
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                         formErrors.department ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -656,7 +718,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.institute}
                     onChange={handleInputChange}
                     placeholder="e.g. IAS DCS / AIIMS / Delhi University"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 ${
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
                       formErrors.institute ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -677,7 +739,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   value={formData.query}
                   onChange={handleInputChange}
                   placeholder="Describe your statistical problem, study design query, sample size calculation, or research guidance requirement..."
-                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#011753]/20 resize-none ${
+                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 resize-none ${
                     formErrors.query ? 'border-rose-300' : 'border-slate-200'
                   }`}
                 />
@@ -689,7 +751,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               {/* Attach Document (Optional) */}
               <div className="space-y-1">
                 <label className="block font-inter text-xs font-semibold text-slate-700">
-                  Attach Document (Optional)
+                  Attach Document / Synopsis (Optional)
                 </label>
                 <div className="p-3 border border-dashed border-slate-300 rounded-xl bg-slate-50/70 hover:bg-slate-50 transition-colors">
                   {fileName ? (
@@ -716,7 +778,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                         <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                       </svg>
                       <span className="font-inter text-xs text-slate-600 font-medium">
-                        Upload PDF / Image File (Max 10MB)
+                        Upload PDF / Document (Max 10MB)
                       </span>
                       <input
                         type="file"
@@ -735,12 +797,12 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               {!authToken && (
                 <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
                   <span className="font-inter text-xs text-amber-800">
-                    You need to be logged in to confirm your booking.
+                    You need to be logged in to confirm your appointment.
                   </span>
                   <button
                     type="button"
                     onClick={() => navigate('/login', { state: { returnUrl: location.pathname } })}
-                    className="font-inter text-xs font-bold text-blue-700 hover:underline"
+                    className="font-inter text-xs font-bold text-blue-700 hover:underline shrink-0 ml-2"
                   >
                     Log In →
                   </button>
@@ -751,15 +813,15 @@ const ConsultationModal = ({ isOpen, onClose }) => {
 
           {/* ──────────────── STEP 3: Confirmation / Success ──────────────── */}
           {step === 3 && (
-            <div className="py-8 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 mx-auto flex items-center justify-center">
+            <div className="py-6 text-center space-y-4">
+              <div className="w-16 h-16 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700 mx-auto flex items-center justify-center shadow-inner">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
 
-              <div className="space-y-1.5">
-                <h4 className="font-inter font-extrabold text-xl text-slate-900">
+              <div className="space-y-1">
+                <h4 className="font-inter font-black text-xl text-slate-900">
                   Consultation Booked Successfully!
                 </h4>
                 <p className="font-inter text-xs text-slate-600 max-w-md mx-auto">
@@ -788,39 +850,39 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 </div>
                 {lastBooking?._id && (
                   <div className="flex justify-between text-xs pt-2 border-t border-slate-200">
-                    <span className="text-slate-500 font-medium">Booking Ref:</span>
+                    <span className="text-slate-500 font-medium">Booking ID:</span>
                     <span className="font-mono text-slate-700 text-[11px]">{lastBooking._id}</span>
                   </div>
                 )}
               </div>
 
               <p className="font-inter text-[11px] text-slate-500 max-w-sm mx-auto">
-                Our statistical research specialists will connect with you via Google Meet / Zoom at the scheduled time.
+                Our statistical research specialists will connect with you via Google Meet / Zoom at the scheduled appointment time.
               </p>
             </div>
           )}
         </div>
 
-        {/* Modal Footer */}
-        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
+        {/* Sticky Footer */}
+        <div className="px-5 sm:px-7 py-4 border-t border-slate-100 bg-slate-50/90 backdrop-blur-sm flex items-center justify-between shrink-0">
           {step === 1 && (
             <>
-              <div className="text-xs text-slate-500 font-inter">
+              <div className="text-xs text-slate-500 font-inter truncate mr-2">
                 {selectedSlot ? (
                   <span>
-                    Selected: <strong className="text-slate-800">{formatSlotTime(selectedSlot.startTime)}</strong> ({selectedSlot.duration}m)
+                    Selected: <strong className="text-slate-900">{formatSlotTime(selectedSlot.startTime)}</strong> ({selectedSlot.duration}m)
                   </span>
                 ) : (
-                  <span>Please choose a slot</span>
+                  <span>Please choose an available slot</span>
                 )}
               </div>
               <button
                 type="button"
                 disabled={!selectedSlot}
                 onClick={handleProceedToDetails}
-                className="bg-[#011753] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
+                className="bg-[#017DC3] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-full transition-all shadow-md flex items-center gap-2 shrink-0"
               >
-                <span>Book Free Consultation</span>
+                <span>Continue to Details</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -833,7 +895,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="font-inter text-xs font-semibold text-slate-600 hover:text-slate-900 px-4 py-2"
+                className="font-inter text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-2"
               >
                 ← Back
               </button>
@@ -841,15 +903,15 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 type="button"
                 disabled={bookingLoading}
                 onClick={handleConfirmBooking}
-                className="bg-[#011753] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
+                className="bg-[#017DC3] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
               >
                 {bookingLoading ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Booking Appointment...</span>
+                    <span>Booking Session...</span>
                   </>
                 ) : (
-                  <span>Confirm & Book Free</span>
+                  <span>Confirm Appointment</span>
                 )}
               </button>
             </>
@@ -859,7 +921,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="w-full bg-[#011753] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-full transition-all shadow-md"
+              className="w-full bg-[#017DC3] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-full transition-all shadow-md"
             >
               Done
             </button>
