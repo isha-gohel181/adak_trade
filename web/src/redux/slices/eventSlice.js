@@ -4,9 +4,14 @@ const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.
 
 export const fetchEvents = createAsyncThunk(
     'events/fetchEvents',
-    async ({ page = 1, limit = 10, status = 'active' } = {}, { rejectWithValue }) => {
+    async ({ page = 1, limit = 10, status = 'published' } = {}, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${BASE_URL}/events?page=${page}&limit=${limit}&status=${status}`, {
+            const params = new URLSearchParams({ page, limit });
+            // Only append status if it's explicitly 'published' or 'draft'
+            if (status && status !== 'all' && status !== 'active') {
+                params.append('status', status);
+            }
+            const response = await fetch(`${BASE_URL}/events?${params.toString()}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

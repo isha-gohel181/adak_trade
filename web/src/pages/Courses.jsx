@@ -8,6 +8,26 @@ import CourseCard from '../components/CourseCard'
 import EventHero from '../components/EventHero'
 import { fetchEvents } from '../redux/slices/eventSlice'
 import { useLanguage } from '../context/LanguageContext'
+import sanitizeDisplay from '../utils/textSanitize'
+
+const stripHtml = (html) => {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+const formatDateRange = (start, end) => {
+  if (!start) return 'Upcoming'
+  try {
+    const s = new Date(start)
+    const sStr = s.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    if (!end) return sStr
+    const e = new Date(end)
+    const eStr = e.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    return sStr === eStr ? sStr : `${sStr} – ${eStr}`
+  } catch (err) {
+    return 'Upcoming'
+  }
+}
 
 const Courses = () => {
   const dispatch = useDispatch()
@@ -22,6 +42,7 @@ const Courses = () => {
   const [selectedDuration, setSelectedDuration] = useState('All hours')
   const advancedRef = useRef(null)
   const [hasFetchedEvents, setHasFetchedEvents] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   // Dynamically extract unique categories from backend courses
   const categoryFilters = useMemo(() => {
@@ -101,7 +122,7 @@ const Courses = () => {
 
   useEffect(() => {
     dispatch(fetchCourses())
-    dispatch(fetchEvents({ status: 'active' })).finally(() => setHasFetchedEvents(true))
+    dispatch(fetchEvents({ status: 'published' })).finally(() => setHasFetchedEvents(true))
     window.scrollTo(0, 0)
 
     const ctx = gsap.context(() => {
@@ -130,11 +151,11 @@ const Courses = () => {
   return (
     <div ref={containerRef} className="min-h-screen bg-dark pt-0 pb-24">
 
-      {/* 1. Dynamic Hero Banner */}
-      {eventList && eventList.length > 0 && <EventHero events={eventList} />}
+      {/* 1. Dynamic Hero Banner (Commented out) */}
+      {/* {eventList && eventList.length > 0 && <EventHero events={eventList} />} */}
 
       {/* 2. Page Content Wrapper */}
-      <div className={`px-4 md:px-12 ${eventList && eventList.length > 0 ? 'pt-8 md:pt-12' : 'pt-28 md:pt-32'}`}>
+      <div className="px-4 md:px-12 pt-28 md:pt-32">
         {/* Filter Row Header */}
         <div className="max-w-7xl mx-auto mb-10">
           {/* Desktop Header Grid */}
@@ -307,39 +328,179 @@ const Courses = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <h2 className="font-newsreader text-5xl md:text-6xl italic text-normal mb-4">Upcoming Events</h2>
-              <p className="font-montserrat text-[11px] text-description uppercase tracking-[0.2em]">Curated experiences & intensive workshops.</p>
+              <p className="font-montserrat text-[11px] text-description uppercase tracking-[0.2em]">Curated masterclasses & intensive workshops by IAS-DCS.</p>
             </div>
             <div className="flex items-center gap-4 text-[10px] font-jetbrains text-description">
-              <span className="text-accent">•</span> <span>{t('berlin')}</span>
-              <span className="text-accent">•</span> <span>{t('remotelyAvailable')}</span>
+              <span className="text-accent">•</span> <span>NEW DELHI NCR / NOIDA</span>
+              <span className="text-accent">•</span> <span>ONLINE & HYBRID SESSIONS</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {eventsLoading ? (
               <div className="col-span-full text-center py-20 text-accent font-montserrat font-bold">LOADING EVENTS...</div>
             ) : eventList && eventList.length > 0 ? (
-              eventList.map((event) => (
-                <CourseCard
-                  key={event._id || event.id}
-                  item={{
-                    id: event._id || event.id,
-                    title: event.title,
-                    category: event.category || 'EVENT',
-                    description: event.description,
-                    thumbnail: event.thumbnail || event.image,
-                    buttonText: event.buttonText || 'Register Now',
-                    isNew: event.isNew
-                  }}
-                  variant="event"
-                />
-              ))
+              eventList.map((event) => {
+                const priceNum = typeof event.price === 'object' && event.price?.$numberDecimal
+                  ? parseFloat(event.price.$numberDecimal)
+                  : parseFloat(event.price) || 0
+                const priceText = priceNum > 0 ? `₹${priceNum.toLocaleString()}` : 'Free'
+                const cleanDesc = stripHtml(event.description)
+
+                return (
+                  <div
+                    key={event._id || event.id}
+                    onClick={() => setSelectedEvent(event)}
+                    className="bg-white border border-slate-200/80 hover:border-[#017DC3]/50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full group cursor-pointer relative overflow-hidden"
+                  >
+                    {/* Header Badges */}
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <span className="px-3 py-1 rounded-md bg-[#EFF7CE] text-[#0F172A] font-jetbrains text-[10px] font-bold tracking-wider uppercase border border-[#1E293B]/20">
+                        {event.category || 'WORKSHOP'}
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 font-jetbrains text-[10px] font-bold uppercase">
+                        {event.type === 'online' ? '💻 Online' : event.type === 'hybrid' ? '🌐 Hybrid' : '📍 In-Person'}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-newsreader text-2xl text-slate-900 group-hover:text-[#017DC3] transition-colors duration-300 font-bold tracking-tight leading-snug line-clamp-2 mb-3">
+                      {sanitizeDisplay(event.title || 'Event')}
+                    </h3>
+
+                    {/* Date / Time */}
+                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-3 font-montserrat">
+                      <svg className="w-4 h-4 text-[#017DC3] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span>{formatDateRange(event.startDate, event.endDate)}</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="font-montserrat text-xs text-slate-600 leading-relaxed mb-6 flex-grow line-clamp-3">
+                      {cleanDesc || 'Join us for this comprehensive session led by the Institute of Applied Statistics.'}
+                    </p>
+
+                    {/* Card Footer */}
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block font-jetbrains">Registration</span>
+                        <span className="font-montserrat text-base text-slate-900 font-black">{priceText}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedEvent(event);
+                        }}
+                        className="px-5 py-2.5 bg-[#017DC3] text-white group-hover:bg-[#006AA7] rounded-full font-jetbrains text-xs font-bold tracking-wider uppercase transition shadow-sm hover:scale-105"
+                      >
+                        Register Now
+                      </button>
+                    </div>
+                  </div>
+                )
+              })
             ) : hasFetchedEvents ? (
               <div className="col-span-full text-center py-20 text-description font-montserrat uppercase tracking-widest">No upcoming events at the moment.</div>
             ) : null}
           </div>
         </div>
       </div>
+
+      {/* 5. Event Details & Registration Modal */}
+      {selectedEvent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
+            <button
+              onClick={() => setSelectedEvent(null)}
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-lg transition"
+            >
+              ✕
+            </button>
+
+            <div className="flex items-center gap-2 mb-3">
+              <span className="px-3 py-1 rounded-md bg-[#EFF7CE] text-[#0F172A] font-jetbrains text-[10px] font-bold tracking-wider uppercase border border-[#1E293B]/20">
+                {selectedEvent.category || 'EVENT'}
+              </span>
+              <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 font-jetbrains text-[10px] font-bold uppercase">
+                {selectedEvent.type === 'online' ? '💻 Online Session' : selectedEvent.type === 'hybrid' ? '🌐 Hybrid Workshop' : '📍 In-Person Conference'}
+              </span>
+            </div>
+
+            <h2 className="font-newsreader text-2xl sm:text-3xl font-bold text-slate-900 leading-snug mb-4">
+              {sanitizeDisplay(selectedEvent.title)}
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 mb-6 text-xs font-montserrat text-slate-700">
+              <div>
+                <span className="font-bold text-slate-400 uppercase tracking-wider block font-jetbrains text-[10px]">Schedule</span>
+                <span className="font-semibold text-slate-900">{formatDateRange(selectedEvent.startDate, selectedEvent.endDate)}</span>
+              </div>
+              <div>
+                <span className="font-bold text-slate-400 uppercase tracking-wider block font-jetbrains text-[10px]">Registration Fee</span>
+                <span className="font-semibold text-slate-900">
+                  {selectedEvent.price && parseFloat(selectedEvent.price) > 0 ? `₹${parseFloat(selectedEvent.price).toLocaleString()} INR` : 'Complimentary (Free)'}
+                </span>
+              </div>
+              {selectedEvent.onlineLink?.platform && (
+                <div>
+                  <span className="font-bold text-slate-400 uppercase tracking-wider block font-jetbrains text-[10px]">Platform</span>
+                  <span className="font-semibold text-slate-900 capitalize">{selectedEvent.onlineLink.platform}</span>
+                </div>
+              )}
+              {selectedEvent.capacity && (
+                <div>
+                  <span className="font-bold text-slate-400 uppercase tracking-wider block font-jetbrains text-[10px]">Seat Capacity</span>
+                  <span className="font-semibold text-slate-900">{selectedEvent.capacity} Participants</span>
+                </div>
+              )}
+              {selectedEvent.venue?.city && (
+                <div className="col-span-full">
+                  <span className="font-bold text-slate-400 uppercase tracking-wider block font-jetbrains text-[10px]">Location</span>
+                  <span className="font-semibold text-slate-900">{selectedEvent.venue.address ? `${selectedEvent.venue.address}, ` : ''}{selectedEvent.venue.city}, {selectedEvent.venue.country}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Description / Content */}
+            <div className="mb-8">
+              <h4 className="font-newsreader text-lg font-bold text-slate-900 mb-2">Event Details & Overview</h4>
+              <div
+                className="font-montserrat text-sm text-slate-600 leading-relaxed space-y-3 prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: selectedEvent.description || '<p>No description provided.</p>' }}
+              />
+            </div>
+
+            {/* Action CTA */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-slate-200">
+              <div className="text-xs text-slate-500 font-montserrat text-center sm:text-left">
+                Organized by <strong className="text-slate-800">Institute of Applied Statistics (IAS-DCS)</strong>
+              </div>
+              {selectedEvent.onlineLink?.url ? (
+                <a
+                  href={selectedEvent.onlineLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
+                >
+                  Join Meeting / Register
+                </a>
+              ) : (
+                <button
+                  onClick={() => {
+                    alert('Thank you for your interest! Please contact support@ias-dcs.com for event enrollment.');
+                    setSelectedEvent(null);
+                  }}
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
+                >
+                  Confirm Registration
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

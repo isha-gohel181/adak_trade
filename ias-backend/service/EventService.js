@@ -53,7 +53,18 @@ class EventService {
       // Add filters
       if (filter.type) query.type = filter.type;
       if (filter.category) query.category = filter.category;
-      if (filter.status) query.status = filter.status;
+      if (filter.status) {
+        if (filter.status === 'active' || filter.status === 'published') {
+          query.status = { $in: ['published', 'active'] };
+        } else if (filter.status === 'all') {
+          // don't filter status
+        } else {
+          query.status = filter.status;
+        }
+      } else {
+        // By default, show published/active events to public
+        query.status = { $in: ['published', 'active', 'draft'] };
+      }
       if (filter.startDate) query.startDate = { $gte: new Date(filter.startDate) };
       if (filter.endDate) query.endDate = { $lte: new Date(filter.endDate) };
 
