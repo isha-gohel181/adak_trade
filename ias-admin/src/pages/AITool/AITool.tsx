@@ -107,7 +107,7 @@ const AITool: React.FC = () => {
 
     try {
       const token = localStorage.getItem('accessToken');
-      const baseUrl = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
+      const baseUrl = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
       // Remove trailing slash if present, then add /ai/chat
       const apiUrl = `${baseUrl.replace(/\/$/, '')}/ai/chat`;
       const response = await fetch(

@@ -13,7 +13,7 @@ import type {
 } from "../../types/auth";
 
 // API base URL
-const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
+const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com").replace(/\/+$/, "");
 
 // Helper function to handle API errors
 const handleApiError = (error: unknown): string => {

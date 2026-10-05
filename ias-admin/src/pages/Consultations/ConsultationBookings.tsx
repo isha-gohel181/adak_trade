@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
 import { fetchAdminBookings, ConsultationBooking } from "../../store/slices/consultationSlice";
 
-const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "http://localhost:5000").replace(/\/+$/, "");
+const API_BASE_URL = (import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com").replace(/\/+$/, "");
 
 const ConsultationBookings = () => {
   const dispatch = useDispatch<AppDispatch>();
