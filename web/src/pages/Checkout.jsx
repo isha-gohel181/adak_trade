@@ -53,7 +53,7 @@ const Checkout = () => {
   const [formData, setFormData] = useState(() => {
     let savedUser = null
     try {
-      const lsUser = localStorage.getItem('user') || localStorage.getItem('userInfo') || localStorage.getItem('edrilla_user')
+      const lsUser = localStorage.getItem('user') || localStorage.getItem('userInfo') || localStorage.getItem('ias_dcs_user')
       if (lsUser) {
         savedUser = JSON.parse(lsUser)
       }
@@ -118,7 +118,7 @@ const Checkout = () => {
   useEffect(() => {
     const localUser = (() => {
       try {
-        return JSON.parse(localStorage.getItem('edrilla_user') || localStorage.getItem('user') || '{}')
+        return JSON.parse(localStorage.getItem('ias_dcs_user') || localStorage.getItem('user') || '{}')
       } catch {
         return {}
       }
@@ -328,7 +328,7 @@ const Checkout = () => {
       setIsVerified(true)
       if (data?.data?.user) {
         try {
-          localStorage.setItem('edrilla_user', JSON.stringify(data.data.user))
+          localStorage.setItem('ias_dcs_user', JSON.stringify(data.data.user))
         } catch {}
       }
       setOtpMessage('Email verified successfully!')

@@ -187,7 +187,7 @@ const Signup = () => {
                 id="signup-email"
                 type="email"
                 className="signup-input"
-                placeholder="scholar@edrilla.com"
+                placeholder="learner@nexprism.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

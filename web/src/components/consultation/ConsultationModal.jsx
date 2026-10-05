@@ -40,7 +40,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
   } = useSelector((state) => state.consultation);
 
   const authUser = useSelector((state) => state.auth?.user);
-  const authToken = useSelector((state) => state.auth?.token) || localStorage.getItem('edrilla_token');
+  const authToken = useSelector((state) => state.auth?.token) || localStorage.getItem('ias_dcs_token');
 
   // Step state: 1 = Date & Slot selection, 2 = Consultation Details, 3 = Confirmation / Success
   const [step, setStep] = useState(1);

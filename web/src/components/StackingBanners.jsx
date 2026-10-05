@@ -22,7 +22,7 @@ const StackingBanners = () => {
       if (!path.startsWith('/') && !path.startsWith('uploads/')) {
         path = `uploads/${path}`
       }
-      const rawBase = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com'
+      const rawBase = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com'
       const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '')
       return `${baseUrl}${path.startsWith('/') ? '' : '/'}${path}`
     } catch {

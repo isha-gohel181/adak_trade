@@ -16,4 +16,4 @@ for (let i = 0; i < lines.length; i++) {
 }
 
 const section = lines.slice(start, end).join('\n');
-fs.writeFileSync('d:/nexprism/Edrilla-2.0/tmp_zoom_inspection.txt', section);
+fs.writeFileSync('d:/nexprism/IAS-DCS-2.0/tmp_zoom_inspection.txt', section);

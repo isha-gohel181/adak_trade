@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 // ── Thunks ───────────────────────────────────────────────────────────────────
 export const fetchMyEnrollments = createAsyncThunk(
@@ -8,7 +8,7 @@ export const fetchMyEnrollments = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
       
       if (!token) {
         return rejectWithValue('No authentication token found');
@@ -49,10 +49,10 @@ export const buyNow = createAsyncThunk(
       // Persist auth data if returned
       const authData = data?.data || data;
       if (authData.accessToken || authData.token) {
-        localStorage.setItem('edrilla_token', authData.accessToken || authData.token);
+        localStorage.setItem('ias_dcs_token', authData.accessToken || authData.token);
       }
       if (authData.guestUser || authData.user) {
-        localStorage.setItem('edrilla_user', JSON.stringify(authData.guestUser || authData.user));
+        localStorage.setItem('ias_dcs_user', JSON.stringify(authData.guestUser || authData.user));
       }
       
       return data;

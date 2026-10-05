@@ -92,7 +92,7 @@ const AssignmentPage = () => {
     if (!filePath) return;
 
     // Create a proper download link
-    const baseUrl = import.meta.env.VITE_BASE_URL || "https://api.edrilla.com";
+    const baseUrl = import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com";
     const fullUrl = `${baseUrl}/${filePath}`;
 
     // Create a temporary anchor element for download

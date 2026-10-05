@@ -11,7 +11,7 @@ import {
 } from "./resourceFieldConfig";
 import QuillEditor from "../../components/QuillEditor";
 
-const IMAGE_BASE_URL = import.meta.env.VITE_BASE_URL || "https://api.edrilla.com/";
+const IMAGE_BASE_URL = import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com/";
 
 export const resolveUrl = (url?: string): string => {
   if (!url) return "";

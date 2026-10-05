@@ -8,16 +8,16 @@ const persistAuth = (response) => {
   if (data) {
     const token = data.accessToken || data.token || '';
     const user = data.user || null;
-    if (token) localStorage.setItem('edrilla_token', token);
-    if (user) localStorage.setItem('edrilla_user', JSON.stringify(user));
+    if (token) localStorage.setItem('ias_dcs_token', token);
+    if (user) localStorage.setItem('ias_dcs_user', JSON.stringify(user));
   }
 };
 
 const loadFromStorage = () => {
   try {
     return {
-      token: localStorage.getItem('edrilla_token') || null,
-      user: JSON.parse(localStorage.getItem('edrilla_user')) || null,
+      token: localStorage.getItem('ias_dcs_token') || null,
+      user: JSON.parse(localStorage.getItem('ias_dcs_user')) || null,
     };
   } catch {
     return { token: null, user: null };
@@ -182,8 +182,8 @@ const authSlice = createSlice({
       state.error = null;
       state.otpVerified = false;
       state.otpEmail = null;
-      localStorage.removeItem('edrilla_token');
-      localStorage.removeItem('edrilla_user');
+      localStorage.removeItem('ias_dcs_token');
+      localStorage.removeItem('ias_dcs_user');
     },
     clearAuthError(state) {
       state.error = null;
@@ -250,11 +250,11 @@ const authSlice = createSlice({
 
           if (newUser && typeof newUser === 'object') {
             state.user = newUser;
-            localStorage.setItem('edrilla_user', JSON.stringify(newUser));
+            localStorage.setItem('ias_dcs_user', JSON.stringify(newUser));
           }
           if (newToken) {
             state.token = newToken;
-            localStorage.setItem('edrilla_token', newToken);
+            localStorage.setItem('ias_dcs_token', newToken);
           }
         }
       );

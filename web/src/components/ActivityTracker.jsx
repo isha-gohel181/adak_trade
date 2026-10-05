@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const TrackerContext = createContext(null);
 
-const rawBase = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const rawBase = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 const BASE = rawBase.includes('/api/v1') ? rawBase : `${rawBase}`;
 
 export const useTracker = () => {
@@ -23,7 +23,7 @@ export const TrackerProvider = ({ children }) => {
   // Helper to fetch user ID safely from localStorage
   const getUserId = () => {
     try {
-      const userStr = localStorage.getItem('edrilla_user');
+      const userStr = localStorage.getItem('ias_dcs_user');
       if (userStr) {
         const user = JSON.parse(userStr);
         return user.id || user._id || 'guest';

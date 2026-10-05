@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authorizedFetch from '../../utils/apiClient';
 // socketService will be dynamically imported in thunks to avoid early evaluation
 
-const API_BASE = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const API_BASE = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 export const connectSocket = createAsyncThunk('chat/connectSocket', async (_, { rejectWithValue, dispatch, getState }) => {
   try {
     const { auth } = getState();
-    const token = auth.token || localStorage.getItem('edrilla_token');
+    const token = auth.token || localStorage.getItem('ias_dcs_token');
     const { default: socketService } = await import('../../services/socketService');
     await socketService.connect(token);
 
@@ -76,7 +76,7 @@ export const fetchChatRooms = createAsyncThunk('chat/fetchRooms', async (_, { re
 export const fetchMessages = createAsyncThunk('chat/fetchMessages', async (roomIdentifier, { rejectWithValue, getState }) => {
   try {
     const state = getState();
-    const token = state.auth?.token || localStorage.getItem('edrilla_token');
+    const token = state.auth?.token || localStorage.getItem('ias_dcs_token');
     let roomId = roomIdentifier;
 
     if (!roomId) return rejectWithValue('No room id provided');
@@ -137,7 +137,7 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async (roomI
 
 export const sendMessageSocket = createAsyncThunk('chat/sendMessageSocket', async ({ roomId, receiverId, message, files, replyTo }, { rejectWithValue, getState }) => {
   const { auth } = getState();
-  const user = auth.user || JSON.parse(localStorage.getItem('edrilla_user') || '{}');
+  const user = auth.user || JSON.parse(localStorage.getItem('ias_dcs_user') || '{}');
 
   const optimisticMsg = {
     _id: `temp-${Date.now()}`,
@@ -247,7 +247,7 @@ export const deleteMessage = createAsyncThunk('chat/deleteMessage', async (messa
 export const sendMessage = createAsyncThunk('chat/sendMessage', async ({ roomId, receiverId, message, replyTo }, { rejectWithValue, getState }) => {
   try {
     const { auth } = getState();
-    const token = auth.token || localStorage.getItem('edrilla_token');
+    const token = auth.token || localStorage.getItem('ias_dcs_token');
 
     const response = await fetch(`${API_BASE}/chat/message`, {
       method: 'POST',

@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 export const fetchMySubmissions = createAsyncThunk(
   'assignment/fetchMySubmissions',
   async (_, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {
         'Content-Type': 'application/json',

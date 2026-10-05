@@ -15,7 +15,7 @@ const smtpConfig = {
     port: Number(process.env.SMTP_PORT) || 587,
     secure: process.env.SMTP_SECURE === 'true',
     auth: {
-        user: process.env.SMTP_USER || 'support@edrilla.com',
+        user: process.env.SMTP_USER || 'support@ias-dcs.com',
         pass: process.env.SMTP_PASS || 'vjbfuqityyfivvii',
     },
 };
@@ -83,7 +83,7 @@ const emailTemplate = `
     <div class="wrapper">
         <div class="container">
             <header class="page-header">
-                <h1 class="logo-text">EDRILLA</h1>
+                <h1 class="logo-text">IAS-DCS</h1>
             </header>
             
             <div class="greeting-area">
@@ -99,7 +99,7 @@ const emailTemplate = `
             <div class="section">
                 <div class="section-header slate-theme">🔑 YOUR LOGIN DETAILS</div>
                 <div class="section-body slate-body">
-                    <div class="data-row"><span class="data-label">Platform</span><span class="data-value">Edrilla</span></div>
+                    <div class="data-row"><span class="data-label">Platform</span><span class="data-value">IAS-DCS</span></div>
                     <div class="data-row"><span class="data-label">Email</span><span class="data-value">{{Email}}</span></div>
                     <div class="data-row">
                         <span class="data-label">Password</span>
@@ -108,7 +108,7 @@ const emailTemplate = `
                             <span style="font-size: 13px; color: #64748b; font-weight: 400; margin-top: 8px; display: inline-block;">• Existing Users: Please use your current password</span>
                         </span>
                     </div>
-                    <p style="font-size: 13px; color: #94a3b8; margin-top: 15px; font-style: italic; border-top: 1px solid #e2e8f0; padding-top: 10px;">If you have already created an account on Edrilla, your existing password will continue to work.</p>
+                    <p style="font-size: 13px; color: #94a3b8; margin-top: 15px; font-style: italic; border-top: 1px solid #e2e8f0; padding-top: 10px;">If you have already created an account on IAS-DCS, your existing password will continue to work.</p>
                 </div>
             </div>
 
@@ -135,7 +135,7 @@ const emailTemplate = `
             <div class="section">
                 <div class="section-header navy-theme">🚀 HOW TO JOIN LIVE CLASSES</div>
                 <div class="section-body navy-body">
-                    <div class="step-li"><div class="step-bubble">1</div><div>Visit <b>Edrilla.com</b></div></div>
+                    <div class="step-li"><div class="step-bubble">1</div><div>Visit <b>ias-dcs-lms.vercel.app</b></div></div>
                     <div class="step-li"><div class="step-bubble">2</div><div>Log in using your registered email and password</div></div>
                     <div class="step-li"><div class="step-bubble">3</div><div>Go to the <b>"Live Classes"</b> tab</div></div>
                     <div class="step-li"><div class="step-bubble">4</div><div>Select the scheduled session</div></div>
@@ -147,13 +147,13 @@ const emailTemplate = `
             <!-- App Hub -->
             <div class="btn-hub">
                 <div style="color: #ffffff; font-size: 11px; font-weight: 800; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Direct Access Portal</div>
-                <a href="https://play.google.com/store/apps/details?id=com.edrilla.app" class="hub-btn">
+                <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="hub-btn">
                     <img src="https://img.icons8.com/color/48/000000/google-play.png">Android
                 </a>
-                <a href="https://apps.apple.com/in/app/edrilla-business-booster/id6751890495" class="hub-btn">
+                <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="hub-btn">
                     <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png">Apple iOS
                 </a>
-                <a href="https://edrilla.com" class="hub-btn">
+                <a href="https://ias-dcs-lms.vercel.app" class="hub-btn">
                     <img src="https://img.icons8.com/ios-filled/50/000000/internet.png">Web Portal
                 </a>
             </div>
@@ -162,8 +162,8 @@ const emailTemplate = `
             <div class="section">
                 <div class="section-header amber-theme">🎥 HOW TO ACCESS CLASS RECORDINGS</div>
                 <div class="section-body amber-body">
-                    <p style="margin-top: 0;">Can't attend a session live? No problem. All recordings will be available <b>inside the Edrilla App</b>.</p>
-                    <div class="step-li"><div class="step-bubble" style="background:#92400e">1</div><div>Download the Edrilla App</div></div>
+                    <p style="margin-top: 0;">Can't attend a session live? No problem. All recordings will be available <b>inside the IAS-DCS App</b>.</p>
+                    <div class="step-li"><div class="step-bubble" style="background:#92400e">1</div><div>Download the IAS-DCS App</div></div>
                     <div class="step-li"><div class="step-bubble" style="background:#92400e">2</div><div>Log in using the same credentials</div></div>
                     <div class="step-li"><div class="step-bubble" style="background:#92400e">3</div><div>Go to <b>"My Courses"</b></div></div>
                     <div class="step-li"><div class="step-bubble" style="background:#92400e">4</div><div>Open your AI Cohort course and access recordings</div></div>
@@ -200,11 +200,11 @@ const emailTemplate = `
             </div>
 
             <footer style="background: #0d1b2a; padding: 50px 30px; text-align: center; color: #94a3b8;">
-                <div class="footer-brand">EDRILLA</div>
+                <div class="footer-brand">IAS-DCS</div>
                 <p>See you in class! 🚀</p>
                 <p style="margin-top: 30px; font-weight: 700; color: #fff;">Warm Regards,<br>Team Lapaas</p>
                 <p style="font-size: 12px; margin-top: 15px;">Learn. Build. Launch. | 📞 +91 95400 65704</p>
-                <p style="opacity: 0.5; font-size: 11px; margin-top: 20px;">© 2026 Edrilla / Lapaas Academy</p>
+                <p style="opacity: 0.5; font-size: 11px; margin-top: 20px;">© 2026 IAS-DCS</p>
             </footer>
         </div>
     </div>
@@ -221,7 +221,7 @@ async function sendMail(to, name) {
     const html = emailTemplate.replace(/{{Name}}/g, name).replace(/{{Email}}/g, to);
 
     await transporter.sendMail({
-        from: `"Team Lapaas" <${process.env.EMAIL_FROM || 'support@edrilla.com'}>`,
+        from: `"Team Lapaas" <${process.env.EMAIL_FROM || 'support@ias-dcs.com'}>`,
         to,
         subject: '🚀 Enrollment Confirmed: AI Live Cohort',
         html,

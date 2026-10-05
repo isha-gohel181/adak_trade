@@ -40,7 +40,7 @@ function getWelcomeEmailHTML(name, email) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Edrilla Solopreneur</title>
+    <title>Welcome to IAS-DCS</title>
     <style>
         * {
             margin: 0;
@@ -219,7 +219,7 @@ function getWelcomeEmailHTML(name, email) {
 <body>
     <div class="email-container">
         <div class="header">
-            <div class="logo">EDRILLA</div>
+            <div class="logo">IAS-DCS</div>
             <div class="tagline">Solopreneur Course</div>
         </div>
         
@@ -245,14 +245,14 @@ function getWelcomeEmailHTML(name, email) {
             
             <div class="download-section">
                 <div class="download-title">Ready to Start Learning?</div>
-                <div class="download-subtitle">Download the Edrilla app and access your course anywhere</div>
+                <div class="download-subtitle">Download the IAS-DCS app and access your course anywhere</div>
                <div class="download-buttons">
-  <a href="https://play.google.com/store/apps/details?id=com.edrilla.app" class="download-btn" target="_blank">📱 Play Store</a>
-  <a href="https://apps.apple.com/in/app/edrilla-business-booster/id6751890495" class="download-btn" target="_blank">
+  <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="download-btn" target="_blank">📱 Play Store</a>
+  <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="download-btn" target="_blank">
     <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" alt="App Store" width="20" style="vertical-align:middle; margin-right:5px;">
     App Store
   </a>
-  <a href="https://edrilla.com/login" class="download-btn" target="_blank">🌐 Web App</a>
+  <a href="https://ias-dcs-lms.vercel.app/login" class="download-btn" target="_blank">🌐 Web App</a>
 </div>
 
             </div>
@@ -267,7 +267,7 @@ function getWelcomeEmailHTML(name, email) {
         
         <div class="footer">
             <p class="support-info">Need help? Contact us at</p>
-            <a href="mailto:support@edrilla.com" class="support-email">support@edrilla.com</a>
+            <a href="mailto:support@ias-dcs.com" class="support-email">support@ias-dcs.com</a>
         </div>
     </div>
 </body>
@@ -276,7 +276,7 @@ function getWelcomeEmailHTML(name, email) {
 }
 
 async function sendWelcomeEmail({ name, email }) {
-  const subject = "Welcome to Edrilla Solopreneur - Let's Start Your Journey!";
+  const subject = "Welcome to IAS-DCS - Let's Start Your Journey!";
   const html = getWelcomeEmailHTML(name, email);
   
   await emailService.getTransporter("transactional").sendMail({

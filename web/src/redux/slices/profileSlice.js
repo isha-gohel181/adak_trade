@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 // ── Thunks ───────────────────────────────────────────────────────────────────
 export const fetchUserProfile = createAsyncThunk(
@@ -8,7 +8,7 @@ export const fetchUserProfile = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
       
       if (!token) {
         return rejectWithValue('No authentication token found');
@@ -36,7 +36,7 @@ export const updateUserProfile = createAsyncThunk(
   async (profileData, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
 
       if (!token) {
         return rejectWithValue('No authentication token found');
@@ -67,7 +67,7 @@ export const deleteDocument = createAsyncThunk(
   async (documentId, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
 
       const res = await fetch(`${BASE_URL}/documentation/${documentId}`, {
         method: 'DELETE',
@@ -90,7 +90,7 @@ export const deleteEducation = createAsyncThunk(
   async (educationId, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
 
       const res = await fetch(`${BASE_URL}/education/${educationId}`, {
         method: 'DELETE',

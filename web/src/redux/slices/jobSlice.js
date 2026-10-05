@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
-// const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
+// const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 // Get user token helper
 const getAuthHeaders = () => {
-  const token = localStorage.getItem('edrilla_token');
+  const token = localStorage.getItem('ias_dcs_token');
   return {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
@@ -84,7 +84,7 @@ export const submitProposal = createAsyncThunk(
   async ({ jobId, formData }, { rejectWithValue }) => {
     try {
       // getAuthHeaders includes Bearer token but we let browser set Content-Type for FormData
-      const token = localStorage.getItem('edrilla_token');
+      const token = localStorage.getItem('ias_dcs_token');
       const res = await fetch(`${BASE_URL}/jobs/${jobId}/proposals`, {
         method: 'POST',
         headers: {

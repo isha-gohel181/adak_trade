@@ -93,7 +93,7 @@ const translations = {
 
     // Purchases & Ledger
     archiveLedger: 'ARCHIVE & LEDGER',
-    purchasesLedgerSub: 'Persistent record of intellectual acquisitions and institutional investments across the Edrilla network.',
+    purchasesLedgerSub: 'Persistent record of intellectual acquisitions and institutional investments across the IAS-DCS network.',
     moduleArchive: 'MODULE ARCHIVE',
     acquisition: 'ACQUISITION',
     amount: 'AMOUNT',
@@ -411,9 +411,9 @@ const translations = {
     faqTitle: 'FREQUENTLY ASKED QUESTIONS',
     faqSubtitle: 'Everything you need to know about our courses, certification, and career placement support.',
     
-    comparisonTitle: 'EDRILLA VS TRADITIONAL LEARNING',
+    comparisonTitle: 'IAS-DCS VS TRADITIONAL LEARNING',
     comparisonSubtitle: 'Discover why thousands of professionals choose our execution-focused learning model.',
-    edrillaAdvantage: 'The Edrilla Advantage',
+    ias_dcsAdvantage: 'The IAS-DCS Advantage',
     traditionalWay: 'Traditional Education',
     
     benefitsTitle: 'WHY LEARN WITH US',
@@ -614,7 +614,7 @@ const translations = {
 
     // Purchases & Ledger
     archiveLedger: 'संग्रह और बहीखाता',
-    purchasesLedgerSub: 'Edrilla नेटवर्क पर बौद्धिक अधिग्रहण और संस्थागत निवेश का स्थायी रिकॉर्ड।',
+    purchasesLedgerSub: 'IAS-DCS नेटवर्क पर बौद्धिक अधिग्रहण और संस्थागत निवेश का स्थायी रिकॉर्ड।',
     moduleArchive: 'मॉड्यूल संग्रह',
     acquisition: 'अधिग्रहण तिथि',
     amount: 'राशि',
@@ -932,9 +932,9 @@ const translations = {
     faqTitle: 'अक्सर पूछे जाने वाले प्रश्न (FAQ)',
     faqSubtitle: 'हमारे पाठ्यक्रमों, प्रमाणन और करियर सहायता के बारे में सब कुछ जानें।',
     
-    comparisonTitle: 'पारंपरिक शिक्षा बनाम एड्रिला',
+    comparisonTitle: 'पारंपरिक शिक्षा बनाम आईएएस-डीसीएस',
     comparisonSubtitle: 'जानें कि हजारों पेशेवर हमारे निष्पादन-केंद्रित शिक्षण मॉडल को क्यों चुनते हैं।',
-    edrillaAdvantage: 'एड्रिला का लाभ',
+    ias_dcsAdvantage: 'आईएएस-डीसीएस का लाभ',
     traditionalWay: 'पारंपरिक शिक्षा प्रणाली',
     
     benefitsTitle: 'हमारे साथ क्यों सीखें',

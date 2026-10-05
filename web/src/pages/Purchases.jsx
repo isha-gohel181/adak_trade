@@ -64,7 +64,7 @@ const Purchases = () => {
                </h1>
             </div>
             <p className="max-w-md font-jetbrains text-xs text-slate-600 font-medium leading-relaxed uppercase tracking-[0.15em] text-left md:text-right">
-               {t('purchasesLedgerSub') || 'Persistent record of intellectual acquisitions and institutional investments across the Edrilla network.'}
+               {t('purchasesLedgerSub') || 'Persistent record of intellectual acquisitions and institutional investments across the IAS-DCS network.'}
             </p>
           </div>
 
@@ -153,7 +153,7 @@ const Purchases = () => {
                         <div className="col-span-2 flex justify-end gap-3 transition-all duration-500">
                            {item.certificate ? (
                               <a 
-                                href={`https://api.edrilla.com/${item.certificate.certificate_url}`} 
+                                href={`https://ias-dcs-lms.onrender.com/${item.certificate.certificate_url}`} 
                                 target="_blank" 
                                 rel="noreferrer"
                                 className="font-jetbrains text-xs font-bold text-amber-700 hover:text-slate-950 uppercase tracking-wider transition-colors bg-amber-100 px-3 py-1.5 rounded-full border border-amber-300/60"

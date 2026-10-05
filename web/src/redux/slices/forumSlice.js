@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 
 export const fetchMyThreads = createAsyncThunk(
   'forum/fetchMyThreads',
   async (_, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const fetchThreads = createAsyncThunk(
   async ({ page = 1, limit = 10, sort = 'latest' } = {}, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export const likeThread = createAsyncThunk(
   async (threadId, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export const postReply = createAsyncThunk(
   async ({ threadId, content, attachment = null, parentReplyId = null }, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {};
       
@@ -152,7 +152,7 @@ export const createThread = createAsyncThunk(
   async ({ title, content, tags, attachments }, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const token = state.auth.token || localStorage.getItem('edrilla_token');
+      const token = state.auth.token || localStorage.getItem('ias_dcs_token');
       
       const headers = {};
       
@@ -174,7 +174,7 @@ export const createThread = createAsyncThunk(
         attachments.forEach(file => formData.append('attachments', file));
       }
 
-      const response = await fetch(`https://api.edrilla.com/forum/create`, {
+      const response = await fetch(`https://ias-dcs-lms.onrender.com/forum/create`, {
         method: 'POST',
         headers,
         body: formData

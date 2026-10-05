@@ -390,9 +390,9 @@ const App = () => {
     setSessionExpired(false);
 
     // Clear user data
-    localStorage.removeItem("edrilla_token");
-    localStorage.removeItem("edrilla_user");
-    localStorage.removeItem("edrilla_refresh");
+    localStorage.removeItem("ias_dcs_token");
+    localStorage.removeItem("ias_dcs_user");
+    localStorage.removeItem("ias_dcs_refresh");
 
     // Redirect the user to the login page
     window.location.href = "/login";

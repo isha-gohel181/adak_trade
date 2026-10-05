@@ -48,7 +48,7 @@ createRoot(document.getElementById('root')).render(
 )
 
 // Auto-connect socket if we have a stored token
-const token = localStorage.getItem('edrilla_token');
+const token = localStorage.getItem('ias_dcs_token');
 if (token) {
   store.dispatch(connectSocket());
 }

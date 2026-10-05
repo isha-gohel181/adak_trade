@@ -17,7 +17,7 @@ const HTML_TEMPLATE = (name, email, passwordText) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Edrilla</title>
+    <title>Welcome to IAS-DCS</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; }
         .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 1px solid #e0e0e0; }
@@ -40,7 +40,7 @@ const HTML_TEMPLATE = (name, email, passwordText) => `
 <body>
     <div class="container">
         <div class="header">
-            <h1>EDRILLA</h1>
+            <h1>IAS-DCS</h1>
             <p>Empowering Your Learning Journey</p>
         </div>
         <div class="content">
@@ -60,24 +60,24 @@ const HTML_TEMPLATE = (name, email, passwordText) => `
             </div>
 
             <div class="download-box">
-                <h3>Download the Edrilla App</h3>
+                <h3>Download the IAS-DCS App</h3>
                 <p>Get the app to access your course and join the community chat.</p>
                 <div class="badge-container">
-                    <a href="https://play.google.com/store/apps/details?id=com.edrilla.app" class="badge">
+                    <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="badge">
                         <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="60">
                     </a>
-                    <a href="https://apps.apple.com/in/app/edrilla-business-booster/id6751890495" class="badge">
+                    <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="badge">
                         <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" height="40" style="margin-bottom: 9px;">
                     </a>
                 </div>
             </div>
             
-            <p>For any queries, simply reply to this email or contact us at <a href="mailto:support@edrilla.com" class="support-link">support@edrilla.com</a>. You can also raise a support query directly from the mobile app help section.</p>
+            <p>For any queries, simply reply to this email or contact us at <a href="mailto:support@ias-dcs.com" class="support-link">support@ias-dcs.com</a>. You can also raise a support query directly from the mobile app help section.</p>
 
-            <p>Happy Learning!<br>Team Edrilla</p>
+            <p>Happy Learning!<br>Team IAS-DCS</p>
         </div>
         <div class="footer">
-            &copy; 2026 Edrilla. All rights reserved.<br>
+            &copy; 2026 IAS-DCS. All rights reserved.<br>
             This is an automated email. Please do not reply directly to this address.
         </div>
     </div>
@@ -93,7 +93,7 @@ async function sendTest() {
         const mailOptions = {
             from: emailService.getFrom("transactional"),
             to: TEST_EMAIL,
-            subject: 'Welcome to Edrilla – AI Live Classes Access',
+            subject: 'Welcome to IAS-DCS – AI Live Classes Access',
             html: HTML_TEMPLATE(TEST_NAME, TEST_EMAIL, passwordText)
         };
 

@@ -3,7 +3,7 @@ const BASE = rawBase.includes('/api/v1') ? rawBase : `${rawBase}`;
 
 export async function authorizedFetch(path, opts = {}) {
   const url = path.startsWith('http') ? path : `${BASE}${path.startsWith('/') ? path : `/${path}`}`;
-  const token = localStorage.getItem('edrilla_token') || null;
+  const token = localStorage.getItem('ias_dcs_token') || null;
 
   // Only set Content-Type to json if body is NOT FormData
   const headers = { ...(opts.headers || {}) };
@@ -22,8 +22,8 @@ export async function authorizedFetch(path, opts = {}) {
   try {
     const newAccess = res.headers.get('x-access-token');
     const newRefresh = res.headers.get('x-refresh-token');
-    if (newAccess) localStorage.setItem('edrilla_token', newAccess);
-    if (newRefresh) localStorage.setItem('edrilla_refresh', newRefresh);
+    if (newAccess) localStorage.setItem('ias_dcs_token', newAccess);
+    if (newRefresh) localStorage.setItem('ias_dcs_refresh', newRefresh);
   } catch (e) { }
 
   return res;

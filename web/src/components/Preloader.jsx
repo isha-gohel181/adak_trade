@@ -116,7 +116,7 @@ const Preloader = ({ onComplete }) => {
 
         {/* Tactical Matrix Strings */}
         <div className="absolute top-12 left-12 flex flex-col gap-1 data-string data-string-1 items-start">
-            <span className="font-jetbrains text-[8px] tracking-[0.5em] text-accent uppercase">Brand.Intel // EDRILLA V2.1</span>
+            <span className="font-jetbrains text-[8px] tracking-[0.5em] text-accent uppercase">Brand.Intel // IAS-DCS V2.1</span>
             <span className="font-jetbrains text-[8px] tracking-[0.3em] text-white/20 uppercase">Core Status: ACTIVE</span>
         </div>
 
@@ -134,7 +134,7 @@ const Preloader = ({ onComplete }) => {
         <div ref={logoRef} className="relative lg:mb-20 mb-10 w-full flex justify-center">
             <div ref={logoRevealRef} className="overflow-visible lg:pr-40 lg:pl-10 pr-0 pl-0 w-fit">
                 <h1 className="font-anton text-[clamp(3.5rem,15vw,14rem)] lg:text-[clamp(4.5rem,18vw,14rem)] tracking-tighter text-normal flex leading-none drop-shadow-[0_0_80px_rgba(255,255,255,0.05)] whitespace-nowrap">
-                    EDRILLA
+                    IAS-DCS
                 </h1>
             </div>
             

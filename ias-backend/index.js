@@ -33,7 +33,7 @@ const io = new Server(server, {
       if (/\.vercel\.app$/.test(origin)) return callback(null, true);
       const allowed = [
         "http://localhost:5173",
-        "https://edrilla.com",
+        "https://ias-dcs-lms.vercel.app",
         "https://edrila.nexprism.in",
         "http://edrila.nexprism.in",
         "https://lapaas.com",

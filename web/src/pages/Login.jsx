@@ -151,7 +151,7 @@ const Login = () => {
                 id="login-email"
                 type="email"
                 className="login-input"
-                placeholder="scholar@edrilla.com"
+                placeholder="learner@nexprism.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -219,7 +219,7 @@ const Login = () => {
         </div>
 
         <div className="login-footer">
-          © 2024 EDRILLA V2.0. ALL RIGHTS RESERVED.
+          © 2024 IAS-DCS V2.0. ALL RIGHTS RESERVED.
         </div>
       </div>
 
@@ -318,7 +318,7 @@ const Login = () => {
                 id="forgot-email"
                 type="email"
                 className="forgot-modal__input"
-                placeholder="scholar@edrilla.com"
+                placeholder="learner@nexprism.com"
                 value={forgotEmail}
                 onChange={(event) => setForgotEmail(event.target.value)}
                 autoComplete="email"

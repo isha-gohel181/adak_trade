@@ -15,9 +15,9 @@ async function testTransactional() {
 
   try {
     const info = await transporter.verify();
-    console.log("Transactional Email (noreply@edrilla.com): SUCCESS");
+    console.log("Transactional Email (noreply@ias-dcs.com): SUCCESS");
   } catch (error) {
-    console.error("Transactional Email (noreply@edrilla.com): FAILED -", error.message);
+    console.error("Transactional Email (noreply@ias-dcs.com): FAILED -", error.message);
   }
 }
 
@@ -34,9 +34,9 @@ async function testFounder() {
 
   try {
     const info = await transporter.verify();
-    console.log("Founder Email (sahil@edrilla.com): SUCCESS");
+    console.log("Founder Email (contact@ias-dcs.com): SUCCESS");
   } catch (error) {
-    console.error("Founder Email (sahil@edrilla.com): FAILED -", error.message);
+    console.error("Founder Email (contact@ias-dcs.com): FAILED -", error.message);
   }
 }
 
@@ -53,9 +53,9 @@ async function testSupport() {
 
   try {
     const info = await transporter.verify();
-    console.log("Support Email (support@edrilla.com): SUCCESS");
+    console.log("Support Email (support@ias-dcs.com): SUCCESS");
   } catch (error) {
-    console.error("Support Email (support@edrilla.com): FAILED -", error.message);
+    console.error("Support Email (support@ias-dcs.com): FAILED -", error.message);
   }
 }
 

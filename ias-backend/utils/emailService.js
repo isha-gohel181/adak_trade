@@ -5,9 +5,9 @@ dotenv.config();
 /**
  * EmailService handles sending different types of emails from different sender addresses.
  * 
- * Transactional: noreply@edrilla.com (process.env.TransactionalEmail / process.env.TransactionalEmailPass)
- * Founder/Casual: sahil@edrilla.com (process.env.FounderEmail / process.env.FounderEmailPass)
- * Support: support@edrilla.com (process.env.SupportEmail / process.env.SupportEmailPass)
+ * Transactional: noreply@ias-dcs.com (process.env.TransactionalEmail / process.env.TransactionalEmailPass)
+ * Founder/Casual: contact@ias-dcs.com (process.env.FounderEmail / process.env.FounderEmailPass)
+ * Support: support@ias-dcs.com (process.env.SupportEmail / process.env.SupportEmailPass)
  */
 class EmailService {
   constructor() {
@@ -59,13 +59,13 @@ class EmailService {
   getFrom(type = "transactional") {
     switch (type) {
       case "transactional":
-        return `"Edrilla" <${process.env.TransactionalEmail || "noreply@edrilla.com"}>`;
+        return `"IAS-DCS" <${process.env.TransactionalEmail || "noreply@ias-dcs.com"}>`;
       case "founder":
-        return `"Sahil (Edrilla)" <${process.env.FounderEmail || "sahil@edrilla.com"}>`;
+        return `"IAS-DCS Admin" <${process.env.FounderEmail || "contact@ias-dcs.com"}>`;
       case "support":
-        return `"Edrilla Support" <${process.env.SupportEmail || "support@edrilla.com"}>`;
+        return `"IAS-DCS Support" <${process.env.SupportEmail || "support@ias-dcs.com"}>`;
       default:
-        return `"Edrilla" <${process.env.TransactionalEmail || "noreply@edrilla.com"}>`;
+        return `"IAS-DCS" <${process.env.TransactionalEmail || "noreply@ias-dcs.com"}>`;
     }
   }
 
@@ -115,7 +115,7 @@ class EmailService {
    * Send password reset email (Transactional)
    */
   async sendPasswordResetEmail(email, resetToken, userName) {
-    const resetUrl = `${process.env.FRONTEND_URL || "https://edrilla.com"
+    const resetUrl = `${process.env.FRONTEND_URL || "https://ias-dcs-lms.vercel.app"
       }/reset-password?token=${resetToken}`;
 
     const mailOptions = {
@@ -128,7 +128,7 @@ class EmailService {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset - Edrilla</title>
+    <title>Password Reset - IAS-DCS</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
     <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -139,7 +139,7 @@ class EmailService {
                     <!-- Header with Logo -->
                     <tr>
                         <td style="background-color: #93bb3d; padding: 30px 40px; text-align: center;">
-                            <img src="https://edrilla.com/logo.svg" alt="Edrilla Logo" style="height: 40px; width: auto; display: block; margin: 0 auto 15px auto;">
+                            <img src="https://ias-dcs-lms.vercel.app/logo/iasdcs-logo.png" alt="IAS-DCS Logo" style="height: 40px; width: auto; display: block; margin: 0 auto 15px auto;">
                             <h1 style="color: #191a17; margin: 0; font-size: 24px; font-weight: bold;">Password Reset Request</h1>
                         </td>
                     </tr>
@@ -152,7 +152,7 @@ class EmailService {
                             </p>
                             
                             <p style="margin: 0 0 25px 0; font-size: 16px; line-height: 1.5;">
-                                We received a request to reset your password for your Edrilla account. If you made this request, click the button below to create a new password.
+                                We received a request to reset your password for your IAS-DCS account. If you made this request, click the button below to create a new password.
                             </p>
                             
                             <!-- Reset Button -->
@@ -196,7 +196,7 @@ class EmailService {
                     <tr>
                         <td style="background-color: #0f100e; padding: 30px 40px; text-align: center; border-top: 2px solid #93bb3d;">
                             <p style="margin: 0 0 15px 0; color: #93bb3d; font-size: 18px; font-weight: bold;">
-                                Edrilla
+                                IAS-DCS
                             </p>
                             <p style="margin: 0; font-size: 12px; color: #888888; line-height: 1.4;">
                                 This is an automated email, please do not reply.<br>
@@ -243,7 +243,7 @@ class EmailService {
           <p>Your login details are as follows:</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Password:</strong> ${password}</p>
-          <a href="${process.env.FRONTEND_URL || 'https://edrilla.com'}/login" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          <a href="${process.env.FRONTEND_URL || 'https://ias-dcs-lms.vercel.app'}/login" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Login to your account
           </a>
           `
@@ -277,14 +277,14 @@ class EmailService {
     const mailOptions = {
       from: this.getFrom("transactional"),
       to: email,
-      subject: "Welcome to Edrilla – Enrollment Successful!",
+      subject: "Welcome to IAS-DCS – Enrollment Successful!",
       html: `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollment Successful - Edrilla</title>
+    <title>Enrollment Successful - IAS-DCS</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; background-color: #ffffff; color: #000000; line-height: 1.6; }
@@ -324,7 +324,7 @@ class EmailService {
 <body>
     <div class="email-container">
         <div class="header">
-            <div class="logo">EDRILLA</div>
+            <div class="logo">IAS-DCS</div>
             <div class="tagline">Course</div>
         </div>
         <div class="content">
@@ -337,14 +337,14 @@ class EmailService {
           
             <div class="download-section">
                 <div class="download-title">Start Learning Now</div>
-                <div class="download-subtitle">Download the Edrilla app or use the web platform</div>
+                <div class="download-subtitle">Download the IAS-DCS app or use the web platform</div>
                 <div class="download-buttons">
-                    <a href="https://play.google.com/store/apps/details?id=com.edrilla.app" class="download-btn" target="_blank">📱 Play Store</a>
-                    <a href="https://apps.apple.com/in/app/edrilla-business-booster/id6751890495" class="download-btn" target="_blank">
+                    <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="download-btn" target="_blank">📱 Play Store</a>
+                    <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="download-btn" target="_blank">
                         <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" alt="App Store" width="20" style="vertical-align:middle; margin-right:5px;">
                         App Store
                     </a>
-                    <a href="https://edrilla.com/login" class="download-btn" target="_blank">🌐 Web App</a>
+                    <a href="https://ias-dcs-lms.vercel.app/login" class="download-btn" target="_blank">🌐 Web App</a>
                 </div>
             </div>
             <p class="message-text">If you have any questions or need assistance, our support team is here for you.</p>
@@ -355,7 +355,7 @@ class EmailService {
         </div>
         <div class="footer">
             <p class="support-info">Need help? Contact us at</p>
-            <a href="mailto:support@edrilla.com" class="support-email">support@edrilla.com</a>
+            <a href="mailto:support@ias-dcs.com" class="support-email">support@ias-dcs.com</a>
         </div>
     </div>
 </body>
@@ -439,9 +439,9 @@ class EmailService {
   }
 
   /**
-   * Send job proposal email to job creator (job feature is user-to-user, not from Edrilla)
+   * Send job proposal email to job creator (job feature is user-to-user, not from IAS-DCS)
    * This email is sent from the applicant to the job creator, using the applicant's email as the "from" address.
-   * Edrilla only relays the email, it is not a proposal to Edrilla.
+   * IAS-DCS only relays the email, it is not a proposal to IAS-DCS.
    */
   async sendJobProposalEmail(jobCreatorEmail, jobCreatorName, jobTitle, proposalDetails, applicant) {
     // applicant: { name, email }

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://api.edrilla.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
 const LAPAAS_TICKET_URL = import.meta.env.VITE_LAPAAS_TICKET_URL || `${BASE_URL}/lapaas-ticket`;
 
 export const createSupportTicket = createAsyncThunk(
@@ -8,7 +8,7 @@ export const createSupportTicket = createAsyncThunk(
   async (formData, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
       
       const response = await fetch(`${BASE_URL}/support-tickets/`, {
         method: 'POST',
@@ -56,7 +56,7 @@ export const fetchMyTickets = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const { auth } = getState();
-      const token = auth.token || localStorage.getItem('edrilla_token');
+      const token = auth.token || localStorage.getItem('ias_dcs_token');
       
       const response = await fetch(`${BASE_URL}/support-tickets/`, {
         method: 'GET',

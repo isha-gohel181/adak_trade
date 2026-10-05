@@ -123,8 +123,8 @@ const DashboardHeader = () => {
 
   const handleLogout = () => {
     try {
-      localStorage.removeItem('edrilla_token')
-      localStorage.removeItem('edrilla_user')
+      localStorage.removeItem('ias_dcs_token')
+      localStorage.removeItem('ias_dcs_user')
       localStorage.removeItem('user')
       localStorage.removeItem('userInfo')
       dispatch(logout())

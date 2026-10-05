@@ -11,7 +11,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('edrilla_theme', 'light')
+      localStorage.setItem('ias_dcs_theme', 'light')
     } catch (e) {
       console.warn('Failed to save theme in localStorage', e)
     }

@@ -25,7 +25,7 @@ const certificateData = {
   course_name: course?.title || 'Course',
   completion_date: cert.completion_date ? new Date(cert.completion_date) : new Date(),
   instructor_name: instructor?.fullName || cert.instructor_name || 'Instructor',
-  platform_name: 'Edrilla',
+  platform_name: 'IAS-DCS',
 };
 
 const newUrl = await generateCertificatePDF({ template, certificateData });

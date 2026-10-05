@@ -57,7 +57,7 @@ export const generateCertificatePDF = async ({ template, certificateData }) => {
     const cX = (text, size) => cx - (text.length * size * 0.3);
 
     // ---- TOP SECTION ----
-    page.drawText('EDRILLA', { x: cX('EDRILLA', 18), y: 760, size: 18, color: navy, font: bf });
+    page.drawText('IAS-DCS', { x: cX('IAS-DCS', 18), y: 760, size: 18, color: navy, font: bf });
     page.drawLine({ start: { x: cx - 50, y: 750 }, end: { x: cx + 50, y: 750 }, thickness: 0.5, color: green });
 
     // ---- CERTIFICATE TITLE ----

@@ -16,7 +16,7 @@ const smtpConfig = {
     port: Number(process.env.SMTP_PORT) || 587,
     secure: process.env.SMTP_SECURE === 'true',
     auth: {
-        user: process.env.SMTP_USER || 'support@edrilla.com',
+        user: process.env.SMTP_USER || 'support@ias-dcs.com',
         pass: process.env.SMTP_PASS || 'vjbfuqityyfivvii',
     },
 };
@@ -93,7 +93,7 @@ const emailTemplate = `
     <div class="wrapper">
         <div class="container">
             <header class="page-header">
-                <h1 class="logo-text">EDRILLA</h1>
+                <h1 class="logo-text">IAS-DCS</h1>
                 <div class="header-badge">Class Joining Guide</div>
             </header>
             
@@ -118,7 +118,7 @@ const emailTemplate = `
                     <div class="section-body">
                         <div class="step-item">
                             <div class="step-number">1</div>
-                            <div class="step-text">Visit <b>Edrilla.com</b>.</div>
+                            <div class="step-text">Visit <b>ias-dcs-lms.vercel.app</b>.</div>
                         </div>
                         <div class="step-item">
                             <div class="step-number">2</div>
@@ -144,7 +144,7 @@ const emailTemplate = `
                         <p style="margin-top:0; margin-bottom:20px; font-weight:600; color:#92400e;">Missed a session? We've got you covered!</p>
                         <div class="step-item">
                             <div class="step-number" style="background:#92400e">1</div>
-                            <div class="step-text">Log in to the <b>Edrilla App</b>.</div>
+                            <div class="step-text">Log in to the <b>IAS-DCS App</b>.</div>
                         </div>
                         <div class="step-item">
                             <div class="step-number" style="background:#92400e">2</div>
@@ -162,7 +162,7 @@ const emailTemplate = `
                 </div>
 
                 <div class="btn-container">
-                    <a href="https://edrilla.com" class="main-btn">Go to Dashboard</a>
+                    <a href="https://ias-dcs-lms.vercel.app" class="main-btn">Go to Dashboard</a>
                 </div>
 
                 <!-- HELP SECTION -->
@@ -181,19 +181,19 @@ const emailTemplate = `
             </div>
 
             <div class="social-hub">
-                <a href="https://play.google.com/store/apps/details?id=com.edrilla.app" class="social-link">Android App</a> |
-                <a href="https://apps.apple.com/in/app/edrilla-business-booster/id6751890495" class="social-link">iOS App</a> |
-                <a href="https://edrilla.com" class="social-link">Web Portal</a>
+                <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="social-link">Android App</a> |
+                <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="social-link">iOS App</a> |
+                <a href="https://ias-dcs-lms.vercel.app" class="social-link">Web Portal</a>
             </div>
 
             <footer class="footer">
-                <div class="footer-logo">EDRILLA</div>
+                <div class="footer-logo">IAS-DCS</div>
                 <p class="footer-text">
                     Lapaas Academy, New Delhi, India<br>
                     Empowering the next generation of AI Builders.
                 </p>
                 <div class="contact-info">📞 +91 95400 65704</div>
-                <p style="font-size:11px; opacity:0.6; margin-top:30px;">© 2026 Edrilla. All rights reserved.</p>
+                <p style="font-size:11px; opacity:0.6; margin-top:30px;">© 2026 IAS-DCS. All rights reserved.</p>
             </footer>
         </div>
     </div>
@@ -210,7 +210,7 @@ async function sendMail(to, name) {
     const html = emailTemplate.replace(/{{Name}}/g, name).replace(/{{Email}}/g, to);
 
     await transporter.sendMail({
-        from: `"Sahil Khanna | Edrilla" <${process.env.EMAIL_FROM || 'support@edrilla.com'}>`,
+        from: `"IAS-DCS Support" <${process.env.EMAIL_FROM || 'support@ias-dcs.com'}>`,
         to,
         subject: '⚠️ ACTION REQUIRED: How to Join Your Live Classes & Access Recordings',
         html,
