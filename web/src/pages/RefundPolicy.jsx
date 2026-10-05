@@ -16,12 +16,12 @@ const RefundPolicy = () => {
         
         <div className="refund-animate space-y-6 text-base leading-relaxed">
           <p>
-            Thank you for choosing Bankers Grade for your banking exam preparation. We strive to provide the highest quality educational content. Please read our refund policy carefully.
+            Thank you for choosing the Institute of Applied Statistics (IAS-DCS) for your professional development and statistical research training. We strive to provide the highest quality educational content. Please read our refund policy carefully.
           </p>
           
-          <h2 className="text-xl font-bold text-amber-600 mt-6">1. Digital Products</h2>
+          <h2 className="text-xl font-bold text-amber-600 mt-6">1. Digital Products & Live Courses</h2>
           <p>
-            Due to the digital nature of our courses, video classes, e-books, and practice tests, all sales are considered final once the content has been accessed or downloaded.
+            Due to the digital nature of our self-paced courses, datasets, recorded workshops, and certification material, sales are considered final once learning materials have been accessed or downloaded.
           </p>
           
           <h2 className="text-xl font-bold text-amber-600 mt-6">2. Refund Eligibility</h2>
@@ -30,17 +30,17 @@ const RefundPolicy = () => {
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Duplicate payments made by accident.</li>
-            <li>Technical issues on our platform that prevent you from accessing the purchased course entirely, which our support team is unable to resolve within 7 working days.</li>
+            <li>Technical issues on our platform that prevent you from accessing the enrolled course entirely, which our technical support team is unable to resolve within 7 working days.</li>
           </ul>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">3. How to Request a Refund</h2>
           <p>
-            If you believe you are eligible for a refund, please contact our support team within 48 hours of purchase with your transaction details and a clear explanation of the issue.
+            If you believe you are eligible for a refund, please contact our support team at <a href="mailto:support@ias-dcs.com" className="text-amber-700 font-bold hover:underline">support@ias-dcs.com</a> within 48 hours of purchase with your transaction ID and a description of the issue.
           </p>
           
           <h2 className="text-xl font-bold text-amber-600 mt-6">4. Processing Time</h2>
           <p>
-            Approved refunds will be processed within 7-10 business days and will be credited back to the original payment method used during the purchase.
+            Approved refunds will be processed within 7-10 business days and will be credited back to the original payment method used during enrollment.
           </p>
         </div>
       </div>

@@ -1,14 +1,122 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import gsap from 'gsap'
-import { fetchExploreJobs } from '../redux/slices/jobSlice'
+import { useNavigate } from 'react-router-dom'
+import { fetchExploreJobs, submitProposal } from '../redux/slices/jobSlice'
 import { useLanguage } from '../context/LanguageContext'
+
+// Helper formatting functions
+const formatBudget = (budget) => {
+  if (!budget) return 'Negotiable';
+  if (typeof budget === 'string') {
+    try {
+      const parsed = JSON.parse(budget);
+      if (typeof parsed === 'object' && parsed !== null) return formatBudget(parsed);
+    } catch (e) {}
+    return budget;
+  }
+  if (typeof budget === 'number') return `₹${budget.toLocaleString()}`;
+  if (typeof budget === 'object') {
+    const { min, max, currency = 'INR' } = budget;
+    const symbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : `${currency} `;
+    if (min !== undefined && max !== undefined) {
+      return `${symbol}${Number(min).toLocaleString()} – ${symbol}${Number(max).toLocaleString()}`;
+    }
+    if (min !== undefined) return `${symbol}${Number(min).toLocaleString()}+`;
+    if (max !== undefined) return `Up to ${symbol}${Number(max).toLocaleString()}`;
+  }
+  return 'Negotiable';
+};
+
+const formatLocation = (loc) => {
+  if (!loc) return 'Remote';
+  if (typeof loc === 'string') {
+    try {
+      const parsed = JSON.parse(loc);
+      if (typeof parsed === 'object' && parsed !== null) return formatLocation(parsed);
+    } catch (e) {}
+    return loc;
+  }
+  if (typeof loc === 'object') {
+    const addr = loc.address;
+    if (addr && typeof addr === 'object') {
+      const parts = [addr.city, addr.state, addr.country].filter(Boolean);
+      if (parts.length > 0) {
+        const modeSuffix = loc.type && loc.type.toLowerCase() !== 'onsite' ? ` (${loc.type.charAt(0).toUpperCase() + loc.type.slice(1)})` : '';
+        return `${parts.join(', ')}${modeSuffix}`;
+      }
+    }
+    if (loc.type) return loc.type.charAt(0).toUpperCase() + loc.type.slice(1);
+    if (loc.city || loc.country) return [loc.city, loc.state, loc.country].filter(Boolean).join(', ');
+  }
+  return 'Remote';
+};
+
+const formatWorkMode = (gig) => {
+  if (!gig) return 'Remote';
+  if (typeof gig === 'string') return gig.charAt(0).toUpperCase() + gig.slice(1);
+  if (gig.mode) return gig.mode.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  if (gig.workMode) {
+    if (typeof gig.workMode === 'string') return gig.workMode;
+    if (gig.workMode.type) return gig.workMode.type.charAt(0).toUpperCase() + gig.workMode.type.slice(1);
+  }
+  if (gig.location?.type) return gig.location.type.charAt(0).toUpperCase() + gig.location.type.slice(1);
+  return 'Remote';
+};
+
+const formatJobType = (gig) => {
+  if (!gig) return 'Full Time';
+  if (typeof gig === 'string') return gig;
+  if (gig.type && typeof gig.type === 'string') return gig.type;
+  if (gig.mode && typeof gig.mode === 'string') {
+    return gig.mode.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+  return 'Full Time';
+};
+
+const formatExperience = (lvl) => {
+  if (!lvl) return 'Intermediate';
+  if (typeof lvl === 'string') return lvl.charAt(0).toUpperCase() + lvl.slice(1);
+  return 'Intermediate';
+};
+
+const formatDuration = (dur) => {
+  if (!dur) return 'Flexible';
+  if (typeof dur === 'string') return dur;
+  if (typeof dur === 'object' && dur.value) {
+    return `${dur.value} ${dur.unit || 'months'}`;
+  }
+  return 'Flexible';
+};
+
+const getSkills = (gig) => {
+  if (!gig) return ['Applied Statistics', 'Data Analysis'];
+  if (Array.isArray(gig.skillsRequired) && gig.skillsRequired.length > 0) return gig.skillsRequired;
+  if (Array.isArray(gig.skills) && gig.skills.length > 0) return gig.skills;
+  if (Array.isArray(gig.tags) && gig.tags.length > 0) return gig.tags;
+  return ['Applied Statistics', 'Data Analysis', 'Research'];
+};
+
+const safeRender = (val) => {
+  if (val === null || val === undefined) return '';
+  if (typeof val === 'string') return val;
+  if (typeof val === 'number') return String(val);
+  if (Array.isArray(val)) return val.map(safeRender).join(', ');
+  if (typeof val === 'object') {
+    if (val.min !== undefined || val.max !== undefined) return formatBudget(val);
+    if (val.address || val.type) return formatLocation(val);
+    if (val.value && val.unit) return formatDuration(val);
+    const preferred = val.name || val.label || val.title || val.value;
+    if (preferred && typeof preferred !== 'object') return String(preferred);
+    if (preferred && typeof preferred === 'object') return safeRender(preferred);
+    return '';
+  }
+  return String(val);
+};
 
 const GigCard = ({ gig }) => {
   const cardRef = useRef(null)
   const { t } = useLanguage()
 
-  // Use a fallback image if none exists
   const displayImage = gig.image || gig.thumbnail || '/gig_motion.png';
   const displayIcon = gig.icon || (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -16,21 +124,6 @@ const GigCard = ({ gig }) => {
       <path d="M3.27 6.96L12 12.01l8.73-5.05" /><path d="M12 22.08V12" />
     </svg>
   );
-
-  // Helper to strictly ensure we return a string, never an object
-  const safeRender = (val) => {
-    if (val === null || val === undefined) return '';
-    if (typeof val === 'string') return val;
-    if (typeof val === 'number') return String(val);
-    if (Array.isArray(val)) return val.map(safeRender).join(', ');
-    if (typeof val === 'object') {
-      const preferred = val.address || val.type || val.name || val.label || val.title || val.value;
-      if (preferred && typeof preferred !== 'object') return String(preferred);
-      if (preferred && typeof preferred === 'object') return safeRender(preferred);
-      try { return JSON.stringify(val); } catch (e) { return '[Data]'; }
-    }
-    return String(val);
-  };
 
   return (
     <div
@@ -60,11 +153,11 @@ const GigCard = ({ gig }) => {
           {/* Structured Specifics Grid */}
           <div className="mt-2 bg-slate-50 border border-slate-200/60 p-4 rounded-xl space-y-2">
             {[
-              { label: t('jobRole'), value: safeRender(gig.role || gig.position || 'Specialist') },
-              { label: t('jobLocation'), value: safeRender(gig.location || gig.locationDetails || 'Remote') },
-              { label: t('jobReportTo'), value: safeRender(gig.reportTo || 'Manager') },
-              { label: t('jobWorkingDays'), value: safeRender(gig.workingDays || 'Mon to Fri') },
-              { label: t('jobTimings'), value: safeRender(gig.timings || 'Flexible') }
+              { label: t('jobRole') || 'Role', value: safeRender(gig.category || gig.role || gig.position || 'Specialist') },
+              { label: t('jobLocation') || 'Location', value: formatLocation(gig.location) },
+              { label: 'Budget', value: formatBudget(gig.budget) },
+              { label: 'Duration', value: formatDuration(gig.estimatedDuration) },
+              { label: 'Work Mode', value: formatWorkMode(gig) }
             ].map((item, i) => (
               <div key={i} className="flex gap-2 items-baseline">
                 <span className="font-jetbrains text-xs text-slate-500 font-bold uppercase tracking-wider shrink-0">{item.label}:</span>
@@ -75,7 +168,7 @@ const GigCard = ({ gig }) => {
         </div>
 
         <p className="font-montserrat text-xs leading-relaxed text-slate-600 line-clamp-3 font-medium">
-          <span className="text-amber-800 uppercase text-[10px] tracking-wider block mb-1 font-black">{t('positionOverview')}</span>
+          <span className="text-amber-800 uppercase text-[10px] tracking-wider block mb-1 font-black">{t('positionOverview') || 'Position Overview'}</span>
           {safeRender(gig.description)}
         </p>
 
@@ -83,41 +176,41 @@ const GigCard = ({ gig }) => {
         <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100">
           <div className="flex items-center gap-2 text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-            <span className="font-jetbrains text-xs font-bold uppercase">{safeRender(gig.type || 'Full Time')}</span>
+            <span className="font-jetbrains text-xs font-bold uppercase">{formatJobType(gig)}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span className="font-jetbrains text-xs font-bold uppercase">{safeRender(gig.shift || 'Day')}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span className="font-jetbrains text-xs font-bold uppercase">{formatExperience(gig.experienceLevel)}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span className="font-jetbrains text-xs font-bold uppercase">{safeRender(gig.workMode || 'Remote')}</span>
+            <span className="font-jetbrains text-xs font-bold uppercase">{formatWorkMode(gig)}</span>
           </div>
         </div>
 
         {/* Posted Date */}
         <div className="flex items-center gap-2 text-slate-500">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          <span className="font-jetbrains text-xs font-medium">{t('postedText')} {gig.createdAt ? new Date(gig.createdAt).toLocaleDateString() : 'Recently'}</span>
+          <span className="font-jetbrains text-xs font-medium">{t('postedText') || 'Posted'} {gig.createdAt ? new Date(gig.createdAt).toLocaleDateString() : 'Recently'}</span>
         </div>
 
         {/* Skill Tags Cloud */}
         <div className="flex flex-wrap gap-2">
-          {(gig.skills || gig.tags || []).slice(0, 3).map((skill, si) => (
+          {getSkills(gig).slice(0, 3).map((skill, si) => (
             <span key={si} className="px-3 py-1 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-full">
               {safeRender(skill)}
             </span>
           ))}
-          {((gig.skills?.length || gig.tags?.length || 0) > 3) && (
+          {(getSkills(gig).length > 3) && (
             <span className="px-3 py-1 bg-slate-100 border border-slate-200 font-jetbrains text-[10px] text-slate-600 font-bold uppercase tracking-wider rounded-full">
-              +{((gig.skills?.length || gig.tags?.length || 0) - 3)}
+              +{getSkills(gig).length - 3}
             </span>
           )}
         </div>
 
         {/* Footer Button */}
         <button className="w-full mt-2 py-3 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2">
-          {t('applyNow')}
+          {t('applyNow') || 'View Details & Apply'}
           <span className="text-base">›</span>
         </button>
       </div>
@@ -134,13 +227,12 @@ const Gigs = () => {
   const containerRef = useRef(null)
 
   const filterOptions = [
-    { key: 'All Categories', label: t('categoryAll') },
-    { key: 'Design & Branding', label: t('categoryDesignBranding') },
-    { key: 'Content & Copywriting', label: t('categoryContentCopywriting') },
-    { key: 'Video & Audio', label: t('categoryVideoAudio') },
-    { key: 'Marketing & Growth', label: t('categoryMarketingGrowth') },
-    { key: 'Tech & Website', label: t('categoryTechWebsite') },
-    { key: 'Sales & Clientwork', label: t('categorySalesClientwork') }
+    { key: 'All Categories', label: t('categoryAll') || 'All Categories' },
+    { key: 'Statistical Analysis', label: 'Statistical Analysis' },
+    { key: 'Machine Learning', label: 'Machine Learning' },
+    { key: 'Data Science', label: 'Data Science' },
+    { key: 'BI & Visualization', label: 'BI & Visualization' },
+    { key: 'Tech & Website', label: 'Tech & Website' }
   ]
 
   useEffect(() => {
@@ -150,7 +242,11 @@ const Gigs = () => {
   const jobsList = Array.isArray(exploreJobs) ? exploreJobs : [];
   const filteredJobs = activeFilter === 'All Categories'
     ? jobsList
-    : jobsList.filter(g => g.category === activeFilter || g.title?.includes(activeFilter))
+    : jobsList.filter(g => 
+        g.category === activeFilter || 
+        g.title?.toLowerCase().includes(activeFilter.toLowerCase()) ||
+        g.skillsRequired?.some(s => s.toLowerCase().includes(activeFilter.toLowerCase()))
+      );
 
   if (selectedJob) {
     return <JobDetail job={selectedJob} onBack={() => setSelectedJob(null)} submitting={submitting} dispatch={dispatch} />;
@@ -162,28 +258,25 @@ const Gigs = () => {
         <div className="mb-6">
           <div className="flex items-baseline gap-6 gig-header-reveal flex-wrap">
             <h1 className="font-newsreader text-4xl md:text-6xl font-bold italic text-slate-900 tracking-tight">
-              {t('gigsTitle')}
+              {t('gigsTitle') || 'Professional Gigs & Research Roles'}
             </h1>
           </div>
-          <p className="font-jetbrains text-xs text-amber-800 uppercase tracking-[0.4em] font-black italic mt-2">{t('gigsSubtitle')}</p>
+          <p className="font-jetbrains text-xs text-amber-800 uppercase tracking-[0.4em] font-black italic mt-2">
+            {t('gigsSubtitle') || 'Applied Statistics, Modeling & Data Science Opportunities'}
+          </p>
         </div>
 
+        {/* Category Filters (Pill Row without FILTER BY label) */}
         <div className="mb-10">
-          <div className="mt-6 flex items-center w-full relative">
-            <div className="sticky left-0 md:relative z-20 bg-slate-50 md:bg-transparent pr-4 md:pr-6 flex-shrink-0">
-              <span className="inline-flex items-center justify-center h-[38px] font-jetbrains text-xs bg-slate-900 px-5 md:px-6 font-black text-white tracking-widest uppercase whitespace-nowrap rounded-full">
-                {t('filterBy')}
-              </span>
-            </div>
-
-            <div className="flex flex-nowrap overflow-x-auto scrollbar-hide gap-2.5 w-full pl-2 md:pl-0 pb-2 touch-pan-x">
+          <div className="mt-4 flex items-center w-full">
+            <div className="flex flex-wrap md:flex-nowrap overflow-x-auto scrollbar-hide gap-2.5 w-full pb-2 touch-pan-x">
               {filterOptions.map((filterObj) => (
                 <button
                   key={filterObj.key}
                   onClick={() => setActiveFilter(filterObj.key)}
                   className={`inline-flex items-center justify-center h-[38px] whitespace-nowrap px-5 font-jetbrains text-xs font-bold tracking-wider uppercase transition-all duration-300 rounded-full border ${activeFilter === filterObj.key
                       ? 'bg-accent border-accent text-slate-950 font-black shadow-accent-soft'
-                      : 'bg-white text-slate-700 border-slate-200/80 hover:border-amber-400 hover:text-amber-700'
+                      : 'bg-white text-slate-700 border-slate-200/80 hover:border-amber-400 hover:text-amber-700 shadow-sm'
                     }`}
                 >
                   {filterObj.label}
@@ -205,7 +298,7 @@ const Gigs = () => {
               {loading ? (
                 <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
               ) : (
-                <span className="font-jetbrains uppercase tracking-widest text-xs text-slate-500 font-medium">{t('noGigsFound')}</span>
+                <span className="font-jetbrains uppercase tracking-widest text-xs text-slate-500 font-medium">{t('noGigsFound') || 'No opportunities found'}</span>
               )}
             </div>
           )}
@@ -230,46 +323,51 @@ const Gigs = () => {
 }
 
 const JobDetail = ({ job, onBack, submitting, dispatch }) => {
+  const navigate = useNavigate()
+  const { user, token } = useSelector(state => state.auth)
+  const isAuthenticated = !!(token || localStorage.getItem('ias_dcs_token') || user)
+
   const [formData, setFormData] = useState({
     coverLetter: '',
     proposedAmount: '',
     additionalInfo: ''
   })
   const [cvFile, setCvFile] = useState(null)
+  const [feedback, setFeedback] = useState({ type: '', message: '' })
 
-  const safeRender = (val) => {
-    if (val === null || val === undefined) return '';
-    if (typeof val === 'string') return val;
-    if (typeof val === 'number') return String(val);
-    if (Array.isArray(val)) return val.map(v => (typeof v === 'object' ? (v.name || v.label || JSON.stringify(v)) : String(v))).join(', ');
-    if (typeof val === 'object') {
-      const preferred = val.address || val.type || val.name || val.label || val.title || val.value;
-      if (preferred && typeof preferred !== 'object') return String(preferred);
-      try { return JSON.stringify(val); } catch (e) { return '[Data]'; }
-    }
-    return String(val);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isAuthenticated) {
+      navigate('/login?redirect=/gig');
+      return;
+    }
+
     if (!cvFile) {
-      alert('Please upload your CV');
+      setFeedback({ type: 'error', message: 'Please upload your CV (PDF or DOCX).' });
       return;
     }
     
+    setFeedback({ type: '', message: '' });
     const body = new FormData();
     body.append('coverLetter', formData.coverLetter);
     body.append('proposedAmount', formData.proposedAmount);
     body.append('cv', cvFile);
-    body.append('additionalInfo', formData.additionalInfo);
+    if (formData.additionalInfo) {
+      body.append('additionalInfo', formData.additionalInfo);
+    }
 
-    import('../redux/slices/jobSlice').then(m => dispatch(m.submitProposal({ jobId: job._id || job.id, formData: body })))
-      .then(res => {
-        if (!res.error) {
-          alert('Proposal submitted successfully!');
-          onBack();
-        }
-      });
+    try {
+      await dispatch(submitProposal({ jobId: job._id || job.id, formData: body })).unwrap();
+      setFeedback({ type: 'success', message: '🎉 Proposal submitted successfully! The recruiter has received your application.' });
+      setFormData({ coverLetter: '', proposedAmount: '', additionalInfo: '' });
+      setCvFile(null);
+      setTimeout(() => {
+        onBack();
+      }, 1500);
+    } catch (err) {
+      const msg = typeof err === 'string' ? err : err?.message || 'Failed to submit proposal';
+      setFeedback({ type: 'error', message: msg });
+    }
   };
 
   return (
@@ -288,7 +386,7 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
             <div className="flex flex-col gap-2">
               <h1 className="font-newsreader text-4xl md:text-5xl font-bold italic text-slate-900 leading-tight">{safeRender(job.title)}</h1>
               <p className="font-jetbrains text-xs text-slate-500 uppercase tracking-wider font-medium">
-                Posted by Client • {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently'}
+                Posted by {job.createdBy?.fullName || 'IAS-DCS Faculty'} • {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently'}
               </p>
             </div>
 
@@ -298,23 +396,23 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
 
             <div className="space-y-3">
               <h4 className="font-newsreader text-2xl italic font-bold text-slate-900">Position Overview</h4>
-              <p className="font-montserrat text-sm text-slate-700 leading-relaxed font-medium">{safeRender(job.description)}</p>
+              <p className="font-montserrat text-sm text-slate-700 leading-relaxed font-medium whitespace-pre-line">{safeRender(job.description)}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>, label: 'Job Type', value: job.type || 'Full Time' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>, label: 'Location', value: job.location || 'Remote' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>, label: 'Work Mode', value: job.workMode || 'Remote' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>, label: 'Budget', value: job.budget || '$1k - $5k' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>, label: 'Experience Level', value: job.experienceLevel || 'Expert' },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>, label: 'Job Type', value: formatJobType(job) },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>, label: 'Location', value: formatLocation(job.location) },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>, label: 'Work Mode', value: formatWorkMode(job) },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>, label: 'Budget', value: formatBudget(job.budget) },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>, label: 'Experience Level', value: formatExperience(job.experienceLevel) },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>, label: 'Posted', value: job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently' }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                  <div className="w-10 h-10 flex items-center justify-center bg-amber-100 text-amber-900 border border-amber-300 rounded-lg">{item.icon}</div>
-                  <div>
+                  <div className="w-10 h-10 flex items-center justify-center bg-amber-100 text-amber-900 border border-amber-300 rounded-lg shrink-0">{item.icon}</div>
+                  <div className="min-w-0">
                     <p className="font-jetbrains text-[10px] uppercase tracking-wider text-slate-500 font-bold">{item.label}</p>
-                    <p className="font-montserrat font-bold text-sm text-slate-900">{safeRender(item.value)}</p>
+                    <p className="font-montserrat font-bold text-sm text-slate-900 truncate">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -323,7 +421,7 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
             <div className="flex flex-col gap-4">
               <h4 className="font-newsreader text-2xl italic font-bold text-slate-900">Skills Required</h4>
               <div className="flex flex-wrap gap-2">
-                {(job.skills || job.tags || ['Design', 'Growth', 'Strategy']).map((skill, i) => (
+                {getSkills(job).map((skill, i) => (
                   <span key={i} className="px-4 py-2 border border-slate-200 font-jetbrains text-xs font-bold text-slate-800 uppercase tracking-wider bg-slate-50 rounded-lg">
                     {safeRender(skill)}
                   </span>
@@ -345,70 +443,122 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Why do you think you're a good fit?</label>
-                    <textarea 
-                      required
-                      value={formData.coverLetter}
-                      onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
-                      placeholder="Share your expertise..."
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 min-h-[140px] font-montserrat text-sm text-slate-900 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400"
-                    />
+                {/* Feedback Notification Banner */}
+                {feedback.message && (
+                  <div className={`p-4 rounded-xl font-montserrat text-xs font-semibold leading-relaxed border ${
+                    feedback.type === 'success'
+                      ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                      : 'bg-rose-50 border-rose-300 text-rose-900'
+                  }`}>
+                    {feedback.message}
                   </div>
+                )}
 
-                  <div className="flex flex-col gap-2">
-                    <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Proposed Amount</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-600 font-bold">₹</span>
-                      <input 
-                        type="number"
-                        required
-                        value={formData.proposedAmount}
-                        onChange={(e) => setFormData({ ...formData, proposedAmount: e.target.value })}
-                        placeholder="0.00"
-                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 font-jetbrains text-sm text-slate-900 focus:border-amber-500 outline-none transition-all"
-                      />
+                {!isAuthenticated ? (
+                  <div className="flex flex-col items-center text-center py-4 px-2 space-y-5 bg-slate-50 border border-slate-200/80 rounded-xl p-6">
+                    <div className="w-14 h-14 rounded-2xl bg-amber-100/90 border border-amber-300 flex items-center justify-center text-amber-900 shadow-sm">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div className="space-y-1.5">
+                      <h4 className="font-newsreader text-2xl italic font-bold text-slate-900">
+                        Sign In Required
+                      </h4>
+                      <p className="font-montserrat text-xs text-slate-600 leading-relaxed font-medium">
+                        You need to be logged in to your IAS-DCS learner account to apply and submit proposals for gigs.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col w-full gap-2.5 pt-2">
+                      <button 
+                        onClick={() => navigate('/login?redirect=/gig')}
+                        className="w-full py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                      >
+                        <span>SIGN IN TO APPLY</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </button>
+                      <button 
+                        onClick={() => navigate('/signup')}
+                        className="w-full py-3 bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-jetbrains text-xs font-bold tracking-wider uppercase rounded-full transition-all"
+                      >
+                        Create New Account
+                      </button>
                     </div>
                   </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Upload your CV (PDF/DOCX)</label>
-                    <div className="relative h-16 group">
-                      <input 
-                        type="file" 
-                        accept=".pdf,.doc,.docx"
-                        onChange={(e) => setCvFile(e.target.files[0])}
-                        className="absolute inset-0 opacity-0 cursor-pointer z-10" 
+                ) : (
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-2">
+                      <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Why do you think you're a good fit?</label>
+                      <textarea 
+                        required
+                        value={formData.coverLetter}
+                        onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
+                        placeholder="Share your expertise, past projects, or statistical modeling background..."
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 min-h-[140px] font-montserrat text-sm text-slate-900 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400"
                       />
-                      <div className="absolute inset-0 border border-dashed border-slate-300 bg-slate-50 rounded-xl flex items-center justify-between px-5 group-hover:border-amber-400 transition-colors">
-                        <span className="font-jetbrains text-xs text-slate-600 font-medium tracking-wider">
-                          {cvFile ? cvFile.name : 'Choose File'}
-                        </span>
-                        <div className="w-8 h-8 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                      <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Proposed Amount</label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-amber-600 font-bold">₹</span>
+                        <input 
+                          type="number"
+                          required
+                          value={formData.proposedAmount}
+                          onChange={(e) => setFormData({ ...formData, proposedAmount: e.target.value })}
+                          placeholder="0.00"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-10 pr-4 font-jetbrains text-sm text-slate-900 focus:border-amber-500 outline-none transition-all"
+                        />
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex flex-col gap-2">
-                    <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Additional Information (optional)</label>
-                    <textarea 
-                      value={formData.additionalInfo}
-                      onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
-                      placeholder="Any links or references..."
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 min-h-[90px] font-montserrat text-sm text-slate-900 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400"
-                    />
-                  </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Upload your CV (PDF/DOCX)</label>
+                      <div className="relative h-16 group">
+                        <input 
+                          type="file" 
+                          accept=".pdf,.doc,.docx"
+                          onChange={(e) => setCvFile(e.target.files[0])}
+                          className="absolute inset-0 opacity-0 cursor-pointer z-10" 
+                        />
+                        <div className="absolute inset-0 border border-dashed border-slate-300 bg-slate-50 rounded-xl flex items-center justify-between px-5 group-hover:border-amber-400 transition-colors">
+                          <span className="font-jetbrains text-xs text-slate-600 font-medium tracking-wider truncate mr-2">
+                            {cvFile ? cvFile.name : 'Choose File'}
+                          </span>
+                          <div className="w-8 h-8 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-900 shrink-0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg></div>
+                        </div>
+                      </div>
+                    </div>
 
-                  <button 
-                    disabled={submitting}
-                    type="submit"
-                    className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {submitting ? 'SUBMITTING...' : 'SUBMIT PROPOSAL'}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                  </button>
-                </form>
+                    <div className="flex flex-col gap-2">
+                      <label className="font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-wider">Additional Information (optional)</label>
+                      <textarea 
+                        value={formData.additionalInfo}
+                        onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
+                        placeholder="Any links to GitHub, portfolio, or publications..."
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 min-h-[90px] font-montserrat text-sm text-slate-900 focus:border-amber-500 outline-none transition-all placeholder:text-slate-400"
+                      />
+                    </div>
+
+                    <button 
+                      disabled={submitting}
+                      type="submit"
+                      className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {submitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin mr-1" />
+                          <span>SUBMITTING...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>SUBMIT PROPOSAL</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
           </div>
@@ -417,4 +567,5 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
     </div>
   );
 };
+
 export default Gigs

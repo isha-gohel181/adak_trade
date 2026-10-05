@@ -213,7 +213,8 @@ const AppContent = () => {
     return () => clearTimeout(timer)
   }, [location.pathname])
 
-  // 4. Global Zoom & DevTools Protection Protocol
+  // 4. Global Zoom & DevTools Protection Protocol (Commented out for inspection)
+  /*
   useEffect(() => {
     const handleKeydown = (e) => {
       // Disable Ctrl + (+, -, 0)
@@ -255,6 +256,7 @@ const AppContent = () => {
       document.removeEventListener('contextmenu', handleContextMenu)
     }
   }, [])
+  */
 
   // 5. Global Site Reveal Logic (Prevents Refresh Flicker)
   useEffect(() => {

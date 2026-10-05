@@ -81,10 +81,14 @@ export const fetchExploreJobs = createAsyncThunk(
 
 export const submitProposal = createAsyncThunk(
   'jobs/submitProposal',
-  async ({ jobId, formData }, { rejectWithValue }) => {
+  async ({ jobId, formData }, { getState, rejectWithValue }) => {
     try {
-      // getAuthHeaders includes Bearer token but we let browser set Content-Type for FormData
-      const token = localStorage.getItem('ias_dcs_token');
+      const state = getState();
+      const token = state.auth?.token || localStorage.getItem('ias_dcs_token');
+      if (!token) {
+        return rejectWithValue('Please log in to submit a proposal');
+      }
+
       const res = await fetch(`${BASE_URL}/jobs/${jobId}/proposals`, {
         method: 'POST',
         headers: {
@@ -126,6 +130,7 @@ const jobSlice = createSlice({
     exploreJobs: [], // Public jobs for Gigs page
     currentJob: null,
     loading: false,
+    submitting: false,
     error: null,
     total: 0,
     page: 1,

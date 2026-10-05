@@ -282,14 +282,14 @@ const Contact = () => {
                                     <div className="space-y-2">
                                         <h3 className="font-newsreader text-xl italic text-amber-800 font-bold">{t('emailSupport')}</h3>
                                         <p className="font-jetbrains text-xs text-slate-600 leading-relaxed">
-                                            For general inquiries, course-related questions, or technical assistance:
+                                            For general inquiries, course-related questions, or research consultation assistance:
                                         </p>
                                         <div className="pt-2">
                                             <a
-                                                href="mailto:support@bankersgrade.com"
+                                                href="mailto:support@ias-dcs.com"
                                                 className="font-jetbrains text-lg font-bold text-slate-900 hover:text-amber-600 transition-colors"
                                             >
-                                                support@bankersgrade.com
+                                                support@ias-dcs.com
                                             </a>
                                         </div>
                                         <p className="font-jetbrains text-[9px] text-slate-500 uppercase tracking-wider">
@@ -297,21 +297,11 @@ const Contact = () => {
                                         </p>
                                     </div>
 
-                                    {/* Address Section */}
-                                    {/* <div className="space-y-2 pt-4 border-t border-slate-100">
-                                        <h3 className="font-newsreader text-xl italic text-amber-800 font-bold">{t('officeAddress')}</h3>
-                                        <div className="font-jetbrains text-sm text-slate-800 leading-relaxed">
-                                            <p className="font-bold text-slate-900">Lapaas Digital Private Limited</p>
-                                            <p className="text-slate-600">Sec 11, Rohini</p>
-                                            <p className="text-slate-600">New Delhi, India</p>
-                                        </div>
-                                    </div> */}
-
                                     {/* Feedback Info Section */}
                                     <div className="space-y-1.5 pt-4 border-t border-slate-100">
                                         <h3 className="font-newsreader text-xl italic text-amber-800 font-bold">{t('feedbackSuggestions')}</h3>
                                         <p className="font-jetbrains text-xs text-slate-600 leading-relaxed">
-                                            Your feedback helps us improve. If you have ideas, suggestions, or feature requests, email us with the subject: <span className="text-amber-800 font-bold">"Feedback – [Your Name]"</span>.
+                                            Your feedback helps us innovate. If you have ideas, curriculum suggestions, or collaborative research proposals, email us with the subject: <span className="text-amber-800 font-bold">"Feedback – [Your Name]"</span>.
                                         </p>
                                     </div>
                                 </div>
@@ -322,13 +312,13 @@ const Contact = () => {
                                 <h3 className="font-newsreader text-xl italic text-amber-800 font-bold mb-3">{t('socialMedia')}</h3>
                                 <div className="flex flex-col gap-2">
                                     <div className="font-jetbrains text-xs text-slate-600">
-                                        YouTube – <a href="https://www.youtube.com/@bankersgrade" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">Bankers Grade</a>
+                                        YouTube – <a href="https://www.youtube.com/@ias-dcs" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">IAS-DCS Analytics</a>
                                     </div>
                                     <div className="font-jetbrains text-xs text-slate-600">
-                                        Instagram – <a href="https://www.instagram.com/bankersgrade" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">@bankersgrade</a>
+                                        Instagram – <a href="https://www.instagram.com/ias_dcs" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">@ias_dcs</a>
                                     </div>
                                     <div className="font-jetbrains text-xs text-slate-600">
-                                        WhatsApp – <a href="https://wa.me/message/5WRJJMD2XK7XP1" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">WhatsApp</a>
+                                        WhatsApp – <a href="https://wa.me/message/5WRJJMD2XK7XP1" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">Official Support</a>
                                     </div>
                                 </div>
                             </div>

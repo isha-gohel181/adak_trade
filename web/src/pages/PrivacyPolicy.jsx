@@ -17,35 +17,35 @@ const PrivacyPolicy = () => {
         <div className="privacy-animate space-y-6 text-base leading-relaxed">
           <p><strong>Effective Date:</strong> January 1, 2026</p>
           <p>
-            At Bankers Grade (operated by EdutouchInfinity Pvt. Ltd.), we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal information when you use our educational platform.
+            At the Institute of Applied Statistics (IAS-DCS, operated as a corporate division of DCS Pvt. Ltd.), we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal and research information when you use our educational and research platform.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">1. Information We Collect</h2>
           <p>
-            We may collect personal information such as your name, email address, phone number, and payment details when you register for an account, purchase a course, or interact with our platform.
+            We may collect personal information such as your name, email address, phone number, academic affiliation, and payment details when you register for an account, enroll in statistical training, or interact with our platform.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">2. How We Use Your Information</h2>
           <ul className="list-disc pl-6 space-y-2">
-            <li>To provide and maintain our educational services.</li>
-            <li>To process your payments and deliver courses (e.g. IBPS, SBI CBO, JAIIB).</li>
-            <li>To communicate with you regarding updates, offers, and support.</li>
-            <li>To improve the user experience of our website and mobile application.</li>
+            <li>To provide and maintain our executive education, workshops, and research services.</li>
+            <li>To process your course enrollments, certifications, and consultations.</li>
+            <li>To communicate with you regarding curriculum updates, academic events, and support.</li>
+            <li>To improve the research capabilities and user experience of our platform.</li>
           </ul>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">3. Data Security</h2>
           <p>
-            We implement industry-standard security measures to protect your data from unauthorized access. However, no method of transmission over the Internet is 100% secure.
+            We implement enterprise-grade encryption and security measures to protect your account and data from unauthorized access.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">4. Third-Party Services</h2>
           <p>
-            We may use third-party services (such as payment gateways and video hosting) that have their own privacy policies. We are not responsible for the practices of these third parties.
+            We may use trusted third-party services (such as secure payment gateways and cloud infrastructure) that have their own privacy policies conforming to global standards.
           </p>
 
-          <h2 className="text-xl font-bold text-amber-400 mt-6">5. Contact Us</h2>
+          <h2 className="text-xl font-bold text-amber-600 mt-6">5. Contact Us</h2>
           <p>
-            If you have any questions regarding this Privacy Policy, please contact our support team.
+            If you have any questions regarding this Privacy Policy, please contact our support team at <a href="mailto:support@ias-dcs.com" className="text-amber-700 font-bold hover:underline">support@ias-dcs.com</a>.
           </p>
         </div>
       </div>

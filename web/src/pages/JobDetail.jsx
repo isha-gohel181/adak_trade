@@ -66,10 +66,44 @@ const JobDetail = () => {
 
   const formatBudget = (budget) => {
     if (!budget) return 'N/A'
-    const { min, max, currency } = budget
+    if (typeof budget === 'string') {
+      try {
+        const parsed = JSON.parse(budget);
+        if (typeof parsed === 'object' && parsed !== null) return formatBudget(parsed);
+      } catch (e) {}
+      return budget;
+    }
+    const { min, max, currency = 'INR' } = budget
     if (currency === 'LPA') return `${min} - ${max} LPA`
-    const symbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency
-    return `${symbol}${min} - ${symbol}${max}`
+    const symbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : currency === 'EUR' ? '€' : `${currency} `
+    if (min !== undefined && max !== undefined) {
+      return `${symbol}${Number(min).toLocaleString()} – ${symbol}${Number(max).toLocaleString()}`
+    }
+    if (min !== undefined) return `${symbol}${Number(min).toLocaleString()}+`
+    return 'N/A'
+  }
+
+  const formatLocation = (loc) => {
+    if (!loc) return 'Remote';
+    if (typeof loc === 'string') {
+      try {
+        const parsed = JSON.parse(loc);
+        if (typeof parsed === 'object' && parsed !== null) return formatLocation(parsed);
+      } catch (e) {}
+      return loc;
+    }
+    if (typeof loc === 'object') {
+      const addr = loc.address;
+      if (addr && typeof addr === 'object') {
+        const parts = [addr.city, addr.state, addr.country].filter(Boolean);
+        if (parts.length > 0) {
+          const modeSuffix = loc.type && loc.type.toLowerCase() !== 'onsite' ? ` (${loc.type.charAt(0).toUpperCase() + loc.type.slice(1)})` : '';
+          return `${parts.join(', ')}${modeSuffix}`;
+        }
+      }
+      if (loc.type) return loc.type.charAt(0).toUpperCase() + loc.type.slice(1);
+    }
+    return 'Remote';
   }
 
   const isOwner = user?._id === currentJob?.createdBy?._id
@@ -140,7 +174,7 @@ const JobDetail = () => {
                </div>
                
                <div className="flex flex-wrap gap-4">
-                 {currentJob.skillsRequired?.map((skill, index) => (
+                 {(currentJob.skillsRequired || currentJob.skills || currentJob.tags || []).map((skill, index) => (
                    <div 
                      key={index}
                      className="group relative px-6 py-4 bg-white/[0.03] border border-white/10 hover:border-accent/40 transition-all duration-300 flex items-center gap-4 overflow-hidden"
@@ -224,7 +258,7 @@ const JobDetail = () => {
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="font-jetbrains text-[9px] text-description uppercase tracking-widest">Location</span>
-                      <span className="font-montserrat text-sm font-medium text-normal uppercase">{currentJob.location?.type || 'Remote'}</span>
+                      <span className="font-montserrat text-sm font-medium text-normal uppercase">{formatLocation(currentJob.location)}</span>
                     </div>
                   </div>
 
@@ -247,8 +281,17 @@ const JobDetail = () => {
                     Edit Job Post
                   </button>
                 ) : (
-                  <button className="w-full bg-accent text-dark py-5 font-jetbrains text-[12px] font-medium uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_20px_40px_rgba(var(--accent-rgb),0.2)]">
-                    Apply for this job
+                  <button 
+                    onClick={() => {
+                      if (!user) {
+                        navigate('/login?redirect=/gig');
+                      } else {
+                        navigate('/gig');
+                      }
+                    }}
+                    className="w-full bg-accent text-dark py-5 font-jetbrains text-[12px] font-medium uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_20px_40px_rgba(var(--accent-rgb),0.2)]"
+                  >
+                    Apply for this gig
                   </button>
                 )}
 

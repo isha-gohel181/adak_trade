@@ -18,7 +18,6 @@ import {
   VideoIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import SidebarWidget from "./SidebarWidget";
 import { Files, Tag, UserCircle2Icon, Bell, MessageCircle, Bot, FileText } from "lucide-react";
 
 type NavSubItem = {
@@ -147,11 +146,11 @@ const navItems: NavItem[] = [
     name: "Testimonials",
     path: "/testimonials"
   },
-  {
-    icon: <Bot />,
-    name: "AI Tool",
-    path: "/ai-tool"
-  },
+  // {
+  //   icon: <Bot />,
+  //   name: "AI Tool",
+  //   path: "/ai-tool"
+  // },
   {
     icon: <PieChartIcon />,
     name: "Leaderboard Settings",
@@ -631,9 +630,7 @@ const AppSidebar: React.FC = () => {
             )}
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? (
-          userRole !== "news_editor" ? <SidebarWidget /> : null
-        ) : null}
+        {/* SidebarWidget removed */}
       </div>
     </aside>
   );

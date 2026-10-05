@@ -7,6 +7,14 @@ import { hasAdminRole } from '../middlewares/isAdmin.js';
 
 const jobPostService = JobPostService;
 
+const safeGetRedis = async () => {
+  try {
+    return await initRedis();
+  } catch (e) {
+    return null;
+  }
+};
+
 export const createJobPost = async (req, res) => {
   try {
     // Parse and validate skillsRequired
@@ -101,10 +109,13 @@ export const createJobPost = async (req, res) => {
 
     const jobPost = await jobPostService.create(jobPostData);
 
-    const redis = await initRedis();
-    // Invalidate all jobposts cache and user's jobposts cache
-    await redis.del('jobposts:all*');
-    await redis.del(`jobposts:user:${req.user._id}*`);
+    try {
+      const redis = await safeGetRedis();
+      if (redis) {
+        await redis.del('jobposts:all*');
+        await redis.del(`jobposts:user:${req.user._id}*`);
+      }
+    } catch (cacheErr) {}
 
     return res.status(201).json({
       success: true,
@@ -242,8 +253,8 @@ export const submitProposal = async (req, res) => {
     const { jobId } = req.params;
     const proposal = {
       userId: req.user._id,
-      coverLetter: req.body.coverLetter,
-      proposedAmount: parseFloat(req.body.proposedAmount),
+      coverLetter: req.body.coverLetter || '',
+      proposedAmount: parseFloat(req.body.proposedAmount) || 0,
       submittedAt: new Date(),
       status: "pending"
     };
@@ -273,43 +284,44 @@ export const submitProposal = async (req, res) => {
 
     const updatedJob = await jobPostService.submitProposal(jobId, proposal);
 
-    // --- Send email and notification to job creator ---
-    if (updatedJob && updatedJob.createdBy) {
-      const jobCreator = updatedJob.createdBy;
-      const jobCreatorEmail=await User.findById(jobCreator);
-      //console.log("Job Creator:", jobCreatorEmail);
-      const applicant = {
-        name: req.user.fullName || req.user.name || "Applicant",
-        email: req.user.email
-      };
-
-      //console.log("Job Creator:", jobCreator);
-      // Send email only if jobCreator.email exists
-      if (jobCreatorEmail.email) {
-        try {
-          await emailService.sendJobProposalEmail(
-            jobCreatorEmail.email,
-            jobCreatorEmail.fullName || jobCreatorEmail.name || "Job Creator",
-            updatedJob.title,
-            proposal,
-            applicant
-          );
-        } catch (e) {
-          console.error("Failed to send job proposal email:", e);
+    // --- Send email and notification asynchronously in the background so response is instant ---
+    (async () => {
+      try {
+        if (updatedJob && updatedJob.createdBy) {
+          const jobCreator = updatedJob.createdBy;
+          const jobCreatorEmail = await User.findById(jobCreator);
+          if (jobCreatorEmail && jobCreatorEmail.email) {
+            const applicant = {
+              name: req.user.fullName || req.user.name || "Applicant",
+              email: req.user.email
+            };
+            await emailService.sendJobProposalEmail(
+              jobCreatorEmail.email,
+              jobCreatorEmail.fullName || jobCreatorEmail.name || "Job Creator",
+              updatedJob.title,
+              proposal,
+              applicant
+            );
+          }
         }
-      } else {
-        console.error("Job creator email is missing, cannot send proposal email.");
+      } catch (e) {
+        console.error("Background job proposal email error:", e?.message || e);
       }
-    
-    }
 
-    // Invalidate job cache for this job and all jobposts lists
-    const redis = await initRedis();
-    await redis.del(`jobpost:${jobId}`);
-    await redis.del('jobposts:all*');
-    if (updatedJob && updatedJob.createdBy) {
-      await redis.del(`jobposts:user:${updatedJob.createdBy}*`);
-    }
+      // Invalidate job cache safely
+      try {
+        const redis = await initRedis();
+        if (redis) {
+          await redis.del(`jobpost:${jobId}`);
+          await redis.del('jobposts:all*');
+          if (updatedJob && updatedJob.createdBy) {
+            await redis.del(`jobposts:user:${updatedJob.createdBy}*`);
+          }
+        }
+      } catch (cacheErr) {
+        // Non-critical cache error
+      }
+    })();
 
     return res.status(200).json({
       success: true,
@@ -318,9 +330,10 @@ export const submitProposal = async (req, res) => {
     });
   } catch (error) {
     console.error('submitProposal error:', error);
-    return res.status(500).json({
+    const isAlreadySubmitted = error.message && error.message.includes('already submitted');
+    return res.status(isAlreadySubmitted ? 400 : 500).json({
       success: false,
-      message: error.message
+      message: error.message || 'Failed to submit proposal'
     });
   }
 };
@@ -411,14 +424,18 @@ export const updateJobPost = async (req, res) => {
 
     const jobPost = await jobPostService.update(id, updateData);
 
-    // Update Redis cache
-    const redis = await initRedis();
-    await redis.del(`jobpost:${id}`);
-    await redis.del('jobposts:all*');
-    if (jobPost && jobPost.createdBy) {
-      await redis.del(`jobposts:user:${jobPost.createdBy}*`);
-    }
-    await redis.setEx(`jobpost:${id}`, 300, JSON.stringify(jobPost));
+    // Update Redis cache safely
+    try {
+      const redis = await safeGetRedis();
+      if (redis) {
+        await redis.del(`jobpost:${id}`);
+        await redis.del('jobposts:all*');
+        if (jobPost && jobPost.createdBy) {
+          await redis.del(`jobposts:user:${jobPost.createdBy}*`);
+        }
+        await redis.setEx(`jobpost:${id}`, 300, JSON.stringify(jobPost));
+      }
+    } catch (cacheErr) {}
 
     return res.status(200).json({
       success: true,
@@ -441,12 +458,16 @@ export const deleteJobPost = async (req, res) => {
     const job = await jobPostService.getById(id);
     await jobPostService.delete(id);
 
-    const redis = await initRedis();
-    await redis.del('jobposts:all*');
-    await redis.del(`jobpost:${id}`);
-    if (job && job.createdBy) {
-      await redis.del(`jobposts:user:${job.createdBy}*`);
-    }
+    try {
+      const redis = await safeGetRedis();
+      if (redis) {
+        await redis.del('jobposts:all*');
+        await redis.del(`jobpost:${id}`);
+        if (job && job.createdBy) {
+          await redis.del(`jobposts:user:${job.createdBy}*`);
+        }
+      }
+    } catch (cacheErr) {}
 
     return res.status(200).json({
       success: true,
@@ -464,21 +485,31 @@ export const deleteJobPost = async (req, res) => {
 export const getJobPostById = async (req, res) => {
   try {
     const { id } = req.params;
-    const redis = await initRedis();
-    const cacheKey = `jobpost:${id}`;
-    const cached = await redis.get(cacheKey);
+    try {
+      const redis = await safeGetRedis();
+      if (redis) {
+        const cacheKey = `jobpost:${id}`;
+        const cached = await redis.get(cacheKey);
 
-    if (cached) {
-      return res.status(200).json({
-        success: true,
-        message: 'Job post fetched from cache',
-        data: JSON.parse(cached),
-        fromCache: true
-      });
-    }
+        if (cached) {
+          return res.status(200).json({
+            success: true,
+            message: 'Job post fetched from cache',
+            data: JSON.parse(cached),
+            fromCache: true
+          });
+        }
+      }
+    } catch (cacheErr) {}
 
     const jobPost = await jobPostService.getById(id);
-    await redis.setEx(cacheKey, 300, JSON.stringify(jobPost));
+    
+    try {
+      const redis = await safeGetRedis();
+      if (redis && jobPost) {
+        await redis.setEx(`jobpost:${id}`, 300, JSON.stringify(jobPost));
+      }
+    } catch (cacheErr) {}
 
     return res.status(200).json({
       success: true,
@@ -619,13 +650,17 @@ export const setAdminApprovalStatus = async (req, res) => {
       // Don't fail the request if notification fails
     }
 
-    // Invalidate cache
-    const redis = await initRedis();
-    await redis.del(`jobpost:${id}`);
-    await redis.del('jobposts:all*');
-    if (updated && updated.createdBy) {
-      await redis.del(`jobposts:user:${updated.createdBy._id || updated.createdBy}*`);
-    }
+    // Invalidate cache safely
+    try {
+      const redis = await safeGetRedis();
+      if (redis) {
+        await redis.del(`jobpost:${id}`);
+        await redis.del('jobposts:all*');
+        if (updated && updated.createdBy) {
+          await redis.del(`jobposts:user:${updated.createdBy._id || updated.createdBy}*`);
+        }
+      }
+    } catch (cacheErr) {}
 
     return res.status(200).json({
       success: true,
