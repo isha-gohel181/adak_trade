@@ -612,7 +612,7 @@ export const getCourseById = async (req, res) => {
     }
     if (course.landingPageSections) {
       clean.landingPageSections = course.landingPageSections.map(s => ({
-        _id: s._id, type: s.type, data: s.data,
+        _id: s._id, type: s.type, data: s.data, order: s.order, sortOrder: s.sortOrder
       }));
     }
     if (course.reviews) {
@@ -625,17 +625,42 @@ export const getCourseById = async (req, res) => {
         rating: r.rating,
       }));
     }
+    if (course.overviewSection) clean.overviewSection = course.overviewSection;
     if (course.comparisonSection) clean.comparisonSection = course.comparisonSection;
     if (course.benefitsSection) clean.benefitsSection = course.benefitsSection;
+    if (course.frameworkSection) clean.frameworkSection = course.frameworkSection;
+    if (course.solutionSection) clean.solutionSection = course.solutionSection;
     if (course.bonuses) {
       clean.bonuses = course.bonuses.map(b => ({
         title: b.title, price: b.price,
       }));
     }
-    if (course.faqs || course.faq) {
-      clean.faqs = (course.faqs || course.faq).map(f => ({
-        category: f.category, question: f.question, answer: f.answer,
-      }));
+    try {
+      const FAQ = (await import("../models/FAQ.js")).default;
+      const dbFaqs = await FAQ.find({ courseId: course._id }).lean();
+      if (dbFaqs && dbFaqs.length > 0) {
+        clean.faqs = dbFaqs.map(f => ({
+          _id: f._id,
+          category: f.category || 'course',
+          question: f.question,
+          answer: f.answer,
+        }));
+      } else if (course.faqs || course.faq) {
+        clean.faqs = (course.faqs || course.faq).map(f => ({
+          category: f.category || 'course',
+          question: f.question,
+          answer: f.answer,
+        }));
+      }
+    } catch (faqErr) {
+      console.error('Error fetching course FAQs:', faqErr);
+      if (course.faqs || course.faq) {
+        clean.faqs = (course.faqs || course.faq).map(f => ({
+          category: f.category || 'course',
+          question: f.question,
+          answer: f.answer,
+        }));
+      }
     }
     if (course.plans) {
       clean.plans = course.plans.map(p => ({
@@ -786,6 +811,21 @@ export const getCourseBySlug = async (req, res) => {
     // Filter out null reviews from the course data
     if (course && course.reviews) {
       course.reviews = course.reviews.filter(r => r != null);
+    }
+
+    try {
+      const FAQ = (await import("../models/FAQ.js")).default;
+      const dbFaqs = await FAQ.find({ courseId: course._id }).lean();
+      if (dbFaqs && dbFaqs.length > 0) {
+        course.faqs = dbFaqs.map(f => ({
+          _id: f._id,
+          category: f.category || 'course',
+          question: f.question,
+          answer: f.answer,
+        }));
+      }
+    } catch (faqErr) {
+      console.error('Error fetching course FAQs in getCourseBySlug:', faqErr);
     }
 
     return res.status(200).json({

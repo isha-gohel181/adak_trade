@@ -82,7 +82,11 @@ export const AdminTrackerProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Transmit queued logs to backend
   const flushLogs = () => {
-    if (queueRef.current.length === 0) return;
+    const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
+    if (!token || token === 'cookie-session' || queueRef.current.length === 0) {
+      if (!token) queueRef.current = [];
+      return;
+    }
 
     const payload = JSON.stringify({ logs: [...queueRef.current] });
     queueRef.current = []; // Clear queue
@@ -96,7 +100,7 @@ export const AdminTrackerProvider: React.FC<{ children: React.ReactNode }> = ({ 
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken') || ''}`
+        'Authorization': `Bearer ${token}`
       },
       body: payload,
     }).catch((err) => {
@@ -106,7 +110,8 @@ export const AdminTrackerProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Synchronous flush on page exit
   const flushOnUnload = () => {
-    if (queueRef.current.length === 0) return;
+    const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
+    if (!token || token === 'cookie-session' || queueRef.current.length === 0) return;
 
     const payload = JSON.stringify({ logs: [...queueRef.current] });
     queueRef.current = [];
@@ -117,7 +122,10 @@ export const AdminTrackerProvider: React.FC<{ children: React.ReactNode }> = ({ 
     } else {
       fetch(`${BASE}/admin-activity-logs`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: payload,
         keepalive: true,
       }).catch(() => {});

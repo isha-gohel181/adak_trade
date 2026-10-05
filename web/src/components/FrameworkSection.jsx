@@ -8,8 +8,16 @@ gsap.registerPlugin(ScrollTrigger)
 const FrameworkSection = ({ course, section }) => {
   const containerRef = useRef(null)
   const introRef = useRef(null)
+  const targetSection = section || course?.frameworkSection
 
-  // Extract data from EditorJS blocks
+  // If section visibility is disabled or no section exists, don't render
+  if (!targetSection || targetSection.show === false) {
+    return null
+  }
+
+  const mediaUrl = targetSection.media || ''
+
+  // Extract data strictly from EditorJS blocks in database
   const processContent = (content) => {
     if (!content || !content.blocks) return { intro: [], phases: [] }
     
@@ -27,7 +35,7 @@ const FrameworkSection = ({ course, section }) => {
         if (!foundFirstHeader) {
           intro.push(block.data.text)
         } else if (currentPhase) {
-          currentPhase.description += block.data.text + ' '
+          currentPhase.description += (currentPhase.description ? ' ' : '') + block.data.text
         }
       }
     })
@@ -35,7 +43,17 @@ const FrameworkSection = ({ course, section }) => {
     return { intro, phases }
   }
 
-  const { intro, phases } = processContent(section?.description || section?.content)
+  const { intro, phases } = processContent(targetSection.description || targetSection.content)
+  const rawTitle = targetSection.title
+  const hasContent = phases.length > 0 || intro.length > 0 || mediaUrl || rawTitle
+
+  // If no data exists in database, do not render this section
+  if (!hasContent) {
+    return null
+  }
+
+  const sectionTitle = sanitizeDisplay(rawTitle || 'The Framework')
+  const sectionSubtitle = sanitizeDisplay(targetSection.subtitle || "THE ARCHITECT'S ROADMAP")
 
   const stripHtml = (html) => {
     if (!html) return ''
@@ -44,149 +62,179 @@ const FrameworkSection = ({ course, section }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Intro Animation (60% lighter and faster: y: 8px, duration 0.45s, stagger 0.03s)
       gsap.fromTo('.framework-intro-item', 
-        { opacity: 0, y: 8 },
+        { opacity: 0, y: 25 },
         { 
           opacity: 1, y: 0, 
-          duration: 0.45, stagger: 0.03, ease: 'power3.out',
+          duration: 0.7, stagger: 0.1, ease: 'power3.out',
           scrollTrigger: {
             trigger: introRef.current,
-            start: 'top 95%'
+            start: 'top 92%'
           }
         }
       )
 
-      // 2. Phases Animation (60% lighter and faster: y: 12px, duration 0.45s)
-      gsap.utils.toArray('.phase-node').forEach((node, i) => {
-        gsap.fromTo(node,
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1, y: 0,
-            duration: 0.45, ease: 'power3.out',
+      if (phases.length > 0) {
+        gsap.utils.toArray('.phase-node').forEach((node) => {
+          gsap.fromTo(node,
+            { opacity: 0, y: 25 },
+            {
+              opacity: 1, y: 0,
+              duration: 0.6, ease: 'power3.out',
+              scrollTrigger: {
+                trigger: node,
+                start: 'top 92%',
+              }
+            }
+          )
+        })
+
+        gsap.fromTo('.roadmap-line-inner', 
+          { height: '0%' },
+          { 
+            height: '100%', 
+            ease: 'none',
             scrollTrigger: {
-              trigger: node,
-              start: 'top 95%',
-              toggleActions: 'play none none reverse'
+              trigger: '.phases-container',
+              start: 'top 75%',
+              end: 'bottom 90%',
+              scrub: true
             }
           }
         )
-      })
-
-      // 3. Connective Line Animation (Clean height scale)
-      gsap.fromTo('.roadmap-line-inner', 
-        { height: '0%' },
-        { 
-          height: '100%', 
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.phases-container',
-            start: 'top 70%',
-            end: 'bottom 90%',
-            scrub: true
-          }
-        }
-      )
+      }
     }, containerRef)
+
     return () => ctx.revert()
   }, [phases])
 
-  return (
-    <section ref={containerRef} className="max-w-7xl mx-auto py-20">
-      
-      {/* HEADER SECTION */}
-      <div ref={introRef} className="max-w-4xl mx-auto mb-20 relative px-4 md:px-0">
-        <div className="relative p-3 md:p-10 lg:p-16 border border-white/10 bg-[#0C0C0C] backdrop-blur-3xl overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.8)]">
-          {/* Top Accent Line */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
-          
-          <div className="space-y-12 relative z-10">
-            <div className="space-y-4">
-              <h2 className="framework-intro-item font-newsreader italic text-3xl md:text-4xl lg:text-6xl text-white font-extralight tracking-tight leading-[1.1]">
-                {sanitizeDisplay(section?.title || 'The Framework')}
-              </h2>
-                <span className="framework-intro-item block font-jetbrains text-accent text-[10px] tracking-[0.1em] uppercase font-black opacity-60">
-                {sanitizeDisplay(section?.subtitle || "THE ARCHITECT'S ROADMAP")}
-              </span>
-            </div>
+  // Helper to format YouTube embed URL
+  const getEmbedUrl = (url) => {
+    if (!url) return ''
+    if (url.includes('youtube.com/embed/')) return url
+    const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/)
+    if (ytMatch && ytMatch[1]) {
+      return `https://www.youtube.com/embed/${ytMatch[1]}?modestbranding=1&rel=0`
+    }
+    return url
+  }
 
-            <div className="space-y-8">
+  return (
+    <section ref={containerRef} className="max-w-7xl mx-auto py-20 px-4 md:px-6">
+      
+      {/* Top Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-16" />
+
+      {/* INTRO HEADER CARD */}
+      <div ref={introRef} className="max-w-4xl mx-auto mb-16 relative">
+        <div className="relative p-8 md:p-12 border border-slate-200 bg-white rounded-2xl shadow-md space-y-6 text-center md:text-left">
+          <div className="space-y-3">
+            <span className="framework-intro-item inline-block font-jetbrains text-accent text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold border border-blue-100 bg-blue-50 px-3.5 py-1 rounded-full shadow-xs">
+              {sectionSubtitle}
+            </span>
+            <h2 className="framework-intro-item font-newsreader italic text-3xl md:text-5xl text-slate-900 font-light tracking-tight leading-[1.05]">
+              {sectionTitle.split(' ').map((word, i, arr) => (
+                <React.Fragment key={i}>
+                  {i >= arr.length - 2 ? (
+                    <span className="text-accent underline decoration-accent/30 underline-offset-8">{word} </span>
+                  ) : (
+                    word + ' '
+                  )}
+                </React.Fragment>
+              ))}
+            </h2>
+          </div>
+
+          {intro.length > 0 && (
+            <div className="space-y-3">
               {intro.map((text, i) => (
-                <p key={i} className={`framework-intro-item font-montserrat text-white/70 leading-[1.8] tracking-wide font-light ${i === 0 ? 'text-lg md:text-xl text-white/90 border-l-2 border-accent/30 pl-6 md:pl-8 py-2' : 'text-sm md:text-base'}`}>
+                <p key={i} className="framework-intro-item font-montserrat text-slate-600 leading-relaxed text-sm md:text-base">
                   {sanitizeDisplay(stripHtml(text))}
                 </p>
               ))}
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* OPTIONAL EMBEDDED MEDIA / VIDEO */}
+      {mediaUrl && (
+        <div className="max-w-4xl mx-auto mb-16">
+          <div className="relative w-full rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xl shadow-slate-200/50" style={{ paddingTop: '56.25%' }}>
+            {mediaUrl.includes('youtube') || mediaUrl.includes('youtu.be') ? (
+              <iframe
+                src={getEmbedUrl(mediaUrl)}
+                title={sectionTitle}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            ) : (
+              <img
+                src={mediaUrl}
+                alt={sectionTitle}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* PHASES ROADMAP (Rendered strictly if phases exist in backend) */}
+      {phases.length > 0 && (
+        <div className="phases-container relative max-w-4xl mx-auto pt-4 space-y-10 pl-6 md:pl-0">
+          
+          {/* Central Road Line */}
+          <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-slate-200">
+            <div className="roadmap-line-inner w-full bg-accent shadow-sm shadow-accent/40 origin-top" />
           </div>
 
-          {/* Decorative Background Element */}
-          <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
-        </div>
-      </div>
+          <div className="space-y-8">
+            {phases.map((phase, index) => (
+              <div 
+                key={index} 
+                className={`phase-node relative flex flex-col md:flex-row items-center gap-6 md:gap-0 ${
+                  index % 2 !== 0 ? 'md:flex-row-reverse' : ''
+                }`}
+              >
+                {/* Content Card */}
+                <div className="w-full md:w-[45%] group">
+                  <div className="relative p-6 md:p-7 border border-slate-200/90 bg-white rounded-2xl shadow-xs hover:shadow-lg hover:border-accent/40 transition-all duration-300">
+                    
+                    {/* Side Accent Line */}
+                    <div className={`absolute top-0 bottom-0 w-[3px] bg-accent rounded-full transition-all duration-300 ${
+                      index % 2 !== 0 ? 'right-0' : 'left-0'
+                    }`} />
 
-      {/* PHASES ROADMAP */}
-      <div className="phases-container relative max-w-4xl mx-auto pt-4 space-y-24 md:space-y-40 pl-6 md:pl-0">
-        
-        {/* Central Road Line */}
-        <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[1px] bg-white/10">
-           <div className="roadmap-line-inner w-full bg-accent shadow-[0_0_15px_#017DC3] origin-top" />
-        </div>
-
-        <div className="space-y-6">
-          {phases.map((phase, index) => (
-            <div 
-              key={index} 
-              className={`phase-node relative flex flex-col md:flex-row items-center gap-4 md:gap-0 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}
-            >
-              
-              {/* Content Card */}
-              <div className="w-full md:w-[46%] group">
-                <div className="relative p-5 md:p-7 lg:p-10 border border-accent/30 bg-[#0E0E0E] backdrop-blur-3xl rounded-none transition-all duration-500 hover:bg-[#121212] hover:border-accent/60 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(1, 125, 195,0.12)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_60px_rgba(1, 125, 195,0.2)]">
-                  
-                  {/* Side Accent Line */}
-                  <div className={`absolute top-0 bottom-0 w-[2px] bg-accent transition-all duration-500 ${index % 2 !== 0 ? 'right-0' : 'left-0'}`} />
-
-                  {/* Decorative Glow */}
-                  <div className="absolute -top-10 -right-10 w-24 h-24 bg-accent/15 rounded-full blur-3xl group-hover:bg-accent/25 transition-colors" />
-                  
-                  {/* Ghost Numbering */}
-                  <div className="absolute top-4 right-8 font-jetbrains text-4xl md:text-5xl lg:text-6xl font-black text-accent/[0.08] select-none scale-105 group-hover:scale-115 transition-all duration-700">
-                    0{index + 1}
-                  </div>
-
-                  <div className="space-y-5 relative z-10">
-                    <div className="flex items-center gap-3">
-                      <div className="h-[1px] w-8 bg-accent/80" />
-                      <span className="font-jetbrains text-[9px] tracking-[0.5em] text-accent uppercase font-bold">MODULE_0{index + 1}</span>
+                    {/* Header */}
+                    <div className="space-y-2 mb-3">
+                      <span className="font-jetbrains text-[10px] text-accent tracking-[0.25em] uppercase font-bold">
+                        STAGE {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="font-newsreader italic text-xl md:text-2xl text-slate-900 font-normal tracking-tight">
+                        {sanitizeDisplay(stripHtml(phase.title))}
+                      </h3>
                     </div>
-                    
-                    <h3 className="font-newsreader italic text-2xl md:text-3xl lg:text-4xl text-white font-extralight leading-tight tracking-tight">
-                      {sanitizeDisplay(stripHtml(phase.title))}
-                    </h3>
-                    
-                    <p className="font-montserrat text-white/90 text-[11px] md:text-[10px] leading-[1.8] tracking-widest uppercase italic font-medium">
+
+                    {/* Description */}
+                    <p className="font-montserrat text-xs md:text-sm text-slate-600 leading-relaxed">
                       {sanitizeDisplay(stripHtml(phase.description))}
                     </p>
-
-                    <div className="pt-4 flex items-center gap-3 opacity-100 transition-all duration-500">
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_12px_#017DC3]" />
-                      <span className="font-jetbrains text-[8px] tracking-[0.5em] text-white uppercase font-bold">SYSTEM PROTOCOL 0{index + 1}</span>
-                    </div>
                   </div>
-
                 </div>
+
+                {/* Central Glowing Node Point */}
+                <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-7 h-7 rounded-full bg-white border-2 border-accent flex items-center justify-center z-20 shadow-md">
+                  <div className="w-2.5 h-2.5 bg-accent rounded-full animate-pulse shadow-xs" />
+                </div>
+
+                {/* Spacer for the other side on desktop */}
+                <div className="hidden md:block md:w-[45%]" />
               </div>
-
-              {/* Connector Dot */}
-              <div className="absolute left-[24px] md:left-1/2 top-8 md:top-1/2 w-2.5 h-2.5 bg-dark border-2 border-accent rounded-full md:-translate-x-1/2 md:-translate-y-1/2 z-10 shadow-[0_0_8px_#017DC3]" />
-
-              <div className="hidden md:block w-[46%]" />
-
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-
-      </div>
+      )}
 
     </section>
   )

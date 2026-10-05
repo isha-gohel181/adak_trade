@@ -6,135 +6,192 @@ import sanitizeDisplay from '../utils/textSanitize'
 gsap.registerPlugin(ScrollTrigger)
 
 const SolutionSection = ({ course, section }) => {
-  const ref = useRef(null)
+  const containerRef = useRef(null)
+  const targetSection = section || course?.solutionSection
+
+  // If section visibility is disabled or no section exists, don't render
+  if (!targetSection || targetSection.show === false) {
+    return null
+  }
+
+  // Extract points strictly from backend
+  const problems = (targetSection.outcomePoints || []).filter(p => p && String(p).trim() !== '')
+  const outcomes = (targetSection.points || []).filter(p => p && String(p).trim() !== '')
+
+  // Process EditorJS description blocks
+  const mainDescBlocks = targetSection.content?.blocks?.map(block => 
+    sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
+  ).filter(t => t && t.trim() !== '') || []
+
+  const outcomeDescBlocks = targetSection.outcomeDescription?.blocks?.map(block => 
+    sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
+  ).filter(t => t && t.trim() !== '') || []
+
+  const solutionDescBlocks = targetSection.solutionDescription?.blocks?.map(block => 
+    sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
+  ).filter(t => t && t.trim() !== '') || []
+
+  const rawTitle = targetSection.title
+  const outcomeHeading = sanitizeDisplay(targetSection.outcomeTitle || "")
+  const solutionHeading = sanitizeDisplay(targetSection.solutionTitle || "")
+
+  const hasContent = problems.length > 0 || outcomes.length > 0 || mainDescBlocks.length > 0 || rawTitle || outcomeHeading || solutionHeading
+
+  // If no data exists in database, do not render this section
+  if (!hasContent) {
+    return null
+  }
+
+  const sectionTitle = sanitizeDisplay(rawTitle || "The Solution")
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Reveal headers and descriptions (90% lighter)
-      gsap.utils.toArray('.sol-title').forEach((title) => {
-        gsap.fromTo(title,
-          { opacity: 0, y: 6 },
-          {
-            opacity: 1, y: 0,
-            duration: 0.35, ease: 'power3.out',
-            scrollTrigger: { trigger: title, start: 'top 95%' }
-          }
-        )
-      })
+      gsap.fromTo('.sol-header',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.1,
+          scrollTrigger: { trigger: '.sol-header', start: 'top 92%' }
+        }
+      )
 
-      gsap.utils.toArray('.sol-desc').forEach((desc) => {
-        gsap.fromTo(desc,
-          { opacity: 0, y: 4 },
+      if (problems.length > 0) {
+        gsap.fromTo('.sol-problem-card',
+          { opacity: 0, y: 20 },
           {
-            opacity: 1, y: 0,
-            duration: 0.3, ease: 'power3.out',
-            scrollTrigger: { trigger: desc, start: 'top 95%' }
+            opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.06,
+            scrollTrigger: { trigger: '.sol-problem-grid', start: 'top 92%' }
           }
         )
-      })
+      }
 
-      // 2. Individual Point Grid Cards (challenges & outcomes)
-      // Iterating individually ensures each card animates only when it crosses its own trigger line.
-      gsap.utils.toArray('.sol-point').forEach((point, i) => {
-        gsap.fromTo(point,
-          { opacity: 0, x: -4, scale: 0.99 },
+      if (outcomes.length > 0) {
+        gsap.fromTo('.sol-outcome-card',
+          { opacity: 0, y: 20 },
           {
-            opacity: 1, x: 0, scale: 1,
-            duration: 0.25,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: point,
-              start: 'top 95%'
-            }
+            opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.06,
+            scrollTrigger: { trigger: '.sol-outcome-grid', start: 'top 92%' }
           }
         )
-      })
-    }, ref)
+      }
+    }, containerRef)
+
     return () => ctx.revert()
-  }, [])
-
-  // Process EditorJS content for the description text blocks
-  const descriptionBlocks = section?.content?.blocks?.map(block => 
-    sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
-  ) || [];
+  }, [problems, outcomes])
 
   return (
-    <section ref={ref} className="max-w-7xl mx-auto py-20">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mb-16" />
+    <section ref={containerRef} className="max-w-7xl mx-auto py-20 px-4 md:px-6">
+      
+      {/* Top Divider */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-16" />
 
-      <div className="grid grid-cols-1 min-[1301px]:grid-cols-[1fr_1.8fr] gap-12 min-[1301px]:gap-20 items-start mb-28 px-4 md:px-0">
-        <div className="space-y-8 min-[1301px]:sticky min-[1301px]:top-32 transition-all duration-500">
-          <h2 className="sol-title font-newsreader italic text-4xl md:text-5xl lg:text-6xl text-white font-extralight tracking-tight leading-[1.1]">
-            {sanitizeDisplay(section?.title || "The Solution").split(' ').map((word, i, arr) => (
-              <React.Fragment key={i}>
-                {i === arr.length - 1 ? (
-                  <span className="text-accent">{word}</span>
-                ) : (
-                  word + ' '
-                )}
-              </React.Fragment>
-            ))}
-          </h2>
-          <div className="h-[2px] bg-accent/40 w-24" />
-        </div>
+      {/* Main Header & Narrative */}
+      <div className="sol-header text-center space-y-5 max-w-4xl mx-auto mb-16">
+        <span className="inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold border border-blue-100 bg-blue-50 px-3.5 py-1 rounded-full shadow-xs">
+          PROBLEM $\rightarrow$ SOLUTION TRANSFORMATION
+        </span>
+        <h2 className="font-newsreader italic text-[clamp(2.2rem,5vw,4.2rem)] text-slate-900 font-light tracking-tight leading-[1.05]">
+          {sectionTitle.split(' ').map((word, i, arr) => (
+            <React.Fragment key={i}>
+              {i >= arr.length - 2 ? (
+                <span className="text-accent underline decoration-accent/30 underline-offset-8">{word} </span>
+              ) : (
+                word + ' '
+              )}
+            </React.Fragment>
+          ))}
+        </h2>
 
-        <div className="min-[1301px]:border-l border-white/10 pl-0 min-[1301px]:pl-12 py-2">
-          <div className="space-y-4">
-            {descriptionBlocks.map((text, i) => (
-              <p key={i} className={`font-montserrat leading-[1.8] tracking-wide ${i === 0 ? 'text-lg md:text-xl text-white/95 font-medium' : 'text-sm md:text-base text-white/70 font-light'}`}>
-                {text}
-              </p>
+        {mainDescBlocks.length > 0 && (
+          <div className="space-y-3 font-montserrat text-sm md:text-base text-slate-600 leading-relaxed">
+            {mainDescBlocks.map((text, idx) => (
+              <p key={idx}>{text}</p>
             ))}
           </div>
-        </div>
+        )}
       </div>
 
-      {/* What we Solve Section (Challenges - Red X) */}
-      {(section?.outcomeTitle || (section?.outcomePoints && section.outcomePoints.length > 0)) && (
-        <div className="space-y-16 mb-20">
-          {section?.outcomeTitle && (
-            <div className="text-center">
-              <h3 className="sol-title font-newsreader italic text-3xl md:text-5xl text-normal font-extralight tracking-tight">
-                {sanitizeDisplay(section.outcomeTitle)}
+      {/* PHASE 1: PROBLEMS WE SOLVE (Rendered only if data exists) */}
+      {(problems.length > 0 || outcomeHeading || outcomeDescBlocks.length > 0) && (
+        <div className="mb-16 space-y-6">
+          <div className="text-center space-y-2">
+            <span className="font-jetbrains text-[10px] text-rose-700 tracking-[0.25em] uppercase font-bold px-3 py-1 bg-rose-50 border border-rose-200 rounded-full inline-block">
+              PHASE 01: ELIMINATE THE FRICTION
+            </span>
+            {outcomeHeading && (
+              <h3 className="font-newsreader italic text-2xl md:text-3xl text-slate-800 font-normal">
+                {outcomeHeading}
               </h3>
+            )}
+            {outcomeDescBlocks.length > 0 && (
+              <p className="font-montserrat text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                {outcomeDescBlocks.join(' ')}
+              </p>
+            )}
+          </div>
+
+          {problems.length > 0 && (
+            <div className="sol-problem-grid grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+              {problems.map((p, i) => (
+                <div 
+                  key={i} 
+                  className="sol-problem-card flex items-center gap-4 px-6 py-5 bg-white border border-rose-100/80 border-l-4 border-l-rose-400 rounded-xl shadow-xs hover:border-rose-200 transition-all duration-300"
+                >
+                  <div className="w-8 h-8 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center shrink-0 text-rose-600 shadow-xs">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <span className="font-montserrat text-xs md:text-sm text-slate-700 font-normal leading-relaxed">
+                    {sanitizeDisplay(p)}
+                  </span>
+                </div>
+              ))}
             </div>
           )}
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-            {section?.outcomePoints?.map((p, i) => (
-              <div key={i} className="sol-point group flex  items-center gap-5 px-6 py-5 bg-red-500/[0.2] border-l-2 border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.02)] transition-all duration-500">
-                <div className="w-8 h-8 rounded-full border border-red-500/40 flex items-center justify-center shrink-0 bg-red-500/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="4"><path d="M18 6L6 18M6 6l12 12" /></svg>
-                </div>
-                <span className="font-montserrat text-sm text-red-400 font-normal tracking-wide uppercase italic">{sanitizeDisplay(p)}</span>
-              </div>
-            ))}
-          </div>
         </div>
       )}
 
-      {/* Solutions Section (Outcomes - Green Check) */}
-      <div className="space-y-16">
-        {section?.solutionTitle && (
-          <div className="text-center">
-            <h3 className="sol-title font-newsreader italic text-3xl md:text-5xl text-normal font-extralight tracking-tight">
-              {sanitizeDisplay(section.solutionTitle)}
-            </h3>
+      {/* PHASE 2: BY PROGRAM'S END / OUTCOMES (Rendered only if data exists) */}
+      {(outcomes.length > 0 || solutionHeading || solutionDescBlocks.length > 0) && (
+        <div className="space-y-6">
+          <div className="text-center space-y-2">
+            <span className="font-jetbrains text-[10px] text-white tracking-[0.25em] uppercase font-bold px-3.5 py-1 bg-accent rounded-full inline-block shadow-xs">
+              PHASE 02: THE TANGIBLE OUTCOMES
+            </span>
+            {solutionHeading && (
+              <h3 className="font-newsreader italic text-2xl md:text-3xl text-accent font-medium">
+                {solutionHeading}
+              </h3>
+            )}
+            {solutionDescBlocks.length > 0 && (
+              <p className="font-montserrat text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                {solutionDescBlocks.join(' ')}
+              </p>
+            )}
           </div>
-        )}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
-          {section?.points?.map((p, i) => (
-            <div key={i} className="sol-point group flex items-center gap-5 px-6 py-5 bg-accent/[0.2] border-l-2 border-accent shadow-[0_0_30px_rgba(1, 125, 195,0.08)] transition-all duration-500">
-              <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(1, 125, 195,0.5)]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
-              </div>
-              <span className="font-montserrat text-sm text-accent font-normal tracking-wide uppercase">{sanitizeDisplay(p)}</span>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-accent/20 to-transparent mt-20" />
+          {outcomes.length > 0 && (
+            <div className="sol-outcome-grid grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
+              {outcomes.map((o, i) => (
+                <div 
+                  key={i} 
+                  className="sol-outcome-card flex items-center gap-4 px-6 py-5 bg-white border border-blue-100 border-l-4 border-l-accent rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50/20 transition-all duration-300"
+                >
+                  <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center shrink-0 text-white shadow-sm shadow-accent/30">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <span className="font-montserrat text-xs md:text-sm text-slate-900 font-medium leading-relaxed">
+                    {sanitizeDisplay(o)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
     </section>
   )
 }

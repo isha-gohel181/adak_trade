@@ -9,61 +9,6 @@ import EventHero from '../components/EventHero'
 import { fetchEvents } from '../redux/slices/eventSlice'
 import { useLanguage } from '../context/LanguageContext'
 
-import { eventData } from '../constants/events'
-
-const courseData = [
-  {
-    id: 1,
-    category: 'EDITORIAL DESIGN',
-    title: 'The Architecture of the Page',
-    description: 'Mastering grid systems and visual tension in high-end publishing.',
-    price: '$249.00',
-    image: '/courses/architecture.png',
-    isNew: true,
-  },
-  {
-    id: 2,
-    category: 'TYPOGRAPHY',
-    title: 'The Romantic Serif',
-    description: 'History and application of intricate display typefaces in digital systems.',
-    price: '$189.00',
-    image: '/courses/typography.png',
-  },
-  {
-    id: 3,
-    category: 'CURATION',
-    title: 'The Digital Curator',
-    description: 'Transitioning from content manager to high-end content architect.',
-    price: '$322.00',
-    image: '/courses/curator.png',
-  },
-  {
-    id: 4,
-    category: 'ART DIRECTION',
-    title: 'Visual Narrative & Identity',
-    description: 'Building cohesive brand worlds through cinematic storytelling.',
-    price: '$599.00',
-    image: '/courses/narrative.png',
-  },
-  {
-    id: 5,
-    category: 'DIGITAL ART',
-    title: 'Motion & Tonal Stacking',
-    description: 'Creating depth and atmosphere without traditional drop shadows.',
-    price: '$420.00',
-    image: '/courses/motion.png',
-  },
-  {
-    id: 6,
-    category: 'PROFESSIONAL PRACTICE',
-    title: 'Pricing the Premium',
-    description: 'The economics of high-end design services and luxury positioning.',
-    price: '$144.00',
-    image: '/courses/pricing.png',
-  }
-]
-
-
 const Courses = () => {
   const dispatch = useDispatch()
   const { courses, loading, error } = useSelector((state) => state.courses)
@@ -78,59 +23,81 @@ const Courses = () => {
   const advancedRef = useRef(null)
   const [hasFetchedEvents, setHasFetchedEvents] = useState(false)
 
+  // Dynamically extract unique categories from backend courses
+  const categoryFilters = useMemo(() => {
+    const set = new Set()
+    if (courses && Array.isArray(courses)) {
+      courses.forEach((c) => {
+        const name =
+          c.categoryId?.name ||
+          c.category?.name ||
+          (typeof c.category === 'string' && c.category.trim() ? c.category.trim() : '')
+        if (name && typeof name === 'string' && name.trim()) {
+          set.add(name.trim())
+        }
+      })
+    }
+    return ['ALL COURSES', ...Array.from(set)]
+  }, [courses])
+
   const filteredCourses = useMemo(() => {
     return (courses || []).filter(item => {
       // 1. Category Filter
       const matchesCategory = (() => {
-        if (activeFilter === 'ALL COURSES') return true;
-        const courseCat = (item.category?.name || item.category || '').toUpperCase();
-        const filterCat = activeFilter.toUpperCase();
-        return courseCat === filterCat || courseCat.includes(filterCat) || filterCat.includes(courseCat);
-      })();
+        if (activeFilter === 'ALL COURSES' || activeFilter === 'ALL') return true
+        const courseCat = (
+          item.categoryId?.name ||
+          item.category?.name ||
+          (typeof item.category === 'string' ? item.category : '') ||
+          ''
+        ).toUpperCase().trim()
+        const filterCat = activeFilter.toUpperCase().trim()
+        return courseCat === filterCat || courseCat.includes(filterCat) || filterCat.includes(courseCat)
+      })()
 
       // 2. Difficulty Filter
       const matchesDifficulty = (() => {
-        if (selectedDifficulty === 'All') return true;
-        const filterDiff = selectedDifficulty.toLowerCase();
+        if (selectedDifficulty === 'All') return true
+        const filterDiff = selectedDifficulty.toLowerCase()
         
         if (item.level && Array.isArray(item.level) && item.level.length > 0) {
-          return item.level.some(l => l.toLowerCase() === filterDiff);
+          return item.level.some(l => (typeof l === 'string' ? l.toLowerCase() : '') === filterDiff)
         }
         
-        const courseDiff = (item.difficulty || '').toLowerCase();
-        if (filterDiff === 'intermediate' && courseDiff === 'medium') return true;
-        return courseDiff === filterDiff;
-      })();
+        const courseDiff = (item.difficulty || '').toLowerCase()
+        if (filterDiff === 'intermediate' && courseDiff === 'medium') return true
+        return courseDiff === filterDiff
+      })()
 
       // 3. Duration Filter
       const matchesDuration = (() => {
-        if (selectedDuration === 'All hours') return true;
+        if (selectedDuration === 'All hours') return true
         
         const getCourseDurationInHours = (c) => {
-          if (!c.duration) return 0;
-          const val = parseFloat(c.duration);
-          if (isNaN(val)) return 0;
+          if (!c.duration) return 0
+          const val = parseFloat(c.duration)
+          if (isNaN(val)) return 0
           if (typeof c.duration === 'string' && c.duration.toLowerCase().includes('min')) {
-            return val / 60;
+            return val / 60
           }
           if (val > 100) {
-            return val / 60;
+            return val / 60
           }
-          return val;
-        };
+          return val
+        }
 
-        const duration = getCourseDurationInHours(item);
-        if (selectedDuration === '0-2 hours') return duration >= 0 && duration <= 2;
-        if (selectedDuration === '2-5 hours') return duration > 2 && duration <= 5;
-        if (selectedDuration === '5-10 hours') return duration > 5 && duration <= 10;
-        if (selectedDuration === '10-20 hours') return duration > 10 && duration <= 20;
-        if (selectedDuration === '20+ hours') return duration > 20;
-        return true;
-      })();
+        const duration = getCourseDurationInHours(item)
+        if (selectedDuration === '0-2 hours') return duration >= 0 && duration <= 2
+        if (selectedDuration === '2-5 hours') return duration > 2 && duration <= 5
+        if (selectedDuration === '5-10 hours') return duration > 5 && duration <= 10
+        if (selectedDuration === '10-20 hours') return duration > 10 && duration <= 20
+        if (selectedDuration === '20+ hours') return duration > 20
+        return true
+      })()
 
-      return matchesCategory && matchesDifficulty && matchesDuration;
-    });
-  }, [courses, activeFilter, selectedDifficulty, selectedDuration]);
+      return matchesCategory && matchesDifficulty && matchesDuration
+    })
+  }, [courses, activeFilter, selectedDifficulty, selectedDuration])
 
   useEffect(() => {
     dispatch(fetchCourses())
@@ -158,14 +125,7 @@ const Courses = () => {
     }, containerRef)
 
     return () => ctx.revert()
-  }, [])
-
-  const getImageUrl = (thumb) => {
-    if (!thumb) return '/herocard.png'
-    if (/^https?:\/\//i.test(thumb)) return thumb
-    const baseUrl = 'https://api.edrilla.com'
-    return thumb.startsWith('/') ? `${baseUrl}${thumb}` : `${baseUrl}/${thumb}`
-  }
+  }, [dispatch])
 
   return (
     <div ref={containerRef} className="min-h-screen bg-dark pt-0 pb-24">
@@ -179,16 +139,17 @@ const Courses = () => {
         <div className="max-w-7xl mx-auto mb-10">
           {/* Desktop Header Grid */}
           <div className="hidden md:grid grid-cols-12 items-center gap-8 w-full pb-6 border-b border-slate-200/80">
-            {/* Section 1: Filters (Cols 1-8) */}
+            {/* Section 1: Dynamic Filters (Cols 1-8) */}
             <div className="col-span-8 flex flex-wrap items-center gap-3">
-              {['ALL COURSES', 'BUSINESS', 'DIGITAL MARKETING'].map((filter) => (
+              {categoryFilters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`course-filter-reveal opacity-0 px-6 py-2.5 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${activeFilter === filter
-                    ? 'bg-accent text-white border-accent shadow-sm shadow-[#017DC3]/25'
-                    : 'text-slate-600 bg-white border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-slate-50'
-                    }`}
+                  className={`course-filter-reveal opacity-0 px-5 py-2.5 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${
+                    activeFilter.toUpperCase() === filter.toUpperCase()
+                      ? 'bg-accent text-white border-accent shadow-sm shadow-[#017DC3]/25'
+                      : 'text-slate-600 bg-white border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-slate-50'
+                  }`}
                 >
                   <RollingText text={filter} />
                 </button>
@@ -307,12 +268,12 @@ const Courses = () => {
                 </svg>
               </button>
               {isFilterOpen && (
-                <div className="absolute top-full left-0 w-full z-50 bg-white border border-slate-200 rounded-2xl shadow-xl mt-2 overflow-hidden">
-                  {['ALL COURSES', 'BUSINESS', 'DIGITAL MARKETING'].map((filter) => (
+                <div className="absolute top-full left-0 w-full z-50 bg-white border border-slate-200 rounded-2xl shadow-xl mt-2 overflow-hidden max-h-60 overflow-y-auto">
+                  {categoryFilters.map((filter) => (
                     <button
                       key={filter}
                       onClick={() => { setActiveFilter(filter); setIsFilterOpen(false); }}
-                      className={`w-full px-6 py-3.5 text-left font-montserrat text-[11px] font-bold border-b border-slate-100 last:border-b-0 transition-colors ${activeFilter === filter ? 'text-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:bg-slate-50'}`}
+                      className={`w-full px-6 py-3.5 text-left font-montserrat text-[11px] font-bold border-b border-slate-100 last:border-b-0 transition-colors ${activeFilter.toUpperCase() === filter.toUpperCase() ? 'text-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:bg-slate-50'}`}
                     >
                       {filter}
                     </button>
@@ -323,29 +284,21 @@ const Courses = () => {
           </div>
         </div>
 
-        {/* 3. Asymmetrical Masonry Grid */}
-        <div className="course-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24 mb-12">
+        {/* 3. Dynamic Masonry Grid */}
+        <div className="course-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mb-16">
           {loading ? (
-            <div className="col-span-full text-center py-20 text-accent font-montserrat">LOADING COURSES...</div>
+            <div className="col-span-full text-center py-20 text-accent font-montserrat font-bold">LOADING COURSES...</div>
           ) : error ? (
-            <div className="col-span-full text-center py-20 text-red-500 font-montserrat">{t('failedToLoad')}</div>
+            <div className="col-span-full text-center py-20 text-red-500 font-montserrat font-semibold">{t('failedToLoad')}</div>
           ) : filteredCourses.length > 0 ? (
             filteredCourses.map((item) => (
               <CourseCard
-                key={item._id || item.id}
-                item={{
-                  id: item._id || item.id,
-                  title: item.title,
-                  category: item.category?.name || item.category || 'COURSE',
-                  description: item.shortDescription || item.description,
-                  price: item.salePrice ? `₹${item.salePrice}` : item.price ? `₹${item.price}` : 'FREE',
-                  image: getImageUrl(item.thumbnail),
-                  isNew: true,
-                }}
+                key={item._id || item.id || item.slug}
+                item={item}
               />
             ))
           ) : (
-            <div className="col-span-full text-center py-20 text-description font-montserrat">{t('noCoursesAvailable')}</div>
+            <div className="col-span-full text-center py-20 text-slate-500 font-montserrat">{t('noCoursesAvailable')}</div>
           )}
         </div>
 
@@ -364,7 +317,7 @@ const Courses = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {eventsLoading ? (
-              <div className="col-span-full text-center py-20 text-accent font-montserrat">LOADING EVENTS...</div>
+              <div className="col-span-full text-center py-20 text-accent font-montserrat font-bold">LOADING EVENTS...</div>
             ) : eventList && eventList.length > 0 ? (
               eventList.map((event) => (
                 <CourseCard
@@ -374,7 +327,7 @@ const Courses = () => {
                     title: event.title,
                     category: event.category || 'EVENT',
                     description: event.description,
-                    image: getImageUrl(event.thumbnail || event.image),
+                    thumbnail: event.thumbnail || event.image,
                     buttonText: event.buttonText || 'Register Now',
                     isNew: event.isNew
                   }}

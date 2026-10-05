@@ -15,9 +15,9 @@ if (!MONGO_URI) {
   process.exit(1);
 }
 
-const ADMIN_EMAIL = "admin@iasdcs.com";
-const ADMIN_PASSWORD = "SuperAdmin@123";
-const ADMIN_NAME = "Super Admin";
+const ADMIN_EMAIL = "admin@ias-dcs.com";
+const ADMIN_PASSWORD = "Admin@123";
+const ADMIN_NAME = "Admin";
 
 const userSchema = new mongoose.Schema(
   {

@@ -203,16 +203,8 @@ const CuratedCatalog = () => {
         ) : courses && courses.length > 0 ? (
           courses.slice(0, 6).map((item) => (
             <CourseCard 
-              key={item._id || item.id} 
-              item={{
-                id: item._id || item.id,
-                title: item.title,
-                category: item.category?.name || item.category || 'COURSE',
-                description: item.shortDescription || item.description,
-                price: item.salePrice ? `₹${item.salePrice}` : item.price ? `₹${item.price}` : 'FREE',
-                image: item.thumbnail ? `https://api.edrilla.com/${item.thumbnail}` : '/herocard.png',
-                isNew: true,
-              }} 
+              key={item._id || item.id || item.slug} 
+              item={item} 
             />
           ))
         ) : (

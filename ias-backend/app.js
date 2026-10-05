@@ -27,8 +27,13 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // incompatible with credentials:true per the browser spec)
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
-  "http://localhost:3000",
   "http://localhost:5174",
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5174",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5000",
   "https://edrilla.com",
   "https://www.edrilla.com",
   "https://admin.edrilla.com",
@@ -46,15 +51,22 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, curl, Postman, server-to-server)
     if (!origin) return callback(null, true);
-    // Allow any localhost port for local development
-    if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return callback(null, true);
-    // Allow Vercel deployments (*.vercel.app)
-    if (/\.vercel\.app$/.test(origin)) return callback(null, true);
+    // Allow any localhost, 127.0.0.1, or local private IP on any port
+    if (/^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$/.test(origin)) {
+      return callback(null, true);
+    }
+    // Allow Vercel and Render deployments (*.vercel.app, *.onrender.com)
+    if (/\.(vercel\.app|onrender\.com)$/.test(origin)) return callback(null, true);
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
-    // Deny unknown origins
-    callback(new Error('Origin not allowed by CORS'));
+    
+    // In development mode, allow all origins
+    if (process.env.NODE_ENV !== 'production') return callback(null, true);
+
+    // Fallback: safely deny without throwing unhandled exceptions
+    callback(null, false);
   },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
   optionsSuccessStatus: 200,
   allowedHeaders: [
     "Content-Type",
@@ -62,17 +74,28 @@ const corsOptions = {
     "x-access-token",
     "x-refresh-token",
     "X-Requested-With",
+    "Accept",
+    "Origin",
+    "Access-Control-Request-Method",
+    "Access-Control-Request-Headers"
   ],
   exposedHeaders: ["x-access-token", "x-refresh-token"],
 };
-app.use(cors(corsOptions));
-// Handle OPTIONS preflight for all routes (path-to-regexp v8+ compatible syntax)
-app.options("/{*splat}", cors(corsOptions));
 
-// Rate limiting
+app.use(cors(corsOptions));
+// Handle all preflight requests
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return cors(corsOptions)(req, res, () => res.sendStatus(200));
+  }
+  next();
+});
+
+// Rate limiting (skip OPTIONS preflights and set reasonable threshold)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: 300,
+  skip: (req) => req.method === 'OPTIONS',
   message: { success: false, message: "Too many attempts, please try again after 15 minutes" },
   standardHeaders: true,
   legacyHeaders: false,

@@ -50,14 +50,43 @@ const CertificatePricingSection = ({ course }) => {
       return () => ctx.revert()
    }, [])
 
+   // Helper to extract numeric price
+   const parseNum = (val) => {
+      if (val === undefined || val === null || val === '') return null
+      if (typeof val === 'number') return isNaN(val) ? null : val
+      if (typeof val === 'object' && val.$numberDecimal !== undefined) {
+         const num = parseFloat(val.$numberDecimal)
+         return isNaN(num) ? null : num
+      }
+      if (typeof val === 'string') {
+         const cleaned = val.replace(/[^0-9.]/g, '')
+         if (!cleaned) return null
+         const num = parseFloat(cleaned)
+         return isNaN(num) ? null : num
+      }
+      return null
+   }
+
    // Use API plans if available, otherwise fallback
-   const apiPlans = course?.plans?.length > 0 ? course.plans.map(p => ({
-      id: p._id,
-      title: p.name || `${p.duration} ${p.durationType}`,
-      price: p.salePrice || p.price,
-      subtitle: p.description || 'Full Access Protocol'
-   })) : [
-      { id: '1year', title: '1 Year', price: course?.salePrice || course?.price || 3499, subtitle: 'Standard Access' }
+   const apiPlans = course?.plans?.length > 0 ? course.plans.map(p => {
+      const saleP = parseNum(p.salePrice)
+      const regP = parseNum(p.price)
+      const finalP = (saleP !== null && saleP > 0) ? saleP : (regP !== null && regP > 0) ? regP : 3499
+      return {
+         id: p._id,
+         title: p.name || `${p.duration} ${p.durationType}`,
+         price: finalP.toLocaleString(),
+         rawPrice: finalP,
+         subtitle: p.description || 'Full Access Protocol'
+      }
+   }) : [
+      { 
+         id: '1year', 
+         title: '1 Year Standard Access', 
+         price: (parseNum(course?.salePrice) || parseNum(course?.price) || 3499).toLocaleString(), 
+         rawPrice: (parseNum(course?.salePrice) || parseNum(course?.price) || 3499), 
+         subtitle: 'Full Curriculum & Verified Credentials' 
+      }
    ];
 
    useEffect(() => {

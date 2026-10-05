@@ -135,122 +135,111 @@ export default function SignInForm() {
   const isLoading = loginStatus === "loading";
 
   return (
-    <div className="flex flex-col flex-1">
-      <div className="w-full max-w-md pt-10 mx-auto">
+    <div className="flex flex-col justify-center w-full max-w-md mx-auto my-auto">
+      <div className="mb-4">
         <Link
           to="/"
-          className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+          className="inline-flex items-center gap-1 text-sm font-medium text-gray-500 transition-colors hover:text-[#017DC3] dark:text-gray-400"
         >
-          <ChevronLeftIcon className="size-5" />
+          <ChevronLeftIcon className="size-4" />
           Back to dashboard
         </Link>
       </div>
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
-        <div className="w-full p-8 bg-white border border-gray-200 shadow-theme-lg rounded-2xl dark:bg-gray-900 dark:border-gray-800">
-          <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Sign In
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your email and password to sign in!
-            </p>
-          </div>
 
-          {/* Display API error if any */}
-          {authError && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-600">{authError}</p>
-            </div>
-          )}
-
-          <div>
-          
-            
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-6">
-                <div>
-                  <Label>
-                    Email <span className="text-error-500">*</span>
-                  </Label>
-                  <Input 
-                    placeholder="info@gmail.com" 
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    disabled={isLoading}
-                    className={formErrors.email ? "border-red-500" : ""}
-                  />
-                  {formErrors.email && (
-                    <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <Label>
-                    Password <span className="text-error-500">*</span>
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
-                      value={formData.password}
-                      onChange={(e) => handleInputChange("password", e.target.value)}
-                      disabled={isLoading}
-                      className={formErrors.password ? "border-red-500" : ""}
-                    />
-                    <span
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                    >
-                      {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                      ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                      )}
-                    </span>
-                  </div>
-                  {formErrors.password && (
-                    <p className="mt-1 text-sm text-red-600">{formErrors.password}</p>
-                  )}
-                </div>
-                
-                <div className="flex sm:flex-row items-center sm:items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <Checkbox 
-                      checked={isChecked} 
-                      onChange={setIsChecked}
-                      disabled={isLoading}
-                    />
-                    <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
-                      Keep me logged in
-                    </span>
-                  </div>
-                
-                </div>
-                
-                <div>
-                  <Button 
-                    type="submit"
-                    className="w-full" 
-                    size="sm"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Signing in...
-                      </div>
-                    ) : (
-                      "Sign in"
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </form>
-
-          
-          </div>
+      <div className="w-full p-7 sm:p-8 bg-white border border-gray-200/80 shadow-xl rounded-2xl dark:bg-gray-900 dark:border-gray-800">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white sm:text-3xl tracking-tight">
+            Sign In
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Enter your email and password to sign in!
+          </p>
         </div>
+
+        {/* Display API error if any */}
+        {authError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 dark:bg-red-950/40 dark:border-red-800 dark:text-red-300">
+            <p className="text-xs font-medium">{authError}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <Label>
+              Email <span className="text-red-500">*</span>
+            </Label>
+            <Input 
+              placeholder="info@gmail.com" 
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              disabled={isLoading}
+              className={formErrors.email ? "border-red-500" : ""}
+            />
+            {formErrors.email && (
+              <p className="mt-1 text-xs text-red-600">{formErrors.email}</p>
+            )}
+          </div>
+          
+          <div>
+            <Label>
+              Password <span className="text-red-500">*</span>
+            </Label>
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                disabled={isLoading}
+                className={formErrors.password ? "border-red-500" : ""}
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute z-30 -translate-y-1/2 cursor-pointer right-3.5 top-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              >
+                {showPassword ? (
+                  <EyeIcon className="size-5 fill-current" />
+                ) : (
+                  <EyeCloseIcon className="size-5 fill-current" />
+                )}
+              </span>
+            </div>
+            {formErrors.password && (
+              <p className="mt-1 text-xs text-red-600">{formErrors.password}</p>
+            )}
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <Checkbox 
+                checked={isChecked} 
+                onChange={setIsChecked}
+                disabled={isLoading}
+              />
+              <span className="text-sm font-normal text-gray-700 dark:text-gray-400 select-none">
+                Keep me logged in
+              </span>
+            </div>
+          </div>
+          
+          <div>
+            <button 
+              type="submit"
+              className="w-full py-3 px-4 bg-[#017DC3] hover:bg-[#0168A5] active:scale-[0.99] text-white font-semibold text-sm rounded-xl shadow-md shadow-[#017DC3]/25 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Signing in...
+                </div>
+              ) : (
+                "Sign in"
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

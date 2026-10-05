@@ -4,24 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCourseDetail } from '../redux/slices/courseSlice'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
-import RollingText from '../components/RollingText'
-import LogoMarquee from '../components/LogoMarquee'
 import CourseHeroDetail from '../components/CourseHeroDetail'
+import OverviewSection from '../components/OverviewSection'
 import ComparisonSection from '../components/ComparisonSection'
-import EasyMoneySection from '../components/EasyMoneySection'
-import BonusSection from '../components/BonusSection'
-import TestimonialsScroll from '../components/TestimonialsScroll'
-import GuaranteeSection from '../components/GuaranteeSection'
-import FAQSection from '../components/FAQSection'
-import CertificatePricingSection from '../components/CertificatePricingSection'
 import BenefitsSection from '../components/BenefitsSection'
 import FrameworkSection from '../components/FrameworkSection'
 import SolutionSection from '../components/SolutionSection'
+import GuaranteeSection from '../components/GuaranteeSection'
+import BonusSection from '../components/BonusSection'
+import TestimonialsScroll from '../components/TestimonialsScroll'
+import FAQSection from '../components/FAQSection'
+import CertificatePricingSection from '../components/CertificatePricingSection'
 import sanitizeDisplay from '../utils/textSanitize'
-import phase1Img from '../assets/images/blueprint/phase_01.png'
-import phase2Img from '../assets/images/blueprint/phase_02.png'
-import phase3Img from '../assets/images/blueprint/phase_03.png'
-import phase4Img from '../assets/images/blueprint/phase_04.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -73,7 +67,7 @@ const CourseDetail = () => {
         )
       })
 
-      // 1. Section Title reveals
+      // 3. Stack cards reveal
       gsap.utils.toArray('.stack-card').forEach((card, index) => {
         if (index === 0) return
         gsap.fromTo(card,
@@ -93,14 +87,6 @@ const CourseDetail = () => {
 
     return () => ctx.revert()
   }, [course]) // Re-run animations when course data is loaded
-
-  // Temporary debug: log course data when loaded
-  useEffect(() => {
-    if (course) {
-      // eslint-disable-next-line no-console
-      console.log('CourseDetail loaded:', { id, title: course.title, course })
-    }
-  }, [course, id])
 
   if (loading && !course) {
     return <div className="min-h-screen bg-dark" />
@@ -173,38 +159,60 @@ const CourseDetail = () => {
     };
   }) || []
 
+  // Extract and sort landing page sections
+  const sortedLandingSections = [...(course.landingPageSections || [])]
+    .filter(s => s && s.data?.show !== false)
+    .sort((a, b) => (a.order ?? a.sortOrder ?? 0) - (b.order ?? b.sortOrder ?? 0))
+
   return (
     <div ref={containerRef} className="min-h-screen bg-dark pt-36 xl:pb-24 px-4 md:px-12 lg:px-20 overflow-x-clip cursor-default">
 
-      {/* Dynamic Sections from API */}
-      {course.landingPageSections?.length > 0 && course.landingPageSections.filter(s => s.data?.show !== false).map((section, idx) => {
+      {/* 1. Main Course Hero Header & Value Proposition */}
+      <CourseHeroDetail course={course} />
+
+      {/* 2. Dynamic Landing Page Sections from Admin Customization */}
+      {sortedLandingSections.length > 0 ? (
+        sortedLandingSections.map((section, idx) => {
+          const sKey = section._id || section.id || `landing-sec-${idx}`
           switch (section.type) {
             case 'overview':
-              return <CourseHeroDetail key={section._id || idx} course={course} section={section.data} />
+              return <OverviewSection key={sKey} course={course} section={section.data} />
             case 'comparison':
-              return <ComparisonSection key={section._id || idx} course={course} section={section.data} />
+              return <ComparisonSection key={sKey} course={course} section={section.data} />
             case 'benefits':
-              return <BenefitsSection key={section._id || idx} course={course} section={section.data} />
+              return <BenefitsSection key={sKey} course={course} section={section.data} />
             case 'framework':
-              return <FrameworkSection key={section._id || idx} course={course} section={section.data} />
+              return <FrameworkSection key={sKey} course={course} section={section.data} />
             case 'solution':
-              return <SolutionSection key={section._id || idx} course={course} section={section.data} />
+              return <SolutionSection key={sKey} course={course} section={section.data} />
             case 'guarantee':
-              return null // Moved below testimonials
+              return <GuaranteeSection key={sKey} course={course} section={section.data} />
             default:
               return null
           }
-      })}
-
-      {!course.landingPageSections?.length && (
+        })
+      ) : (
+        /* Fallback for existing courses with legacy individual section fields */
         <>
-          <CourseHeroDetail course={course} />
-          <ComparisonSection course={course} />
-          <EasyMoneySection course={course} />
+          {course.overviewSection?.show !== false && (
+            <OverviewSection course={course} section={course.overviewSection} />
+          )}
+          {course.comparisonSection?.show !== false && (
+            <ComparisonSection course={course} section={course.comparisonSection} />
+          )}
+          {course.benefitsSection?.show && (
+            <BenefitsSection course={course} section={course.benefitsSection} />
+          )}
+          {course.frameworkSection?.show && (
+            <FrameworkSection course={course} section={course.frameworkSection} />
+          )}
+          {course.solutionSection?.show && (
+            <SolutionSection course={course} section={course.solutionSection} />
+          )}
         </>
       )}
 
-      {/* Always show Curriculum (The Blueprint) if modules exist */}
+      {/* 3. The Blueprint (Curriculum Modules & Lessons) */}
       {dynamicCurriculum.length > 0 && (
         <section id="curriculum-section" className="section-reveal max-w-7xl mx-auto py-16 scroll-mt-32">
           <div className="flex flex-col gap-6">
@@ -266,7 +274,7 @@ const CourseDetail = () => {
                               className={`stack-card group relative sticky grid grid-cols-1 ${displayImage ? 'lg:grid-cols-2' : 'lg:grid-cols-1'} gap-8 md:gap-12 items-center border border-white/10 bg-dark p-8 md:p-12 backdrop-blur-3xl overflow-hidden rounded-2xl shadow-2xl`}
                               style={{ top: `${140 + lIndex * 40}px`, zIndex: lIndex + 1 }}
                             >
-                              {/* Full-Width Soft Glow - No Line */}
+                              {/* Full-Width Soft Glow */}
                               <div className="absolute -top-24 left-0 right-0 h-16 bg-accent/[0.6] blur-[40px] pointer-events-none" />
                               
                               <div className="relative z-10 space-y-8 md:space-y-12">
@@ -308,10 +316,11 @@ const CourseDetail = () => {
         </section>
       )}
 
-      {/* Global Static/Common Sections */}
+      {/* 4. Global Static/Common Sections */}
       <BonusSection course={course} />
       <TestimonialsScroll reviews={course.reviews} />
-      <GuaranteeSection />
+      {/* Guarantee Section fallback if not configured in dynamic sections */}
+      {!sortedLandingSections.some(s => s.type === 'guarantee') && <GuaranteeSection />}
       <FAQSection course={course} />
       <div id="pricing-section" className="scroll-mt-32">
         <CertificatePricingSection course={course} />

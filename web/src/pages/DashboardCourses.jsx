@@ -240,23 +240,8 @@ const DashboardCourses = () => {
           ) : courses && courses.length > 0 ? (
             courses.map((item) => (
               <CourseCard 
-                key={item._id || item.id} 
-                item={{
-                  id: item._id || item.id,
-                  title: item.title,
-                  category: item.category?.name || item.category || 'COURSE',
-                  description: item.shortDescription || item.description,
-                  price: item.salePrice ? `₹${item.salePrice}` : item.price ? `₹${item.price}` : 'FREE',
-                  image: (() => {
-                      const thumb = item.thumbnail;
-                      if (!thumb) return '/herocard.png';
-                      if (thumb.startsWith('http')) return thumb;
-                      const rawBase = import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://api.edrilla.com';
-                      const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '');
-                      return `${baseUrl}${thumb.startsWith('/') ? '' : '/'}${thumb}`;
-                  })(),
-                  isNew: true,
-                }} 
+                key={item._id || item.id || item.slug} 
+                item={item} 
               />
             ))
           ) : (

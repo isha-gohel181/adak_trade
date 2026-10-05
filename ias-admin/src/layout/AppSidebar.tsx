@@ -486,10 +486,11 @@ const AppSidebar: React.FC = () => {
                 )}
                 {(isExpanded || isHovered || isMobileOpen) && (
                   <ChevronDownIcon
-                    className={`ml-auto w-5 h-5 transition-transform duration-200 ${openSubmenu.includes(menuKey)
-                      ? "rotate-180 text-brand-500"
-                      : ""
-                      }`}
+                    className={`ml-auto w-5 h-5 transition-transform duration-200 ${
+                      openSubmenu.includes(menuKey) || hasActiveSubItem(nav.subItems)
+                        ? "rotate-180 text-[#017DC3]"
+                        : "text-white/70 group-hover:text-white"
+                    }`}
                   />
                 )}
               </button>
@@ -528,7 +529,7 @@ const AppSidebar: React.FC = () => {
                     : "0px",
                 }}
               >
-                <ul className="mt-2 space-y-1 ml-9">
+                <ul className="mt-2 space-y-1 ml-6">
                   {renderSubItems(nav.subItems, menuKey)}
                 </ul>
               </div>
@@ -546,7 +547,7 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-3 left-0 bg-[#017DC3] text-white h-screen transition-all duration-300 ease-in-out z-50 border-r border-[#0168A5]/40 shadow-xl
         ${isExpanded || isMobileOpen
           ? "w-[290px]"
           : isHovered
@@ -559,32 +560,35 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
-          }`}
+        className={`py-6 flex flex-col items-center justify-center text-center border-b border-white/15 pb-5 mb-3 ${
+          !isExpanded && !isHovered ? "px-1" : "px-3"
+        }`}
       >
-        <Link to="/" className="flex items-end">
+        <Link to="/" className="flex flex-col items-center justify-center group w-full">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
-              <img
-                className="dark:hidden h-10"
-                src="/images/logo/iasdcs-logo.png"
-                alt="IAS"
-              />
-              <img
-                className="hidden dark:block h-10"
-                src="/images/logo/iasdcs-logo.png"
-                alt="IAS"
-              />
-              <span className="ml-2.5 text-[22px] font-bold tracking-tight bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
+              <div className="w-16 h-16 bg-white rounded-2xl p-2 shadow-lg shadow-black/15 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
+                <img
+                  className="w-full h-full object-contain"
+                  src="/images/logo/iasdcs-logo.png"
+                  alt="IAS DCS"
+                />
+              </div>
+              <span className="mt-3 text-[17px] font-extrabold text-white tracking-tight leading-snug text-center">
                 Institute Of Applied Statistics
+              </span>
+              <span className="text-[11px] font-semibold text-white/80 tracking-wider uppercase mt-0.5">
+                Admin Panel
               </span>
             </>
           ) : (
-            <img
-              className="dark:hidden h-10"
-              src="/images/logo/iasdcs-logo.png"
-              alt="IAS"
-            />
+            <div className="w-12 h-12 bg-white rounded-xl p-1.5 shadow-md flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
+              <img
+                className="w-full h-full object-contain"
+                src="/images/logo/iasdcs-logo.png"
+                alt="IAS"
+              />
+            </div>
           )}
         </Link>
       </div>
@@ -593,15 +597,16 @@ const AppSidebar: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${!isExpanded && !isHovered
-                  ? "lg:justify-center"
-                  : "justify-start"
-                  }`}
+                className={`mb-3 px-3 text-[11px] font-bold uppercase tracking-wider text-white/60 flex leading-[20px] ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <HorizontaLDots className="size-6" />
+                  <HorizontaLDots className="size-5 text-white/60" />
                 )}
               </h2>
               {renderMenuItems(filteredNavItems, "main")}
@@ -609,15 +614,16 @@ const AppSidebar: React.FC = () => {
             {userRole !== "news_editor" && (
               <div className="">
                 <h2
-                  className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${!isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                    }`}
+                  className={`mb-3 px-3 text-[11px] font-bold uppercase tracking-wider text-white/60 flex leading-[20px] ${
+                    !isExpanded && !isHovered
+                      ? "lg:justify-center"
+                      : "justify-start"
+                  }`}
                 >
                   {isExpanded || isHovered || isMobileOpen ? (
                     "Others"
                   ) : (
-                    <HorizontaLDots />
+                    <HorizontaLDots className="size-5 text-white/60" />
                   )}
                 </h2>
                 {renderMenuItems(othersItems, "others")}

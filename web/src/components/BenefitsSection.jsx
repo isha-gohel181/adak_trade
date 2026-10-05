@@ -2,75 +2,142 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import sanitizeDisplay from '../utils/textSanitize'
-import { useLanguage } from '../context/LanguageContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const 
-BenefitsSection = ({ course, section }) => {
+const BenefitsSection = ({ course, section }) => {
   const containerRef = useRef(null)
+  const targetSection = section || course?.benefitsSection
+
+  // If section visibility is disabled or no section exists, don't render
+  if (!targetSection || targetSection.show === false) {
+    return null
+  }
+
+  // Extract points list strictly from database
+  const pointsList = (targetSection.points || []).filter(p => p && String(p).trim() !== '')
+
+  // Process EditorJS content blocks if available
+  const contentBlocks = targetSection.content?.blocks?.map(block => 
+    sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
+  ).filter(t => t && t.trim() !== '') || []
+
+  const rawTitle = targetSection.title
+  const hasContent = pointsList.length > 0 || contentBlocks.length > 0 || rawTitle
+
+  // If no data exists in database, do not render this section
+  if (!hasContent) {
+    return null
+  }
+
+  const sectionTitle = sanitizeDisplay(rawTitle || "What You Will Achieve")
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 90% lighter and faster grid animation (y: 4px, scale: 0.99, duration: 0.25s, stagger: 0.02s)
-      gsap.fromTo('.benefit-card',
-        { opacity: 0, y: 4, scale: 0.99 },
+      gsap.fromTo('.benefit-header',
+        { opacity: 0, y: 30 },
         {
-          opacity: 1, y: 0, scale: 1, duration: 0.25, ease: 'power3.out', stagger: 0.02,
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.1,
+          scrollTrigger: { trigger: '.benefit-header', start: 'top 92%' }
+        }
+      )
+
+      gsap.fromTo('.benefit-card',
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08,
           scrollTrigger: {
             trigger: '.benefit-grid',
-            start: 'top 96%',
+            start: 'top 92%',
           }
         }
       )
     }, containerRef)
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={containerRef} className="max-w-7xl mx-auto py-20">
-      <div className="grid grid-cols-1 min-[1301px]:grid-cols-[1fr_1.8fr] gap-12 min-[1301px]:gap-20 items-start mb-24 px-4 md:px-0">
-        <div className="space-y-8 min-[1301px]:sticky min-[1301px]:top-32 transition-all duration-500">
-          <h2 className="font-newsreader italic text-4xl md:text-5xl lg:text-6xl text-white font-extralight tracking-tight leading-[1.1]">
-            {sanitizeDisplay(section?.title || "What You Will Achieve").split(' ').map((word, i, arr) => (
+    <section ref={containerRef} className="max-w-7xl mx-auto py-20 px-4 md:px-6">
+      
+      {/* Top Section Divider Line */}
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-16" />
+
+      {/* Header & Rich Description Grid */}
+      <div className="benefit-header grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-16">
+        
+        {/* Left Sticky Title */}
+        <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
+          <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-blue-50 border border-blue-100 rounded-full inline-block">
+            CORE ADVANTAGES
+          </span>
+          <h2 className="font-newsreader italic text-[clamp(2.2rem,5vw,3.8rem)] text-slate-900 font-light tracking-tight leading-[1.1]">
+            {sectionTitle.split(' ').map((word, i, arr) => (
               <React.Fragment key={i}>
-                {i === arr.length - 1 ? (
-                  <span className="text-accent">{word}</span>
+                {i >= arr.length - 2 ? (
+                  <span className="text-accent underline decoration-accent/30 underline-offset-8">{word} </span>
                 ) : (
                   word + ' '
                 )}
               </React.Fragment>
             ))}
           </h2>
-          <div className="h-[2px] bg-accent/40 w-24" />
+          <div className="h-[2px] bg-accent/40 w-24 rounded-full" />
         </div>
 
-        {section?.content && (
-          <div className="min-[1301px]:border-l border-white/10 pl-0 min-[1301px]:pl-12 space-y-10 py-2">
-            {section.content.blocks?.map((block, i) => (
-              <p key={i} className={`font-montserrat leading-[1.8] tracking-wide ${i === 0 ? 'text-lg md:text-xl text-white/95 font-medium' : 'text-sm md:text-base text-white/70 font-light'}`}>
-                {sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')}
+        {/* Right Content / Editorial Narrative */}
+        <div className="lg:col-span-7 space-y-4 lg:border-l border-slate-200 lg:pl-10 py-2">
+          {contentBlocks.length > 0 ? (
+            contentBlocks.map((blockText, i) => (
+              <p 
+                key={i} 
+                className={`font-montserrat leading-[1.8] ${
+                  i === 0 
+                    ? 'text-base md:text-lg text-slate-800 font-medium' 
+                    : 'text-sm md:text-base text-slate-600 font-normal'
+                }`}
+              >
+                {blockText}
               </p>
-            ))}
-          </div>
-        )}
+            ))
+          ) : (
+            <p className="font-montserrat text-sm md:text-base text-slate-600 leading-[1.8]">
+              {sanitizeDisplay(course?.shortDescription || "Gain comprehensive mastery backed by structured workflows, practical assignments, and personalized mentoring.")}
+            </p>
+          )}
+        </div>
       </div>
 
-      <div className="benefit-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {section?.points?.map((feat, i) => (
-          <div key={i} className="benefit-card border border-white/5 bg-white/[0.01] p-8 md:p-10 backdrop-blur-xl relative group hover:border-accent/40 transition-all duration-700">
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-              <span className="font-jetbrains text-[40px] font-black text-accent">{String(i + 1).padStart(2, '0')}</span>
+      {/* Benefit Points 3-Column Card Grid (Rendered strictly from backend data) */}
+      {pointsList.length > 0 && (
+        <div className="benefit-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {pointsList.map((feat, i) => (
+            <div 
+              key={i} 
+              className="benefit-card bg-white border border-slate-200/90 hover:border-accent/40 p-7 rounded-2xl relative group hover:shadow-lg hover:shadow-blue-50 transition-all duration-300 flex flex-col justify-between min-h-[150px]"
+            >
+              {/* Number watermark */}
+              <div className="absolute top-3 right-4 opacity-70 group-hover:opacity-100 transition-opacity">
+                <span className="font-jetbrains text-3xl font-black text-slate-200 group-hover:text-blue-200 transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+
+              {/* Glowing Accent Indicator & Text */}
+              <div className="flex items-start gap-4 z-10">
+                <div className="w-2.5 h-2.5 bg-accent rounded-full mt-1.5 shrink-0 shadow-xs shadow-accent/50 group-hover:scale-125 transition-transform" />
+                <span className="font-montserrat text-sm text-slate-800 font-medium leading-relaxed">
+                  {sanitizeDisplay(typeof feat === 'string' ? feat : feat.title || '')}
+                </span>
+              </div>
+
+              {/* Bottom accent indicator */}
+              <div className="w-0 group-hover:w-16 h-[2px] bg-accent transition-all duration-300 mt-6 rounded-full" />
             </div>
-            <div className="flex items-center gap-6">
-              <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_8px_#017DC3]" />
-              <span className="font-montserrat text-[12px] text-normal font-bold tracking-[0.2em] uppercase leading-relaxed">
-                {feat}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
     </section>
   )
 }

@@ -4,47 +4,28 @@ import { ScrollTrigger } from 'gsap/all'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const bonuses = [
-  {
-    title: "One On One 30 Minute Business Consultation",
-    price: "20,000/-",
-  },
-  {
-    title: "1 Year Complimentary Access To All Lapaas Beta Tools",
-    price: "4,999/-",
-  },
-  {
-    title: "Access to 4 Offline 1 Day Workshops",
-    price: "1,999/-",
-  },
-  {
-    title: "12 Exclusive Live FAQs Session",
-    price: "2,999/-",
-  },
-]
-
 const BonusSection = ({ course }) => {
   const ref = useRef(null)
 
-  // Use API bonuses if available
-  const apiBonuses = course?.bonuses || [];
+  // Use API bonuses if available strictly from database
+  const apiBonuses = (course?.bonuses || []).filter(b => b && (b.title || b.price))
 
   useEffect(() => {
-    if (apiBonuses.length === 0) return;
+    if (apiBonuses.length === 0) return
 
     const ctx = gsap.context(() => {
       gsap.fromTo('.bonus-heading',
-        { opacity: 0, y: 50, filter: 'blur(14px)' },
+        { opacity: 0, y: 30 },
         {
-          opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power4.out', stagger: 0.12,
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.1,
           scrollTrigger: { trigger: '.bonus-heading', start: 'top 87%' }
         }
       )
 
       gsap.fromTo('.bonus-card',
-        { opacity: 0, y: 40, scale: 0.94 },
+        { opacity: 0, y: 20 },
         {
-          opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.4)', stagger: 0.12,
+          opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.08,
           scrollTrigger: { trigger: '.bonus-card', start: 'top 85%' }
         }
       )
@@ -52,26 +33,23 @@ const BonusSection = ({ course }) => {
     return () => ctx.revert()
   }, [apiBonuses])
 
-  // Hide the entire section if no bonuses exist in API
-  if (apiBonuses.length === 0) return null;
+  // Hide the entire section if no bonuses exist in API/database
+  if (apiBonuses.length === 0) return null
 
   return (
-    <section ref={ref} className="max-w-7xl mx-auto mb-24 px-4 md:px-0">
+    <section ref={ref} className="max-w-7xl mx-auto mb-20 px-4 md:px-6">
       {/* Top accent */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent mb-20" />
+      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-16" />
 
       {/* Heading */}
-      <div className="text-center space-y-4 mb-16">
-        <span className="bonus-heading block font-jetbrains text-[9px] text-accent tracking-[0.7em] uppercase font-bold opacity-70">
-          Exclusive Bonuses / Zero Cost
+      <div className="text-center space-y-4 mb-14">
+        <span className="bonus-heading inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-blue-50 border border-blue-100 rounded-full shadow-xs">
+          EXCLUSIVE BONUSES
         </span>
-        <h2 className="bonus-heading font-newsreader italic text-[clamp(2rem,5vw,4rem)] text-normal font-extralight leading-tight">
+        <h2 className="bonus-heading font-newsreader italic text-[clamp(2rem,5vw,3.8rem)] text-slate-900 font-light leading-tight">
           Unlock These For Free —{' '}
-          <span className="text-accent underline-lime">No Cost, Just Value!</span>
+          <span className="text-accent underline decoration-accent/30 underline-offset-8">No Cost, Just Value!</span>
         </h2>
-        <p className="bonus-heading font-jetbrains text-xs text-description tracking-[0.3em] uppercase">
-          (Applicable only when you buy 1 Year Plan)
-        </p>
       </div>
 
       {/* Cards Grid */}
@@ -79,44 +57,29 @@ const BonusSection = ({ course }) => {
         {apiBonuses.map((b, i) => (
           <div
             key={i}
-            className="bonus-card group relative border border-white/8 bg-white/[0.01] backdrop-blur-xl p-8 flex items-center justify-between gap-6 hover:border-accent/30 hover:bg-accent/[0.02] transition-all duration-600 overflow-hidden"
+            className="bonus-card group relative border border-slate-200/90 bg-white p-6 rounded-2xl flex items-center justify-between gap-4 shadow-sm hover:shadow-lg hover:border-accent/40 transition-all duration-300 overflow-hidden"
           >
-            {/* Background number watermark */}
-            <div className="absolute top-2 left-3 font-jetbrains text-[80px] font-black text-white/[0.02] leading-none select-none pointer-events-none group-hover:text-accent/[0.04] transition-colors duration-700">
-              {String(i + 1).padStart(2, '0')}
-            </div>
-
             {/* Left: text */}
-            <div className="relative z-10 space-y-3 flex-1">
-              <p className="font-jetbrains text-sm text-description font-medium tracking-wide leading-relaxed">
+            <div className="relative z-10 space-y-2 flex-1">
+              <p className="font-montserrat text-sm text-slate-800 font-medium leading-relaxed">
                 {b.title}
               </p>
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-[1px] bg-accent/40" />
-                <span className="font-jetbrains text-xs text-accent font-black tracking-[0.3em]">
-                  Price: {b.price}
+              <div className="flex items-center gap-2">
+                <span className="font-jetbrains text-xs text-accent font-bold tracking-wide">
+                  Value: {b.price}
                 </span>
               </div>
             </div>
 
             {/* Right: FREE badge */}
-            <div className="relative z-10 shrink-0 flex flex-col items-center justify-center bg-accent w-14 h-20 group-hover:scale-105 transition-transform duration-400">
-              <span
-                className="font-jetbrains text-dark font-black text-[9px] tracking-[0.15em] uppercase"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', letterSpacing: '0.25em' }}
-              >
-                Free
+            <div className="relative z-10 shrink-0 flex flex-col items-center justify-center bg-accent text-white px-3 py-2 rounded-lg shadow-sm">
+              <span className="font-jetbrains text-white font-bold text-[10px] tracking-wider uppercase">
+                FREE
               </span>
             </div>
-
-            {/* Hover line at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent/0 via-accent to-accent/0 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
           </div>
         ))}
       </div>
-
-      {/* Bottom accent */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent mt-20" />
     </section>
   )
 }
