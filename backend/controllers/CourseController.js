@@ -1240,7 +1240,8 @@ export const getAllCourses = async (req, res) => {
     }
 
     // Role-based visibility for isPublished
-    if (req.user?.role === "admin") {
+    const isAdminUser = ["admin", "super_admin"].includes(req.user?.role);
+    if (isAdminUser) {
       // Allow filter from query, or no filter (all courses)
       if (filterParams.hasOwnProperty("isPublished")) {
         filter.isPublished = filterParams.isPublished === "true";
@@ -1456,7 +1457,7 @@ export const updateCourse = async (req, res) => {
 
     if (req.body.accessType) accessType = req.body.accessType;
 
-    if (req.user.role === 'admin' && req.body.accessDuration) {
+    if (["admin", "super_admin"].includes(req.user.role) && req.body.accessDuration) {
       const parsed = parseAccessDuration(req.body.accessDuration);
       accessType = parsed.accessType;
       accessExpiry = parsed.accessExpiry;

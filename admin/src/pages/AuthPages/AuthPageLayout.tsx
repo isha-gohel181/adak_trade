@@ -17,10 +17,10 @@ export default function AuthLayout({
         </div>
 
         {/* Right Side: Brand Banner (Full Height) */}
-        <div className="relative items-center justify-center hidden w-full lg:w-1/2 min-h-screen lg:min-h-full bg-gradient-to-br from-[#047857] via-[#026AA2] to-[#063A5B] dark:bg-gradient-to-br dark:from-[#063A5B] dark:via-[#03253C] dark:to-gray-950 lg:flex overflow-hidden">
+        <div className="relative items-center justify-center hidden w-full lg:w-1/2 min-h-screen lg:min-h-full bg-gradient-to-br from-[#047857] via-[#065f46] to-[#064e3b] dark:bg-gradient-to-br dark:from-[#064e3b] dark:via-[#053a2c] dark:to-gray-950 lg:flex overflow-hidden">
           {/* Ambient Glows */}
           <div className="absolute w-96 h-96 bg-white/10 rounded-full blur-3xl -top-20 -right-20 pointer-events-none"></div>
-          <div className="absolute w-80 h-80 bg-[#36bffa]/20 rounded-full blur-3xl -bottom-20 -left-20 pointer-events-none"></div>
+          <div className="absolute w-80 h-80 bg-[#BFD419]/20 rounded-full blur-3xl -bottom-20 -left-20 pointer-events-none"></div>
 
           <div className="relative flex items-center justify-center z-1 w-full max-w-md px-8">
             <GridShape />
@@ -29,13 +29,13 @@ export default function AuthLayout({
                 <div className="w-24 h-24 bg-white rounded-3xl p-3 shadow-2xl ring-4 ring-white/20 flex items-center justify-center">
                   <img
                     className="w-full h-full object-contain"
-                    src="/images/logo/logo-icon.svg"
-                    alt="IAS"
+                    src="/images/logo/adka_trade_logo.png"
+                    alt="ADAK TRADE EFFORT"
                   />
                 </div>
               </Link>
               <h2 className="text-2xl font-extrabold text-white tracking-tight mb-2">
-                Institute Of Applied Statistics
+                ADAK TRADE EFFORT
               </h2>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 border border-white/20 text-white text-xs font-semibold tracking-wider uppercase mb-3">
                 Admin &amp; Management Portal

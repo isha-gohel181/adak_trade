@@ -249,7 +249,7 @@ class UserRepository extends CrudRepository {
         paidSalesCount,
         platformIncome
       ] = await Promise.all([
-        this.model.db.models.Course.countDocuments({ isDeleted: false, isPublished: true }),
+        this.model.db.models.Course.countDocuments({ isDeleted: false }),
         this.model.db.models.SupportTicket.countDocuments({ isDeleted: false }),
         this.count({ role: 'student', isActive: true }),
         this.model.db.models.ForumThread.countDocuments(),
@@ -286,7 +286,7 @@ class UserRepository extends CrudRepository {
       // Parallel queries for latest records
       const [latestCourses, latestSupportTickets, latestForumThreads] = await Promise.all([
         this.model.db.models.Course
-          .find({ isDeleted: false, isPublished: true })
+          .find({ isDeleted: false })
           .sort({ createdAt: -1 })
           .limit(5)
           .select('title slug thumbnail createdAt')

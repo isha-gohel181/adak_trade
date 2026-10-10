@@ -487,7 +487,7 @@ const AppSidebar: React.FC = () => {
                   <ChevronDownIcon
                     className={`ml-auto w-5 h-5 transition-transform duration-200 ${
                       openSubmenu.includes(menuKey) || hasActiveSubItem(nav.subItems)
-                        ? "rotate-180 text-[#047857]"
+                        ? "rotate-180 text-white"
                         : "text-white/70 group-hover:text-white"
                     }`}
                   />
@@ -546,7 +546,7 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-3 left-0 bg-[#047857] text-white h-screen transition-all duration-300 ease-in-out z-50 border-r border-[#0168A5]/40 shadow-xl
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-3 left-0 bg-gradient-to-b from-[#047857] via-[#047857] to-[#064e3b] text-white h-screen transition-all duration-300 ease-in-out z-50 border-r border-[#064e3b] shadow-xl
         ${isExpanded || isMobileOpen
           ? "w-[290px]"
           : isHovered
@@ -569,12 +569,12 @@ const AppSidebar: React.FC = () => {
               <div className="w-16 h-16 bg-white rounded-2xl p-2 shadow-lg shadow-black/15 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
                 <img
                   className="w-full h-full object-contain"
-                  src="/images/logo/logo-icon.svg"
-                  alt="IAS DCS"
+                  src="/images/logo/adka_trade_logo.png"
+                  alt="ADAK TRADE EFFORT"
                 />
               </div>
               <span className="mt-3 text-[17px] font-extrabold text-white tracking-tight leading-snug text-center">
-                Institute Of Applied Statistics
+                ADAK TRADE EFFORT
               </span>
               <span className="text-[11px] font-semibold text-white/80 tracking-wider uppercase mt-0.5">
                 Admin Panel
@@ -584,8 +584,8 @@ const AppSidebar: React.FC = () => {
             <div className="w-12 h-12 bg-white rounded-xl p-1.5 shadow-md flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
               <img
                 className="w-full h-full object-contain"
-                src="/images/logo/logo-icon.svg"
-                alt="IAS"
+                src="/images/logo/adka_trade_logo.png"
+                alt="ADAK TRADE EFFORT"
               />
             </div>
           )}
