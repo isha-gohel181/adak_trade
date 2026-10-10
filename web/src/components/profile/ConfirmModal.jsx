@@ -38,7 +38,7 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message, confirmText 
            <button 
               onClick={onConfirm}
               disabled={loading}
-              className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-105 transition-all rounded-full shadow-accent-soft disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-[10px] font-black uppercase tracking-[0.3em] hover:brightness-105 transition-all rounded-md shadow-accent-soft disabled:opacity-50 disabled:cursor-not-allowed"
            >
               <span className="relative z-10">{loading ? 'Processing...' : confirmText}</span>
            </button>
@@ -46,7 +46,7 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message, confirmText 
            <button 
               onClick={onClose}
               disabled={loading}
-              className="w-full py-3.5 border border-slate-200 text-slate-700 font-jetbrains text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-100 transition-all rounded-full"
+              className="w-full py-3.5 border border-slate-200 text-slate-700 font-jetbrains text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-slate-100 transition-all rounded-md"
            >
               {cancelText}
            </button>

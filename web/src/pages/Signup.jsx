@@ -118,7 +118,7 @@ const Signup = () => {
       <div className="signup-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="signup-logo flex items-center gap-2.5">
-            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 w-auto object-contain rounded-lg" />
+            <img src="/adka_trade_logo.png" alt="ADAK TRADE Logo" className="h-10 w-auto object-contain rounded-lg" />
           </Link>
         </div>
 
@@ -187,20 +187,20 @@ const Signup = () => {
                 id="signup-email"
                 type="email"
                 className="signup-input"
-                placeholder="learner@nexprism.com"
+                placeholder="trader@adaktrade.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
               />
               <div className="mt-2.5 flex flex-wrap items-center gap-2.5">
-                <button type="button" onClick={handleSendOtp} disabled={sendingOtp} className={`px-4 py-2 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-bold font-jetbrains text-[11px] transition-all shadow-xs ${sendingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                <button type="button" onClick={handleSendOtp} disabled={sendingOtp} className={`px-4 py-2 bg-[#047857] hover:bg-[#064e3b] text-white rounded-md font-bold font-jetbrains text-[11px] transition-all shadow-xs ${sendingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   {sendingOtp ? t('sendingOtpBtn') : (otpSent ? t('resendOtpBtn') : t('sendOtpBtn'))}
                 </button>
                 {otpSent && (
                   <div className="flex items-center gap-2">
                     <input value={otpCode} onChange={(e) => setOtpCode(e.target.value)} placeholder={t('enterOtpPlaceholder')} className="signup-input !p-2 !h-9 !w-32 border-b border-slate-300" />
-                    <button type="button" onClick={handleVerifyOtp} disabled={verifyingOtp} className={`px-4 py-2 bg-[#BFD419] hover:bg-[#A8BC14] text-slate-900 rounded-full font-bold font-jetbrains text-[11px] transition-all shadow-xs ${verifyingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                    <button type="button" onClick={handleVerifyOtp} disabled={verifyingOtp} className={`px-4 py-2 bg-[#BFD419] hover:bg-[#A8BC14] text-slate-900 rounded-md font-bold font-jetbrains text-[11px] transition-all shadow-xs ${verifyingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
                       {verifyingOtp ? t('verifyingBtn') : (otpVerifiedStore ? t('verifiedBtn') : t('verifyBtn'))}
                     </button>
                   </div>
@@ -308,72 +308,36 @@ const Signup = () => {
         </div>
 
         <div className="signup-footer">
-          © 2026 IAS DCS. ALL RIGHTS RESERVED.
+          © 2026 ADAK TRADE EFFORT. ALL RIGHTS RESERVED.
         </div>
       </div>
 
-      {/* Right Section: Visual Showcase with Landing Page Illustration */}
-      <div className="signup-right relative flex flex-col justify-between p-8 lg:p-12 overflow-hidden bg-gradient-to-br from-slate-50 via-[#EBF5FA]/60 to-[#F6F9D7]/30">
-        {/* Ambient decorative glows */}
-        <div className="absolute top-[-10%] right-[-10%] w-[320px] h-[320px] bg-[#017DC3]/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[320px] h-[320px] bg-[#BFD419]/12 rounded-full blur-[100px] pointer-events-none" />
+      {/* Right Section: Visual Showcase with Photo Cluster */}
+      <div className="signup-right relative flex flex-col justify-center items-center p-8 lg:p-12 overflow-hidden bg-[#065f46]">
+        {/* Geometric Background Overlay */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-90" preserveAspectRatio="none" viewBox="0 0 100 100">
+          <polygon points="0,0 100,0 0,100" fill="#059669" />
+          <polygon points="100,0 100,100 0,100" fill="#064e3b" />
+          <polygon points="0,20 80,0 100,80 20,100" fill="#065f46" opacity="0.6"/>
+          <polygon points="0,100 30,50 100,100" fill="#022c22" opacity="0.4"/>
+        </svg>
 
-        {/* Top Badges */}
-        <div className="relative z-10 flex items-center justify-between w-full">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-[#017DC3]/25 text-[#017DC3] text-[10px] font-extrabold uppercase tracking-widest font-jetbrains shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-[#017DC3] animate-pulse"></span>
-            <span>RESEARCH & SCHOLAR PORTAL</span>
+        {/* Center Image Cluster */}
+        <div className="relative z-10 w-full max-w-[500px] aspect-[4/5] sm:aspect-square flex items-center justify-center">
+          
+          {/* Top Large Circle */}
+          <div className="absolute top-[8%] left-[18%] w-[60%] aspect-square rounded-full border-[6px] sm:border-[8px] border-white overflow-hidden shadow-2xl z-10 hover:scale-105 hover:z-40 transition-all duration-500">
+            <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=600&q=80" alt="Seminar Speaker" className="w-full h-full object-cover" />
           </div>
-          <span className="text-[10px] font-jetbrains text-slate-500 font-bold uppercase tracking-wider bg-white/80 px-3 py-1 rounded-full border border-slate-200">
-            IAS DCS V2.0
-          </span>
-        </div>
 
-        {/* Center Illustration Showcase */}
-        <div className="relative z-10 w-full my-auto flex flex-col items-center justify-center py-6">
-          <div className="relative w-full max-w-md flex items-center justify-center group">
-            {/* Soft backdrop glow card */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#017DC3]/10 via-white/50 to-[#BFD419]/10 rounded-3xl blur-md" />
-            
-            {/* Landing page Hero Banner illustration */}
-            <img 
-              src="/hero_banner.png" 
-              alt="IAS DCS Statistical Science & Research" 
-              className="relative z-10 w-auto h-auto max-h-[320px] lg:max-h-[360px] max-w-full object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-
-            {/* Floating Metric Badge 1 (Bottom-left) */}
-            <div className="absolute -bottom-2 -left-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl p-3 shadow-xl flex items-center gap-3 transition-transform duration-500 hover:-translate-y-1">
-              <div className="w-9 h-9 rounded-xl bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center font-black font-jetbrains text-xs">
-                12K+
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-900 leading-tight">Active Scholars</span>
-                <span className="text-[10px] text-slate-500 font-medium">Applied Statistics</span>
-              </div>
-            </div>
-
-            {/* Floating Metric Badge 2 (Top-right) */}
-            <div className="absolute -top-2 -right-3 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 rounded-2xl px-3 py-2 shadow-xl flex items-center gap-2.5 transition-transform duration-500 hover:translate-y-1">
-              <div className="w-6 h-6 rounded-full bg-[#F6F9D7] text-[#6B770A] border border-[#BFD419]/50 flex items-center justify-center font-bold text-xs">
-                ✓
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs font-bold text-slate-900 leading-tight">98.2%</span>
-                <span className="text-[9px] text-slate-500 font-medium uppercase tracking-wider">Completion</span>
-              </div>
-            </div>
+          {/* Bottom Right Medium Circle */}
+          <div className="absolute bottom-[18%] right-[8%] w-[50%] aspect-square rounded-full border-[6px] sm:border-[8px] border-white overflow-hidden shadow-2xl z-20 hover:scale-105 hover:z-40 transition-all duration-500">
+            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=600&q=80" alt="Seminar Audience" className="w-full h-full object-cover" />
           </div>
-        </div>
 
-        {/* Bottom Testimonial / Brand Note */}
-        <div className="relative z-10 bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 lg:p-5 shadow-xs">
-          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed italic">
-            "Advancing scientific research through empirical statistical methods, clinical trials, and certified academic mentorship."
-          </p>
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100 text-[11px] font-semibold text-slate-500">
-            <span className="text-[#017DC3] font-bold">Institute of Applied Statistics</span>
-            <span className="font-jetbrains text-[10px] text-slate-400">RESEARCH HUB</span>
+          {/* Bottom Left Small Circle */}
+          <div className="absolute bottom-[10%] left-[12%] w-[40%] aspect-square rounded-full border-[5px] sm:border-[6px] border-white overflow-hidden shadow-2xl z-30 hover:scale-105 hover:z-40 transition-all duration-500">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80" alt="Classroom" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>

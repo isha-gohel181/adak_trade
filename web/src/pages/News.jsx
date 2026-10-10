@@ -26,7 +26,7 @@ const NewsCard = ({ article, variant = 'standard' }) => {
         </div>
         
         <div className="relative z-10 h-full p-8 md:p-12 flex flex-col justify-end">
-          <span className="font-jetbrains text-xs font-black text-slate-950 bg-amber-400 tracking-wider uppercase mb-4 px-3.5 py-1 rounded-full w-fit shadow-sm">
+          <span className="font-jetbrains text-xs font-black text-slate-950 bg-amber-400 tracking-wider uppercase mb-4 px-3.5 py-1 rounded-md w-fit shadow-sm">
             {article.category}
           </span>
           <h2 className="font-newsreader italic text-3xl md:text-5xl font-bold leading-tight text-white transition-colors group-hover:text-amber-300 mb-4 max-w-3xl">
@@ -61,7 +61,7 @@ const NewsCard = ({ article, variant = 'standard' }) => {
           />
         </div>
         <div className="flex flex-col gap-4">
-          <span className="font-jetbrains text-[10px] font-black text-amber-900 bg-amber-100 border border-amber-300 tracking-wider uppercase px-3 py-1 rounded-full w-fit">
+          <span className="font-jetbrains text-[10px] font-black text-amber-900 bg-amber-100 border border-amber-300 tracking-wider uppercase px-3 py-1 rounded-md w-fit">
             {article.category}
           </span>
           <h2 className="font-newsreader italic text-2xl md:text-3xl leading-snug text-slate-900 font-bold transition-colors group-hover:text-amber-600">
@@ -91,7 +91,7 @@ const NewsCard = ({ article, variant = 'standard' }) => {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <span className="font-jetbrains text-[10px] font-black text-amber-900 bg-amber-100 border border-amber-300 tracking-wider uppercase px-3 py-1 rounded-full w-fit">
+          <span className="font-jetbrains text-[10px] font-black text-amber-900 bg-amber-100 border border-amber-300 tracking-wider uppercase px-3 py-1 rounded-md w-fit">
             {article.category}
           </span>
           <h3 className="font-newsreader italic text-xl md:text-2xl leading-snug text-slate-900 font-bold transition-colors group-hover:text-amber-600 line-clamp-2">
@@ -201,7 +201,7 @@ const News = () => {
                       placeholder={t('searchNewsPlaceholder')}
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full bg-white border border-slate-200/80 rounded-full py-3 px-6 pr-12 font-jetbrains text-xs text-slate-900 focus:outline-none focus:border-amber-500 shadow-sm transition-all duration-300 placeholder:text-slate-400"
+                      className="w-full bg-white border border-slate-200/80 rounded-md py-3 px-6 pr-12 font-jetbrains text-xs text-slate-900 focus:outline-none focus:border-amber-500 shadow-sm transition-all duration-300 placeholder:text-slate-400"
                     />
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 group-hover:text-amber-600 transition-colors">
                       <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />

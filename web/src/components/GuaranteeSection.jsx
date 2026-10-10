@@ -83,7 +83,7 @@ const GuaranteeSection = () => {
 
           <div className="lg:col-span-4 flex flex-col items-center justify-center">
              <div className="relative group/seal">
-                <div className="g-seal w-56 h-56 md:w-64 md:h-64 border-2 border-dashed border-accent/40 rounded-full flex items-center justify-center relative bg-blue-50/50 shadow-inner">
+                <div className="g-seal w-56 h-56 md:w-64 md:h-64 border-2 border-dashed border-accent/40 rounded-full flex items-center justify-center relative bg-[#ecfdf5]/50 shadow-inner">
                    <div className="text-center space-y-1 relative z-10">
                       <span className="font-newsreader italic text-6xl md:text-7xl text-accent font-light">100%</span>
                       <p className="font-jetbrains text-[10px] tracking-[0.3em] text-slate-700 uppercase font-bold">Guarantee</p>
@@ -95,7 +95,7 @@ const GuaranteeSection = () => {
                 <div className="flex gap-2 justify-center">
                    {[1,2,3].map(i => <div key={i} className="w-1.5 h-1.5 bg-accent/60 rounded-full" />)}
                 </div>
-                <p className="font-jetbrains text-[9px] tracking-[0.4em] uppercase text-slate-400 font-bold">IAS DCS QUALITY SHIELD</p>
+                <p className="font-jetbrains text-[9px] tracking-[0.4em] uppercase text-slate-400 font-bold">ADAK TRADE QUALITY SHIELD</p>
              </div>
           </div>
 

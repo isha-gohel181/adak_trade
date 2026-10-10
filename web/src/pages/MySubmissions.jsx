@@ -88,8 +88,8 @@ const MySubmissions = () => {
 
    const getStatusColor = (status) => {
       switch (status?.toLowerCase()) {
-         case 'submitted': return 'bg-[#017DC3] text-dark border-[#017DC3]';
-         case 'graded': return 'bg-blue-500 text-white border-blue-500';
+         case 'submitted': return 'bg-[#047857] text-dark border-[#047857]';
+         case 'graded': return 'bg-[#ecfdf5]0 text-white border-[#10b981]';
          case 'pending': return 'bg-orange-500 text-white border-orange-500';
          default: return 'bg-white/10 text-normal border-white/20';
       }
@@ -116,10 +116,10 @@ const MySubmissions = () => {
                         {selectedSub.assignmentId?.title || 'Tactical Assignment'}
                      </h1>
                      <div className="flex items-center gap-3">
-                        <span className={`px-4 py-1.5 rounded-full font-jetbrains text-[10px] font-black uppercase tracking-widest ${getStatusColor(selectedSub.status)}`}>
+                        <span className={`px-4 py-1.5 rounded-md font-jetbrains text-[10px] font-black uppercase tracking-widest ${getStatusColor(selectedSub.status)}`}>
                            {selectedSub.status || 'SUBMITTED'}
                         </span>
-                        <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full">
+                        <div className="flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 rounded-md">
                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-description"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M6 14h12v8H6z" /></svg>
                            <span className="font-jetbrains text-[10px] text-description uppercase tracking-widest">{selectedSub.scoreGiven ? 'Graded' : 'Not graded'}</span>
                         </div>

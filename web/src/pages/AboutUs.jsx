@@ -180,7 +180,7 @@ const AboutUs = () => {
       
       {/* Background Soft Glow Accents Matching Landing Page */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#017DC3]/5 blur-[130px] rounded-full" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#047857]/5 blur-[130px] rounded-full" />
         <div className="absolute top-[40%] right-[-100px] w-[500px] h-[500px] bg-[#BFD419]/5 blur-[140px] rounded-full" />
         <div className="absolute bottom-[20%] left-[-100px] w-[500px] h-[500px] bg-slate-200/50 blur-[140px] rounded-full" />
       </div>
@@ -189,35 +189,35 @@ const AboutUs = () => {
       <section className="relative px-6 py-8 md:py-16 max-w-7xl mx-auto flex flex-col items-center text-center">
         
         {/* Eyebrow Badge matching landing page */}
-        <div className="hero-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EBF5FA] border border-[#017DC3]/25 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest mb-6 shadow-xs font-jetbrains">
+        <div className="hero-animate inline-flex items-center gap-2 px-4 py-1.5 rounded-md bg-[#EBF5FA] border border-[#047857]/25 text-[#047857] text-[11px] font-bold uppercase tracking-widest mb-6 shadow-xs font-jetbrains">
           <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse shadow-[0_0_6px_#BFD419]" />
-          <span>A Corporate Division of DCS Pvt. Ltd.</span>
+          <span>Capital Market & Trading Academy</span>
         </div>
         
         <h1 className="hero-animate text-[clamp(2.4rem,5.5vw,4.6rem)] font-newsreader font-bold italic text-slate-900 leading-[1.08] tracking-tight mb-6 max-w-5xl">
-          Institute of Applied Statistics <br />
-          <span className="font-montserrat not-italic font-extrabold text-2xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#017DC3] via-[#015A8E] to-slate-900 block mt-2">
-            Advancing Statistical Science in Policy & Practice
+          ADAK TRADE EFFORT <br />
+          <span className="font-montserrat not-italic font-extrabold text-2xl sm:text-3xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#047857] via-[#015A8E] to-slate-900 block mt-2">
+            Empowering Financial Literacy & Quantitative Trading
           </span>
         </h1>
         
         <p className="hero-animate text-base md:text-lg text-slate-600 max-w-3xl leading-relaxed font-normal mb-12">
-          The Institute of Applied Statistics (IAS), a corporate division of DCS Pvt. Ltd., is a premier institution committed to advancing the science and application of statistics in research, policy, and practice. Established with the vision of bridging knowledge and practice, IAS plays a pivotal role in human resource development, capacity building, and multidisciplinary research.
+          ADAK TRADE EFFORT is a premier institution committed to advancing financial literacy, capital market education, algorithmic trading, and quantitative analytics. Established with the vision of bridging theoretical analysis and practical trading, ADAK TRADE plays a pivotal role in mentorship, professional skill development, and market excellence.
         </p>
 
         {/* 4 Stat Cards matching landing page aesthetic */}
         <div className="hero-animate grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-5xl">
           {[
             { value: "06", label: "Strategic Pillars" },
-            { value: "50,000+", label: "Trained Researchers" },
+            { value: "50,000+", label: "Trained Traders" },
             { value: "120+", label: "Institutional Partners" },
-            { value: "Global", label: "Scientific Reach" }
+            { value: "Global", label: "Market Reach" }
           ].map((stat, i) => (
             <div 
               key={i} 
-              className="bg-white border border-slate-200/80 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col items-center justify-center text-center hover:shadow-md hover:border-[#017DC3]/40 transition-all duration-300 min-w-0"
+              className="bg-white border border-slate-200/80 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col items-center justify-center text-center hover:shadow-md hover:border-[#047857]/40 transition-all duration-300 min-w-0"
             >
-              <span className="text-2xl sm:text-3xl md:text-4xl font-black text-[#017DC3] mb-1 font-montserrat tracking-tight truncate w-full">
+              <span className="text-2xl sm:text-3xl md:text-4xl font-black text-[#047857] mb-1 font-montserrat tracking-tight truncate w-full">
                 {stat.value}
               </span>
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-widest font-jetbrains truncate w-full">
@@ -234,23 +234,23 @@ const AboutUs = () => {
           
           {/* Left Column: Comprehensive Story */}
           <div className="lg:col-span-7 flex flex-col min-w-0">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest mb-5 w-fit font-jetbrains">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-[11px] font-bold uppercase tracking-widest mb-5 w-fit font-jetbrains">
               Institutional Foundation
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-newsreader font-bold italic text-slate-900 leading-tight mb-6">
-              Bridging the gap between <span className="text-[#017DC3]">theoretical knowledge</span> and <span className="text-slate-800">evidence-based practice</span>.
+              Bridging the gap between <span className="text-[#047857]">market knowledge</span> and <span className="text-slate-800">profitable execution</span>.
             </h2>
 
             <div className="space-y-4 text-sm md:text-base text-slate-600 leading-relaxed font-normal">
               <p>
-                We specialize in offering comprehensive training programs, consultancy services, and collaborative research opportunities that empower academicians, professionals, and organizations to make informed, data-driven decisions.
+                We specialize in offering comprehensive mentorship programs, strategy consultancy, and practical trading setups that empower retail traders, professionals, and organizations to make disciplined, data-driven decisions.
               </p>
               <p>
-                Our focus lies not only in developing technical expertise in statistical methods but also in fostering an evidence-based culture across sectors such as healthcare, social sciences, agriculture, environment, business, and technology.
+                Our focus lies not only in developing technical expertise in charts and price action but also in fostering risk management discipline and quantitative acumen across equities, derivatives, commodities, and currency markets.
               </p>
               <p>
-                By bringing together experts from academia, industry, and government institutions and organizations, IAS serves as a hub for innovation and knowledge exchange, enabling professionals to strengthen their research and analytical skills while contributing to national and global development goals.
+                By bringing together seasoned market veterans, algorithmic quants, and dedicated learners, ADAK TRADE serves as a hub for innovation and skill mastery, enabling traders to build resilient portfolios and achieve consistent market success.
               </p>
             </div>
           </div>
@@ -261,24 +261,24 @@ const AboutUs = () => {
               
               <div className="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200">
                 <img 
-                  src="/logo/iasdcs-logo.png" 
-                  alt="IAS Logo" 
+                  src="/adka_trade_logo.png" 
+                  alt="ADAK TRADE Logo" 
                   className="h-14 w-auto object-contain rounded-xl bg-white p-1.5 border border-slate-200 shadow-xs flex-shrink-0"
                 />
                 <div className="min-w-0">
-                  <h3 className="text-base md:text-lg font-bold text-slate-900 font-montserrat truncate">Institute of Applied Statistics</h3>
-                  <p className="text-[11px] font-bold text-[#017DC3] tracking-widest uppercase font-jetbrains truncate">Corporate Division of DCS Pvt. Ltd.</p>
+                  <h3 className="text-base md:text-lg font-bold text-slate-900 font-montserrat truncate">ADAK TRADE EFFORT</h3>
+                  <p className="text-[11px] font-bold text-[#047857] tracking-widest uppercase font-jetbrains truncate">Capital Market & Trading Academy</p>
                 </div>
               </div>
 
               <div className="space-y-3.5 text-xs sm:text-sm text-slate-700">
                 <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-xs">
-                  <div className="w-7 h-7 rounded-lg bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-[#EBF5FA] text-[#047857] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Empowering Researchers & Academics</h4>
-                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Rigorous modules in research design, sampling, and inferential analytics.</p>
+                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Empowering Traders & Investors</h4>
+                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Rigorous modules in price action, derivatives, risk management, and quantitative setups.</p>
                   </div>
                 </div>
 
@@ -287,18 +287,18 @@ const AboutUs = () => {
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Evidence-Based Governance & Policy</h4>
-                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Strategic consultation for public sector, NGOs, and enterprise leaders.</p>
+                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Disciplined Risk Architecture</h4>
+                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Strategic position sizing, portfolio hedging, and psychological discipline frameworks.</p>
                   </div>
                 </div>
 
                 <div className="p-3.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-3 shadow-xs">
-                  <div className="w-7 h-7 rounded-lg bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-[#EBF5FA] text-[#047857] flex items-center justify-center flex-shrink-0 mt-0.5">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
                   <div className="min-w-0">
-                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Hub for Multidisciplinary Innovation</h4>
-                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Fostering collaboration between statisticians, clinicians, and engineers.</p>
+                    <h4 className="font-bold text-slate-900 text-xs sm:text-sm font-montserrat">Hub for Market Innovation</h4>
+                    <p className="text-slate-500 text-[11px] sm:text-xs mt-0.5">Fostering collaboration between discretionary traders, quants, and algorithmic builders.</p>
                   </div>
                 </div>
               </div>
@@ -311,24 +311,24 @@ const AboutUs = () => {
 
       {/* 3. OUR VISION SECTION */}
       <section className="scroll-section px-6 py-8 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl bg-white border border-[#017DC3]/20 p-8 md:p-12 shadow-sm overflow-hidden">
+        <div className="relative rounded-3xl bg-white border border-[#047857]/20 p-8 md:p-12 shadow-sm overflow-hidden">
           
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
-            <div className="w-12 h-12 rounded-2xl bg-[#EBF5FA] text-[#017DC3] border border-[#017DC3]/25 flex items-center justify-center shadow-xs flex-shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-[#EBF5FA] text-[#047857] border border-[#047857]/25 flex items-center justify-center shadow-xs flex-shrink-0">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="2" />
                 <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14" />
               </svg>
             </div>
             <div>
-              <span className="text-[11px] font-bold text-[#017DC3] uppercase tracking-[0.25em] font-jetbrains">Strategic Direction</span>
+              <span className="text-[11px] font-bold text-[#047857] uppercase tracking-[0.25em] font-jetbrains">Strategic Direction</span>
               <h2 className="text-2xl md:text-3xl font-newsreader font-bold italic text-slate-900">Our Vision</h2>
             </div>
           </div>
 
-          <div className="bg-[#EBF5FA]/70 border-l-4 border-[#017DC3] p-6 md:p-8 rounded-r-2xl">
+          <div className="bg-[#EBF5FA]/70 border-l-4 border-[#047857] p-6 md:p-8 rounded-r-2xl">
             <blockquote className="text-base sm:text-lg md:text-xl text-slate-800 font-medium leading-relaxed font-newsreader italic">
-              "To establish the Institute of Applied Statistics (IAS) as a globally recognized center of excellence in statistical education, training, and research—driving innovation, enhancing evidence-based practices, and contributing to the development of a robust and sustainable statistical system that supports scientific inquiry and informed policy-making worldwide."
+              "To establish ADAK TRADE EFFORT as a globally recognized center of excellence in capital markets, quantitative trading, and financial analytics education—driving innovation, discipline, and strategic mastery in global trading systems."
             </blockquote>
           </div>
 
@@ -338,12 +338,12 @@ const AboutUs = () => {
       {/* 4. OUR MISSION & 6 STRATEGIC PILLARS */}
       <section className="scroll-section px-6 py-12 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest mb-3 font-jetbrains">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-[11px] font-bold uppercase tracking-widest mb-3 font-jetbrains">
             Core Mandate
           </div>
           <h2 className="text-3xl md:text-4xl font-newsreader font-bold italic text-slate-900 mb-4">Our Mission & Strategic Pillars</h2>
           <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-            The mission of IAS is to nurture, empower, and advance statistical expertise for addressing the growing challenges of the modern research and professional landscape.
+            The mission of ADAK TRADE EFFORT is to nurture, empower, and advance financial and trading expertise for addressing the dynamic challenges of modern capital markets and investment landscapes.
           </p>
         </div>
 
@@ -356,10 +356,10 @@ const AboutUs = () => {
             >
               <div className="min-w-0 space-y-3.5">
                 <div className="flex items-center justify-between">
-                  <div className="w-11 h-11 rounded-xl bg-white border-[1.5px] border-slate-800 text-[#017DC3] flex items-center justify-center flex-shrink-0 group-hover:bg-slate-900 group-hover:text-[#BFD419] transition-colors duration-300 shadow-[1.5px_1.5px_0px_0px_#1E293B]">
+                  <div className="w-11 h-11 rounded-xl bg-white border-[1.5px] border-slate-800 text-[#047857] flex items-center justify-center flex-shrink-0 group-hover:bg-slate-900 group-hover:text-[#BFD419] transition-colors duration-300 shadow-[1.5px_1.5px_0px_0px_#1E293B]">
                     {pillar.icon}
                   </div>
-                  <span className="font-jetbrains text-sm font-bold text-slate-800 group-hover:text-[#017DC3] transition-colors">
+                  <span className="font-jetbrains text-sm font-bold text-slate-800 group-hover:text-[#047857] transition-colors">
                     {pillar.num}
                   </span>
                 </div>
@@ -368,7 +368,7 @@ const AboutUs = () => {
                   {pillar.badge}
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#017DC3] transition-colors font-montserrat">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#047857] transition-colors font-montserrat">
                   {pillar.title}
                 </h3>
 
@@ -385,16 +385,16 @@ const AboutUs = () => {
       <section className="scroll-section px-6 py-12 max-w-7xl mx-auto">
         <div className="bg-white border border-slate-200/80 rounded-3xl p-8 md:p-12 shadow-sm">
           <div className="text-center max-w-3xl mx-auto mb-10">
-            <h2 className="text-2xl md:text-3xl font-newsreader font-bold italic text-slate-900 mb-3">Multidisciplinary Reach</h2>
+            <h2 className="text-2xl md:text-3xl font-newsreader font-bold italic text-slate-900 mb-3">Market Specialization & Reach</h2>
             <p className="text-slate-600 text-xs sm:text-sm">
-              Fostering an evidence-based culture by embedding advanced statistical methodologies across vital sectors.
+              Fostering a disciplined trading culture by embedding quantitative setups and risk management across key financial markets.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {sectors.map((sec, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-4 hover:border-[#017DC3]/40 hover:bg-white transition-all duration-300 min-w-0 shadow-2xs">
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-[#017DC3] flex-shrink-0 shadow-xs">
+              <div key={idx} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-4 hover:border-[#047857]/40 hover:bg-white transition-all duration-300 min-w-0 shadow-2xs">
+                <div className="p-2.5 rounded-xl bg-white border border-slate-200 text-[#047857] flex-shrink-0 shadow-xs">
                   {sec.icon}
                 </div>
                 <div className="min-w-0">
@@ -407,36 +407,36 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* 6. CALL TO ACTION / ENGAGE WITH IAS */}
+      {/* 6. CALL TO ACTION / ENGAGE WITH ADAK TRADE */}
       <section className="scroll-section px-6 py-8 max-w-7xl mx-auto text-center">
-        <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-[#017DC3] to-[#004A75] text-white p-8 md:p-14 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl border border-[#017DC3]/30">
+        <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-[#047857] to-[#004A75] text-white p-8 md:p-14 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl border border-[#047857]/30">
           
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-newsreader font-bold italic text-white mb-4 max-w-2xl leading-tight">
-            Partner with IAS for Training, Research & Consultancy
+            Partner with ADAK TRADE EFFORT for Trading Education & Mentorship
           </h2>
           
           <p className="text-blue-100 text-sm sm:text-base max-w-2xl mb-8 leading-relaxed font-normal">
-            Whether you are an individual researcher aiming to master modern data analytics or an institution looking for survey design & policy consultation, IAS is your trusted partner.
+            Whether you are an aspiring trader aiming to master market strategies or an investor seeking disciplined financial growth, ADAK TRADE EFFORT is your trusted academy.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3.5">
             <Link 
               to="/courses" 
-              className="px-6 py-3.5 rounded-full bg-[#BFD419] text-slate-950 font-black font-jetbrains uppercase tracking-wider text-xs hover:bg-[#A8BC14] transition-all shadow-[0_4px_20px_rgba(191,212,25,0.35)] hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 rounded-md bg-[#BFD419] text-slate-950 font-black font-jetbrains uppercase tracking-wider text-xs hover:bg-[#A8BC14] transition-all shadow-[0_4px_20px_rgba(191,212,25,0.35)] hover:scale-105 active:scale-95"
             >
               Explore Training Programs
             </Link>
             <Link 
               to="/contact" 
-              className="px-6 py-3.5 rounded-full bg-white text-[#017DC3] font-bold font-jetbrains uppercase tracking-wider text-xs hover:bg-[#EBF5FA] transition-all shadow-md hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 rounded-md bg-white text-[#047857] font-bold font-jetbrains uppercase tracking-wider text-xs hover:bg-[#EBF5FA] transition-all shadow-md hover:scale-105 active:scale-95"
             >
-              Institutional Consultation
+              Consultation & Mentorship
             </Link>
             <Link 
               to="/forum" 
-              className="px-6 py-3.5 rounded-full bg-white/10 border border-white/20 text-white font-bold font-jetbrains uppercase tracking-wider text-xs hover:bg-white/20 transition-all shadow-md hover:scale-105 active:scale-95"
+              className="px-6 py-3.5 rounded-md bg-white/10 border border-white/20 text-white font-bold font-jetbrains uppercase tracking-wider text-xs hover:bg-white/20 transition-all shadow-md hover:scale-105 active:scale-95"
             >
-              Join Academic Forum
+              Join Trading Community
             </Link>
           </div>
 

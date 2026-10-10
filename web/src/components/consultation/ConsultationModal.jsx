@@ -246,7 +246,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
             key: orderResult.key,
             amount: orderResult.amount,
             currency: orderResult.currency || 'INR',
-            name: 'Institute of Applied Statistics',
+            name: 'ADAK TRADE EFFORT',
             description: `Consultation Appointment (${selectedSlot.duration} Mins)`,
             order_id: orderResult.orderId,
             handler: async (response) => {
@@ -272,7 +272,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
               email: authUser?.email || '',
               contact: authUser?.phone || '',
             },
-            theme: { color: '#017DC3' },
+            theme: { color: '#047857' },
           };
 
           if (window.Razorpay) {
@@ -450,12 +450,12 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                         onClick={() => handleSelectDay(day)}
                         className={`h-9 sm:h-10 w-full rounded-xl font-inter text-xs flex flex-col items-center justify-center relative transition-all ${
                           isSelected
-                            ? 'bg-[#017DC3] text-white shadow-md font-bold ring-2 ring-blue-700/40 scale-[1.02]'
+                            ? 'bg-[#047857] text-white shadow-md font-bold ring-2 ring-blue-700/40 scale-[1.02]'
                             : isPast
                             ? 'text-slate-300 opacity-40 cursor-not-allowed'
                             : isToday
-                            ? 'bg-blue-50 text-blue-900 border border-blue-300 font-bold'
-                            : 'bg-white text-slate-700 border border-slate-200/80 hover:bg-blue-50/70 hover:border-blue-300 font-medium'
+                            ? 'bg-[#ecfdf5] text-blue-900 border border-blue-300 font-bold'
+                            : 'bg-white text-slate-700 border border-slate-200/80 hover:bg-[#ecfdf5]/70 hover:border-blue-300 font-medium'
                         }`}
                       >
                         <span>{day}</span>
@@ -497,13 +497,13 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     </span>
                   </h4>
                   {loading && (
-                    <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-[#059669] border-t-transparent rounded-full animate-spin" />
                   )}
                 </div>
 
                 {loading ? (
                   <div className="py-10 text-center text-slate-400 font-inter text-xs flex flex-col items-center justify-center gap-2 bg-slate-50 rounded-2xl border border-slate-200">
-                    <div className="w-5 h-5 border-2 border-[#017DC3] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-[#047857] border-t-transparent rounded-full animate-spin" />
                     <span>Loading available slots...</span>
                   </div>
                 ) : slots.length === 0 ? (
@@ -538,10 +538,10 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                           onClick={() => dispatch(setSelectedSlot(slot))}
                           className={`p-3.5 rounded-2xl border text-left transition-all relative flex flex-col justify-between ${
                             isSelected
-                              ? 'bg-blue-50/90 border-[#017DC3] ring-2 ring-[#017DC3]/20 shadow-sm'
+                              ? 'bg-[#ecfdf5]/90 border-[#047857] ring-2 ring-[#047857]/20 shadow-sm'
                               : isDisabled
                               ? 'bg-slate-100 border-slate-200 opacity-60 cursor-not-allowed'
-                              : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/30'
+                              : 'bg-white border-slate-200 hover:border-blue-400 hover:bg-[#ecfdf5]/30'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -549,7 +549,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                               {formatSlotTime(slot.startTime)} - {formatSlotTime(slot.endTime)}
                             </span>
                             {isSelected ? (
-                              <span className="w-5 h-5 rounded-full bg-[#017DC3] text-white flex items-center justify-center text-[10px] font-bold">
+                              <span className="w-5 h-5 rounded-full bg-[#047857] text-white flex items-center justify-center text-[10px] font-bold">
                                 ✓
                               </span>
                             ) : null}
@@ -562,7 +562,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                               className={`font-inter text-[10px] font-bold px-2 py-0.5 rounded-md ${
                                 isFree
                                   ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                                  : 'bg-blue-100 text-blue-800 border border-blue-200'
+                                  : 'bg-[#d1fae5] text-[#065f46] border border-[#a7f3d0]'
                               }`}
                             >
                               {isFree ? 'FREE' : `₹${slot.price}`}
@@ -594,9 +594,9 @@ const ConsultationModal = ({ isOpen, onClose }) => {
           {step === 2 && selectedSlot && (
             <div className="space-y-4">
               {/* Selected Slot Recap Card */}
-              <div className="p-4 rounded-2xl bg-blue-50/80 border border-blue-200 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-[#ecfdf5]/80 border border-[#a7f3d0] flex items-center justify-between">
                 <div>
-                  <span className="font-inter text-[10px] text-blue-800 font-bold uppercase tracking-wider block">
+                  <span className="font-inter text-[10px] text-[#065f46] font-bold uppercase tracking-wider block">
                     Selected Appointment
                   </span>
                   <span className="font-inter font-bold text-slate-900 text-sm">
@@ -609,7 +609,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     • {formatSlotTime(selectedSlot.startTime)} - {formatSlotTime(selectedSlot.endTime)}
                   </span>
                 </div>
-                <span className="font-inter text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                <span className="font-inter text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">
                   {selectedSlot.price === 0 || selectedSlot.duration === 15 ? 'FREE 15m' : `₹${selectedSlot.price}`}
                 </span>
               </div>
@@ -632,7 +632,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="e.g. Dr. Rajesh Sharma"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#047857]/20 ${
                       formErrors.fullName ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -661,7 +661,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.designation}
                       onChange={handleInputChange}
                       placeholder="e.g. Student / Researcher / Faculty"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#047857]/20 ${
                         formErrors.designation ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -687,7 +687,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                       value={formData.department}
                       onChange={handleInputChange}
                       placeholder="e.g. Biostatistics / Medicine / Science"
-                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
+                      className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#047857]/20 ${
                         formErrors.department ? 'border-rose-300' : 'border-slate-200'
                       }`}
                     />
@@ -717,8 +717,8 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                     name="institute"
                     value={formData.institute}
                     onChange={handleInputChange}
-                    placeholder="e.g. IAS DCS / AIIMS / Delhi University"
-                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 ${
+                    placeholder="e.g. ADAK TRADE / Firm / University"
+                    className={`w-full pl-10 pr-4 py-2.5 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#047857]/20 ${
                       formErrors.institute ? 'border-rose-300' : 'border-slate-200'
                     }`}
                   />
@@ -739,7 +739,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   value={formData.query}
                   onChange={handleInputChange}
                   placeholder="Describe your statistical problem, study design query, sample size calculation, or research guidance requirement..."
-                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#017DC3]/20 resize-none ${
+                  className={`w-full p-3 bg-slate-50 border rounded-xl font-inter text-xs text-slate-800 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#047857]/20 resize-none ${
                     formErrors.query ? 'border-rose-300' : 'border-slate-200'
                   }`}
                 />
@@ -757,7 +757,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   {fileName ? (
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 min-w-0">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-700 shrink-0">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#047857] shrink-0">
                           <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                         </svg>
                         <span className="font-inter text-xs text-slate-800 font-medium truncate">
@@ -802,7 +802,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                   <button
                     type="button"
                     onClick={() => navigate('/login', { state: { returnUrl: location.pathname } })}
-                    className="font-inter text-xs font-bold text-blue-700 hover:underline shrink-0 ml-2"
+                    className="font-inter text-xs font-bold text-[#047857] hover:underline shrink-0 ml-2"
                   >
                     Log In →
                   </button>
@@ -880,7 +880,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 type="button"
                 disabled={!selectedSlot}
                 onClick={handleProceedToDetails}
-                className="bg-[#017DC3] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-full transition-all shadow-md flex items-center gap-2 shrink-0"
+                className="bg-[#047857] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-blue-900 text-white font-inter text-xs font-bold px-6 py-3 rounded-md transition-all shadow-md flex items-center gap-2 shrink-0"
               >
                 <span>Continue to Details</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -903,7 +903,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
                 type="button"
                 disabled={bookingLoading}
                 onClick={handleConfirmBooking}
-                className="bg-[#017DC3] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-full transition-all shadow-md flex items-center gap-2"
+                className="bg-[#047857] hover:bg-blue-900 disabled:opacity-60 text-white font-inter text-xs font-bold px-7 py-3 rounded-md transition-all shadow-md flex items-center gap-2"
               >
                 {bookingLoading ? (
                   <>
@@ -921,7 +921,7 @@ const ConsultationModal = ({ isOpen, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="w-full bg-[#017DC3] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-full transition-all shadow-md"
+              className="w-full bg-[#047857] hover:bg-blue-900 text-white font-inter text-xs font-bold py-3 rounded-md transition-all shadow-md"
             >
               Done
             </button>

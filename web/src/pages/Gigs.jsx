@@ -197,19 +197,19 @@ const GigCard = ({ gig }) => {
         {/* Skill Tags Cloud */}
         <div className="flex flex-wrap gap-2">
           {getSkills(gig).slice(0, 3).map((skill, si) => (
-            <span key={si} className="px-3 py-1 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-full">
+            <span key={si} className="px-3 py-1 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-md">
               {safeRender(skill)}
             </span>
           ))}
           {(getSkills(gig).length > 3) && (
-            <span className="px-3 py-1 bg-slate-100 border border-slate-200 font-jetbrains text-[10px] text-slate-600 font-bold uppercase tracking-wider rounded-full">
+            <span className="px-3 py-1 bg-slate-100 border border-slate-200 font-jetbrains text-[10px] text-slate-600 font-bold uppercase tracking-wider rounded-md">
               +{getSkills(gig).length - 3}
             </span>
           )}
         </div>
 
         {/* Footer Button */}
-        <button className="w-full mt-2 py-3 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2">
+        <button className="w-full mt-2 py-3 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-md shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2">
           {t('applyNow') || 'View Details & Apply'}
           <span className="text-base">›</span>
         </button>
@@ -274,7 +274,7 @@ const Gigs = () => {
                 <button
                   key={filterObj.key}
                   onClick={() => setActiveFilter(filterObj.key)}
-                  className={`inline-flex items-center justify-center h-[38px] whitespace-nowrap px-5 font-jetbrains text-xs font-bold tracking-wider uppercase transition-all duration-300 rounded-full border ${activeFilter === filterObj.key
+                  className={`inline-flex items-center justify-center h-[38px] whitespace-nowrap px-5 font-jetbrains text-xs font-bold tracking-wider uppercase transition-all duration-300 rounded-md border ${activeFilter === filterObj.key
                       ? 'bg-accent border-accent text-slate-950 font-black shadow-accent-soft'
                       : 'bg-white text-slate-700 border-slate-200/80 hover:border-amber-400 hover:text-amber-700 shadow-sm'
                     }`}
@@ -386,7 +386,7 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
             <div className="flex flex-col gap-2">
               <h1 className="font-newsreader text-4xl md:text-5xl font-bold italic text-slate-900 leading-tight">{safeRender(job.title)}</h1>
               <p className="font-jetbrains text-xs text-slate-500 uppercase tracking-wider font-medium">
-                Posted by {job.createdBy?.fullName || 'IAS-DCS Faculty'} • {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently'}
+                Posted by {job.createdBy?.fullName || 'ADAK TRADE Faculty'} • {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently'}
               </p>
             </div>
 
@@ -464,21 +464,21 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
                         Sign In Required
                       </h4>
                       <p className="font-montserrat text-xs text-slate-600 leading-relaxed font-medium">
-                        You need to be logged in to your IAS-DCS learner account to apply and submit proposals for gigs.
+                        You need to be logged in to your ADAK TRADE account to apply and submit proposals for gigs.
                       </p>
                     </div>
 
                     <div className="flex flex-col w-full gap-2.5 pt-2">
                       <button 
                         onClick={() => navigate('/login?redirect=/gig')}
-                        className="w-full py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-md shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
                       >
                         <span>SIGN IN TO APPLY</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                       </button>
                       <button 
                         onClick={() => navigate('/signup')}
-                        className="w-full py-3 bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-jetbrains text-xs font-bold tracking-wider uppercase rounded-full transition-all"
+                        className="w-full py-3 bg-white hover:bg-slate-100 border border-slate-200 text-slate-800 font-jetbrains text-xs font-bold tracking-wider uppercase rounded-md transition-all"
                       >
                         Create New Account
                       </button>
@@ -543,7 +543,7 @@ const JobDetail = ({ job, onBack, submitting, dispatch }) => {
                     <button 
                       disabled={submitting}
                       type="submit"
-                      className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-full shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black tracking-widest uppercase rounded-md shadow-accent-soft hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? (
                         <>

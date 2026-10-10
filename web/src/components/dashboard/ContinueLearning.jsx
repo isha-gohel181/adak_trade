@@ -32,7 +32,7 @@ const ContinueLearning = () => {
       
       {/* Top Header Floating */}
       <div className="absolute top-6 left-8 right-8 flex justify-between items-center z-10">
-         <span className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 font-inter text-[10px] text-white font-bold uppercase tracking-wider">
+         <span className="bg-white/10 backdrop-blur-md border border-white/20 rounded-md px-4 py-1.5 font-inter text-[10px] text-white font-bold uppercase tracking-wider">
             {activeCourse?.title || 'Course'}
          </span>
          <button className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-accent group-hover:border-accent transition-colors">
@@ -68,7 +68,7 @@ const ContinueLearning = () => {
             
             <button 
                onClick={() => navigate(`/dashboard/course/${lastSession.courseId}`)}
-               className="w-full md:w-auto bg-accent text-white px-8 py-3.5 rounded-full font-inter text-[11px] font-bold tracking-widest uppercase hover:scale-[1.05] active:scale-95 transition-all shadow-accent-soft flex items-center justify-center gap-3 shrink-0"
+               className="w-full md:w-auto bg-accent text-white px-8 py-3.5 rounded-md font-inter text-[11px] font-bold tracking-widest uppercase hover:scale-[1.05] active:scale-95 transition-all shadow-accent-soft flex items-center justify-center gap-3 shrink-0"
             >
                {t('resume')}
                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">

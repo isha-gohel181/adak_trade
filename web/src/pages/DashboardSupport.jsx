@@ -414,11 +414,11 @@ const DashboardSupport = () => {
                                                     <td className="p-6 font-jetbrains text-xs text-amber-800 font-bold tracking-widest">#{ticket._id?.slice(-6).toUpperCase()}</td>
                                                     <td className="p-6 font-newsreader italic text-lg text-slate-900 font-bold group-hover:text-amber-600 transition-colors">{ticket.subject}</td>
                                                     <td className="p-6">
-                                                        <span className="font-jetbrains text-[10px] border border-slate-200 bg-slate-50 px-3 py-1 rounded-full text-slate-700 uppercase tracking-widest font-bold">{ticket.category}</span>
+                                                        <span className="font-jetbrains text-[10px] border border-slate-200 bg-slate-50 px-3 py-1 rounded-md text-slate-700 uppercase tracking-widest font-bold">{ticket.category}</span>
                                                     </td>
                                                     <td className="p-6">
                                                         <div className="flex items-center gap-2">
-                                                            <div className={`w-2 h-2 rounded-full ${ticket.status === 'resolved' ? 'bg-green-500' : ticket.status === 'open' ? 'bg-amber-500' : 'bg-blue-500'}`} />
+                                                            <div className={`w-2 h-2 rounded-full ${ticket.status === 'resolved' ? 'bg-green-500' : ticket.status === 'open' ? 'bg-amber-500' : 'bg-[#ecfdf5]0'}`} />
                                                             <span className="font-jetbrains text-xs text-slate-900 font-bold uppercase tracking-widest">{ticket.status}</span>
                                                         </div>
                                                     </td>

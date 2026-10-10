@@ -49,8 +49,8 @@ const SecuritySettings = () => {
          </div>
 
          <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4 pt-4">
-            <button className="flex-1 px-8 py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all rounded-full shadow-accent-soft">{t('updatePasswordBtn') || 'Update Password'}</button>
-            <button className="flex-1 px-8 py-4 border border-slate-300 text-slate-700 hover:bg-slate-200/50 font-jetbrains text-xs font-bold uppercase tracking-[0.3em] transition-all rounded-full">{t('cancelBtn') || 'Cancel'}</button>
+            <button className="flex-1 px-8 py-4 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] transition-all rounded-md shadow-accent-soft">{t('updatePasswordBtn') || 'Update Password'}</button>
+            <button className="flex-1 px-8 py-4 border border-slate-300 text-slate-700 hover:bg-slate-200/50 font-jetbrains text-xs font-bold uppercase tracking-[0.3em] transition-all rounded-md">{t('cancelBtn') || 'Cancel'}</button>
          </div>
 
       </div>

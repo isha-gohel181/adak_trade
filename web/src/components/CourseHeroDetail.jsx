@@ -41,7 +41,7 @@ const CourseHeroDetail = ({ course, section }) => {
       {/* LEFT: DRAMATIC TYPOGRAPHY & VALUE */}
       <div className="lg:col-span-7 space-y-8">
         <div className="space-y-3">
-          <span className="reveal-text inline-block font-jetbrains text-accent text-[10px] md:text-xs tracking-[0.25em] font-bold uppercase px-3.5 py-1 bg-blue-50 border border-blue-100 rounded-full shadow-xs">
+          <span className="reveal-text inline-block font-jetbrains text-accent text-[10px] md:text-xs tracking-[0.25em] font-bold uppercase px-3.5 py-1 bg-[#ecfdf5] border border-[#d1fae5] rounded-md shadow-xs">
             {course?.category?.name || 'COURSE'} {course?.level?.[0] ? `/ ${course.level[0]}` : ''}
           </span>
           <h1 className="reveal-text font-newsreader text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.05] font-light text-slate-900 max-w-3xl break-words">
@@ -68,8 +68,8 @@ const CourseHeroDetail = ({ course, section }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
             {highlights.map((check, i) => (
               <div key={i} className="flex items-center gap-2.5">
-                 <div className="reveal-checkmark w-5 h-5 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3.5">
+                 <div className="reveal-checkmark w-5 h-5 rounded-full bg-[#ecfdf5] border border-[#a7f3d0] flex items-center justify-center shrink-0">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="3.5">
                       <path d="M20 6L9 17l-5-5"/>
                     </svg>
                  </div>
@@ -91,7 +91,7 @@ const CourseHeroDetail = ({ course, section }) => {
            </button>
            <button 
             onClick={() => document.getElementById('curriculum-section')?.scrollIntoView({ behavior: 'smooth' })}
-            className="group relative px-8 md:px-10 py-4 rounded-xl border border-slate-300 hover:border-accent hover:bg-blue-50/50 text-slate-800 transition-all duration-300 cursor-pointer"
+            className="group relative px-8 md:px-10 py-4 rounded-xl border border-slate-300 hover:border-accent hover:bg-[#ecfdf5]/50 text-slate-800 transition-all duration-300 cursor-pointer"
            >
               <span className="font-jetbrains text-xs font-bold tracking-[0.2em] uppercase">VIEW CURRICULUM</span>
            </button>

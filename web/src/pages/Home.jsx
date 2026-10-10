@@ -1,32 +1,28 @@
 import Hero from '../components/Hero'
 import FeatureHighlightBar from '../components/FeatureHighlightBar'
+import TestimonialSection from '../components/TestimonialSection'
 import ConsultationBanner from '../components/consultation/ConsultationBanner'
 import AboutSnapshot from '../components/AboutSnapshot'
-import MissionPillars from '../components/MissionPillars'
-import LogoMarquee from '../components/LogoMarquee'
 import EventHero from '../components/EventHero'
-import StackingBanners from '../components/StackingBanners'
-import GrowthSection from '../components/GrowthSection'
-import BrandFeatures from '../components/BrandFeatures'
+import StatsBanner from '../components/StatsBanner'
 import { eventData } from '../constants/events'
 import CourseSlider from '../components/CourseSlider'
+
+import MentorSection from '../components/MentorSection'
 
 const Home = ({ isLoaded }) => {
   return (
     <div className="w-full">
       <Hero isLoaded={isLoaded} />
-      <FeatureHighlightBar />
+      <StatsBanner />
       <AboutSnapshot />
-      <MissionPillars />
       <CourseSlider />
+      <MentorSection />
 
       {/* Dynamic Event Showcase */}
       {/* <EventHero events={eventData} /> */}
       
-      <LogoMarquee />
-      {/* <StackingBanners /> */}
-      <BrandFeatures />
-      <GrowthSection />
+      <TestimonialSection />
       <ConsultationBanner />
     </div>
   )

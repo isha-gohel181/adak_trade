@@ -129,7 +129,7 @@ const FAQSection = ({ course }) => {
             <div
               key={item.id}
               className={`faq-box group border border-slate-200/90 bg-white hover:border-accent/40 transition-all duration-300 rounded-2xl shadow-xs overflow-hidden
-                ${isOpen ? 'bg-blue-50/20 border-blue-200 shadow-md' : ''}`}
+                ${isOpen ? 'bg-[#ecfdf5]/20 border-[#a7f3d0] shadow-md' : ''}`}
             >
               <button
                 onClick={() => setHoveredId(isOpen ? null : item.id)}

@@ -17,12 +17,12 @@ const Terms = () => {
         <div className="terms-animate space-y-6 text-base leading-relaxed">
           <p><strong>Effective Date:</strong> January 1, 2026</p>
           <p>
-            Welcome to the Institute of Applied Statistics (IAS-DCS, a corporate division of DCS Pvt. Ltd.). By accessing or using our platform, you agree to be bound by these Terms and Conditions. Please read them carefully.
+            Welcome to ADAK TRADE EFFORT. By accessing or using our platform, you agree to be bound by these Terms and Conditions. Please read them carefully.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">1. Use of the Platform</h2>
           <p>
-            IAS-DCS provides executive education, research courses, statistical consultancy, and certification materials for research and data science professionals. You agree to use the platform only for lawful purposes and in a way that does not infringe the rights of others.
+            ADAK TRADE EFFORT provides financial education, trading mentorship, capital market analysis, and certification materials for trading and investment professionals. You agree to use the platform only for lawful purposes and in a way that does not infringe the rights of others.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">2. User Accounts</h2>
@@ -32,12 +32,12 @@ const Terms = () => {
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">3. Intellectual Property</h2>
           <p>
-            All content on the IAS-DCS platform, including videos, datasets, study guides, practice tests, course materials, and logos, is the exclusive property of IAS-DCS (DCS Pvt. Ltd.). You may not reproduce, distribute, or modify any content without written permission.
+            All content on the ADAK TRADE platform, including videos, datasets, study guides, practice tests, course materials, and logos, is the exclusive property of ADAK TRADE EFFORT. You may not reproduce, distribute, or modify any content without written permission.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">4. Limitation of Liability</h2>
           <p>
-            IAS-DCS strives to provide accurate, industry-leading analytical and research training materials. We shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our services.
+            ADAK TRADE EFFORT strives to provide accurate, industry-leading trading and financial educational materials. We shall not be held liable for any indirect, incidental, or consequential damages arising from the use of our services.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">5. Changes to Terms</h2>

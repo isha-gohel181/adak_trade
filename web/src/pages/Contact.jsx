@@ -274,7 +274,7 @@ const Contact = () => {
                                 <div className="flex justify-between items-center opacity-40">
                                     <span className="font-jetbrains text-[8px] tracking-[0.4em] uppercase text-slate-500">Coordinates</span>
                                     <div className="h-[1px] w-16 bg-slate-300" />
-                                    <span className="font-jetbrains text-[8px] tracking-[0.1em] uppercase text-slate-500">IAS-DCS HQ</span>
+                                    <span className="font-jetbrains text-[8px] tracking-[0.1em] uppercase text-slate-500">ADAK TRADE HQ</span>
                                 </div>
 
                                 <div className="space-y-6">
@@ -282,14 +282,14 @@ const Contact = () => {
                                     <div className="space-y-2">
                                         <h3 className="font-newsreader text-xl italic text-amber-800 font-bold">{t('emailSupport')}</h3>
                                         <p className="font-jetbrains text-xs text-slate-600 leading-relaxed">
-                                            For general inquiries, course-related questions, or research consultation assistance:
+                                            For general inquiries, trading course-related questions, or mentorship assistance:
                                         </p>
                                         <div className="pt-2">
                                             <a
-                                                href="mailto:support@ias-dcs.com"
+                                                href="mailto:support@adaktrade.com"
                                                 className="font-jetbrains text-lg font-bold text-slate-900 hover:text-amber-600 transition-colors"
                                             >
-                                                support@ias-dcs.com
+                                                support@adaktrade.com
                                             </a>
                                         </div>
                                         <p className="font-jetbrains text-[9px] text-slate-500 uppercase tracking-wider">
@@ -312,10 +312,10 @@ const Contact = () => {
                                 <h3 className="font-newsreader text-xl italic text-amber-800 font-bold mb-3">{t('socialMedia')}</h3>
                                 <div className="flex flex-col gap-2">
                                     <div className="font-jetbrains text-xs text-slate-600">
-                                        YouTube – <a href="https://www.youtube.com/@ias-dcs" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">IAS-DCS Analytics</a>
+                                        YouTube – <a href="https://www.youtube.com/@adaktrade" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">ADAK TRADE Official</a>
                                     </div>
                                     <div className="font-jetbrains text-xs text-slate-600">
-                                        Instagram – <a href="https://www.instagram.com/ias_dcs" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">@ias_dcs</a>
+                                        Instagram – <a href="https://www.instagram.com/adaktrade" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">@adaktrade</a>
                                     </div>
                                     <div className="font-jetbrains text-xs text-slate-600">
                                         WhatsApp – <a href="https://wa.me/message/5WRJJMD2XK7XP1" target="_blank" rel="noopener noreferrer" className="text-amber-800 font-bold hover:underline transition-all">Official Support</a>

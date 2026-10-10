@@ -160,7 +160,7 @@ const MyCourses = () => {
                    <div className="p-7 flex flex-col flex-grow space-y-6 z-10 relative">
                       <div className="space-y-4">
                          {/* Status Badge */}
-                         <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-300/80 px-3.5 py-1 rounded-full">
+                         <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-300/80 px-3.5 py-1 rounded-md">
                             <span className="font-jetbrains text-[10px] text-amber-900 font-black uppercase tracking-wider leading-none">
                                {item.iscompleted ? 'Completed' : 'In Progress'}
                             </span>
@@ -219,7 +219,7 @@ const MyCourses = () => {
                       <div className="pt-2">
                          <button 
                             onClick={() => navigate(`/dashboard/course/${item.courseId}`)}
-                            className="w-full py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all rounded-full shadow-accent-soft text-center"
+                            className="w-full py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-95 transition-all rounded-md shadow-accent-soft text-center"
                          >
                             Continue Learning
                          </button>

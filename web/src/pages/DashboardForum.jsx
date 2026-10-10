@@ -232,7 +232,7 @@ const DashboardForum = () => {
               {question.allTags && question.allTags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {question.allTags.map((tag, idx) => (
-                    <span key={idx} className="px-3 py-0.5 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-full">
+                    <span key={idx} className="px-3 py-0.5 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-md">
                       {tag}
                     </span>
                   ))}
@@ -291,12 +291,12 @@ const DashboardForum = () => {
                     setLikesCount(prev => prev + 1);
                     dispatch(likeThread(question.id));
                   }}
-                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border transition-all ${sentiment === 'like' ? 'bg-amber-400 border-amber-400 text-slate-950 font-bold' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-amber-400 hover:text-amber-700'}`}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md border transition-all ${sentiment === 'like' ? 'bg-amber-400 border-amber-400 text-slate-950 font-bold' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-amber-400 hover:text-amber-700'}`}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill={sentiment === 'like' ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" /></svg>
                   <span className="font-montserrat text-xs font-bold">{formatCount(likesCount)}</span>
                 </button>
-                <button onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:border-amber-400 hover:text-amber-700 transition-all font-montserrat text-xs font-bold uppercase">
+                <button onClick={() => setIsOpen(!isOpen)} className="flex items-center gap-2 px-3.5 py-1.5 rounded-md border border-slate-200 bg-slate-50 text-slate-600 hover:border-amber-400 hover:text-amber-700 transition-all font-montserrat text-xs font-bold uppercase">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
                   <span>{repliesCount} REPLIES</span>
                 </button>
@@ -475,7 +475,7 @@ const DashboardForum = () => {
                   onClick={() => setIsModalOpen(true)}
                   className="w-full bg-accent text-slate-950 p-8 font-jetbrains text-[11px] font-black uppercase tracking-[0.4em] hover:scale-[1.05] active:scale-95 transition-all shadow-accent-soft flex flex-col items-center gap-4 group rounded-2xl"
                 >
-                  <div className="w-12 h-12 rounded-full bg-[#4a89ff] flex items-center justify-center text-white shadow-lg group-hover:rotate-90 transition-transform duration-500">
+                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white shadow-lg group-hover:rotate-90 transition-transform duration-500">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M12 5v14M5 12h14" /></svg>
                   </div>
                   {t('startNewTopic')}
@@ -553,7 +553,7 @@ const DashboardForum = () => {
       {/* Global Success Notification */}
       {showSuccessMessage && (
         <div className="fixed inset-0 z-[30000] flex items-center justify-center pointer-events-none">
-          <div className="bg-accent text-dark px-12 py-8 rounded-sm shadow-[0_30px_100px_rgba(1, 125, 195,0.3)] flex flex-col items-center gap-4">
+          <div className="bg-accent text-dark px-12 py-8 rounded-sm shadow-[0_30px_100px_rgba(4,120,87,0.3)] flex flex-col items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-dark/10 flex items-center justify-center">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12" /></svg>
             </div>

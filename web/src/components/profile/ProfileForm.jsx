@@ -177,7 +177,7 @@ const ProfileForm = () => {
          <button 
             onClick={handleSave}
             disabled={updateLoading}
-            className="px-12 py-4 bg-accent text-slate-950 font-montserrat text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-[0.98] transition-all rounded-full shadow-accent-soft disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-12 py-4 bg-accent text-slate-950 font-montserrat text-xs font-black uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-[0.98] transition-all rounded-md shadow-accent-soft disabled:opacity-50 disabled:cursor-not-allowed"
          >
             {updateLoading ? (t('savingState') || 'Saving...') : (t('saveChangesBtn') || 'Save Changes')}
          </button>

@@ -68,7 +68,7 @@ const CourseCard = ({ item, className = '', variant = 'course' }) => {
   const courseId = item?._id || item?.id || item?.slug
 
   const CardContent = (
-    <div className={`catalog-card bg-white border border-slate-200/80 hover:border-[#017DC3]/50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-5 sm:p-6 flex flex-col h-full group relative overflow-hidden ${className}`}>
+    <div className={`catalog-card bg-white border border-slate-200/80 hover:border-[#047857]/50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-5 sm:p-6 flex flex-col h-full group relative overflow-hidden ${className}`}>
       {/* Image Wrapper */}
       <div className="relative overflow-hidden mb-5 aspect-[16/10] bg-slate-100 rounded-xl shrink-0 border border-slate-100">
         <img 
@@ -97,7 +97,7 @@ const CourseCard = ({ item, className = '', variant = 'course' }) => {
 
       {/* Content Metadata */}
       <div className="flex flex-col flex-grow">
-        <h3 className="font-newsreader text-xl sm:text-2xl text-slate-900 group-hover:text-[#017DC3] transition-colors duration-300 font-bold tracking-tight leading-snug line-clamp-2 mb-2">
+        <h3 className="font-newsreader text-xl sm:text-2xl text-slate-900 group-hover:text-[#047857] transition-colors duration-300 font-bold tracking-tight leading-snug line-clamp-2 mb-2">
           {sanitizeDisplay(item?.title || '')}
         </h3>
         
@@ -119,14 +119,14 @@ const CourseCard = ({ item, className = '', variant = 'course' }) => {
                   </span>
                 )}
               </div>
-              <div className="w-9 h-9 flex items-center justify-center border border-[#017DC3]/30 bg-[#EBF5FA] group-hover:bg-[#017DC3] group-hover:border-[#017DC3] rounded-full transition-all duration-300 shadow-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all duration-300 stroke-[#017DC3] group-hover:stroke-white">
+              <div className="w-9 h-9 flex items-center justify-center border border-[#047857]/30 bg-[#EBF5FA] group-hover:bg-[#047857] group-hover:border-[#047857] rounded-full transition-all duration-300 shadow-sm">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all duration-300 stroke-[#047857] group-hover:stroke-white">
                   <path d="M7 17L17 7M17 7H7M17 7V17" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
             </>
           ) : (
-            <button className="w-full py-3.5 bg-[#017DC3] text-white hover:bg-[#006AA7] rounded-full font-jetbrains text-xs font-bold tracking-[0.25em] uppercase hover:scale-[1.02] shadow-[0_4px_15px_rgba(1,125,195,0.35)] transition-all duration-300">
+            <button className="w-full py-3.5 bg-[#047857] text-white hover:bg-[#064e3b] rounded-md font-jetbrains text-xs font-bold tracking-[0.25em] uppercase hover:scale-[1.02] shadow-[0_4px_15px_rgba(4,120,87,0.35)] transition-all duration-300">
               {item?.buttonText || t('registerNow') || 'Register Now'}
             </button>
           )}

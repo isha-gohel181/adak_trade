@@ -207,7 +207,7 @@ const DashboardPersonality = () => {
                    </p>
                    <div className="flex flex-wrap justify-center md:justify-start gap-4">
                      {displayData.tags.map((tag, i) => (
-                         <span key={i} className="px-6 py-2 border border-white/10 rounded-full font-jetbrains text-[8px] font-bold text-accent tracking-[0.2em] bg-white/5 uppercase">
+                         <span key={i} className="px-6 py-2 border border-white/10 rounded-md font-jetbrains text-[8px] font-bold text-accent tracking-[0.2em] bg-white/5 uppercase">
                              {tag}
                          </span>
                      ))}
@@ -220,7 +220,7 @@ const DashboardPersonality = () => {
                 {/* Left: Traits */}
                 <div className="lg:col-span-5 space-y-10 result-reveal opacity-0 invisible">
                    <div className="flex items-center gap-6 mb-12">
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#017DC3]" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#047857]" />
                       <h3 className="font-jetbrains text-[9px] font-bold tracking-[0.5em] text-normal uppercase">Biological Calibration</h3>
                    </div>
                    {displayData.traits.map((trait, i) => (
@@ -231,7 +231,7 @@ const DashboardPersonality = () => {
                         </div>
                         <div className="h-[1.5px] bg-white/5 rounded-full relative overflow-hidden">
                             <div 
-                              className="absolute h-full bg-accent shadow-[0_0_20px_#017DC3] transition-all duration-[2000ms] ease-out"
+                              className="absolute h-full bg-accent shadow-[0_0_20px_#047857] transition-all duration-[2000ms] ease-out"
                               style={{ width: `${trait.score}%`, left: trait.activeSide === 'right' ? 'auto' : 0, right: trait.activeSide === 'right' ? 0 : 'auto' }}
                             />
                         </div>
@@ -255,7 +255,7 @@ const DashboardPersonality = () => {
                             >
                                 {tabKey}
                                 {activeTab === tabKey && (
-                                    <div className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent shadow-[0_0_10px_#017DC3]" />
+                                    <div className="absolute bottom-0 left-0 w-full h-[1.5px] bg-accent shadow-[0_0_10px_#047857]" />
                                 )}
                             </button>
                         ))}
@@ -285,7 +285,7 @@ const DashboardPersonality = () => {
                     </div>
                     <Link 
                       to="/dashboard/courses"
-                      className="px-10 py-5 border border-white/10 font-jetbrains text-[9px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-full"
+                      className="px-10 py-5 border border-white/10 font-jetbrains text-[9px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-md"
                     >
                       Browse Full Catalog
                     </Link>
@@ -300,7 +300,7 @@ const DashboardPersonality = () => {
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-12 border-t border-white/5">
                    <Link 
                       to="/personality-test"
-                      className="group flex items-center gap-6 px-12 py-5 border border-white/10 font-jetbrains text-[9px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-full"
+                      className="group flex items-center gap-6 px-12 py-5 border border-white/10 font-jetbrains text-[9px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-md"
                    >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:rotate-180 transition-transform duration-700 opacity-40">
                          <path d="M2.5 2v6h6M21.5 22v-6h-6M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3" />

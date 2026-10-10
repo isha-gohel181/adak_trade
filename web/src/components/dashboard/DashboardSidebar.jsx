@@ -70,7 +70,7 @@ const UpcomingDeadlines = ({ assignments = [] }) => {
                <div key={assignment.id} className="p-5 border border-slate-200/80 bg-white rounded-2xl space-y-2 relative overflow-hidden group hover:border-amber-400 transition-all shadow-sm">
                   <div className="flex items-center justify-between">
                      <div className="flex items-center gap-2">
-                        <span className="font-jetbrains text-[10px] text-amber-900 font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-amber-300 bg-amber-100">{t('pending')}</span>
+                        <span className="font-jetbrains text-[10px] text-amber-900 font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md border border-amber-300 bg-amber-100">{t('pending')}</span>
                      </div>
                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600">
                         <circle cx="12" cy="12" r="10" />

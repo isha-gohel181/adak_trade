@@ -43,7 +43,7 @@ const BonusSection = ({ course }) => {
 
       {/* Heading */}
       <div className="text-center space-y-4 mb-14">
-        <span className="bonus-heading inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-blue-50 border border-blue-100 rounded-full shadow-xs">
+        <span className="bonus-heading inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-[#ecfdf5] border border-[#d1fae5] rounded-md shadow-xs">
           EXCLUSIVE BONUSES
         </span>
         <h2 className="bonus-heading font-newsreader italic text-[clamp(2rem,5vw,3.8rem)] text-slate-900 font-light leading-tight">

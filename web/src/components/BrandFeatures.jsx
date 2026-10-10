@@ -135,18 +135,18 @@ const BrandFeatures = () => {
         
         {/* Header Segment */}
         <div className="schemes-header text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest font-jetbrains">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-[11px] font-bold uppercase tracking-widest font-jetbrains">
             <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse shadow-[0_0_6px_#BFD419]" />
             Specialized R&D Schemes & Cells
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
             Our Research & <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#017DC3] via-[#028DDb] to-[#005B8E]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#047857] via-[#028DDb] to-[#005B8E]">
               Development Schemes
             </span>
           </h2>
           <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-            IAS operates dedicated specialized research schemes in collaboration with universities, medical colleges, and research institutions nationwide to foster an empirical, evidence-based culture.
+            ADAK TRADE operates dedicated specialized research & market cells in collaboration with trading desks, quantitative laboratories, and research institutions nationwide to foster an empirical, evidence-based culture.
           </p>
         </div>
 
@@ -155,7 +155,7 @@ const BrandFeatures = () => {
           {schemesData.map((scheme) => (
             <div 
               key={scheme.id}
-              className="scheme-card-item group relative bg-white border border-slate-200/90 rounded-3xl p-5 md:p-6 flex flex-col items-center justify-between transition-all duration-300 hover:border-[#017DC3]/40 hover:shadow-xl hover:-translate-y-1.5 shadow-sm"
+              className="scheme-card-item group relative bg-white border border-slate-200/90 rounded-3xl p-5 md:p-6 flex flex-col items-center justify-between transition-all duration-300 hover:border-[#047857]/40 hover:shadow-xl hover:-translate-y-1.5 shadow-sm"
             >
               {/* Top Medallion Seal Image */}
               <div className="w-full flex items-center justify-center pt-2 pb-4">
@@ -168,7 +168,7 @@ const BrandFeatures = () => {
 
               {/* Title Content */}
               <div className="w-full flex flex-col items-center text-center space-y-2 flex-grow justify-center py-2">
-                <h3 className="font-inter font-bold text-xs sm:text-[13px] text-slate-800 leading-snug group-hover:text-[#017DC3] transition-colors line-clamp-3">
+                <h3 className="font-inter font-bold text-xs sm:text-[13px] text-slate-800 leading-snug group-hover:text-[#047857] transition-colors line-clamp-3">
                   {scheme.title}
                 </h3>
               </div>
@@ -178,7 +178,7 @@ const BrandFeatures = () => {
                 <button
                   type="button"
                   onClick={() => setSelectedScheme(scheme)}
-                  className="w-full max-w-[140px] py-2 px-4 rounded-full bg-[#017DC3] hover:bg-[#006AA7] text-white font-bold text-[11px] uppercase tracking-wider shadow-sm hover:shadow-[0_4px_15px_rgba(1,125,195,0.35)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+                  className="w-full max-w-[140px] py-2 px-4 rounded-md bg-[#047857] hover:bg-[#064e3b] text-white font-bold text-[11px] uppercase tracking-wider shadow-sm hover:shadow-[0_4px_15px_rgba(4,120,87,0.35)] transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >
                   Read More
                 </button>
@@ -219,7 +219,7 @@ const BrandFeatures = () => {
                 className="w-28 h-28 sm:w-36 sm:h-36 object-contain drop-shadow-lg flex-shrink-0"
               />
               <div className="space-y-3 min-w-0 text-center sm:text-left">
-                <span className="inline-block px-3 py-1 rounded-full bg-[#EBF5FA] text-[#017DC3] border border-[#017DC3]/20 text-[10px] font-bold uppercase tracking-wider font-jetbrains">
+                <span className="inline-block px-3 py-1 rounded-md bg-[#EBF5FA] text-[#047857] border border-[#047857]/20 text-[10px] font-bold uppercase tracking-wider font-jetbrains">
                   {selectedScheme.category}
                 </span>
                 <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-tight">
@@ -251,14 +251,14 @@ const BrandFeatures = () => {
               <button
                 type="button"
                 onClick={() => setSelectedScheme(null)}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-md border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
               >
                 Close
               </button>
               <Link
                 to="/courses"
                 onClick={() => setSelectedScheme(null)}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#017DC3] text-white hover:bg-[#006AA7] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-md bg-[#047857] text-white hover:bg-[#064e3b] text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
               >
                 <span>Explore Associated Courses</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

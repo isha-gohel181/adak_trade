@@ -129,7 +129,7 @@ const FrameworkSection = ({ course, section }) => {
       <div ref={introRef} className="max-w-4xl mx-auto mb-16 relative">
         <div className="relative p-8 md:p-12 border border-slate-200 bg-white rounded-2xl shadow-md space-y-6 text-center md:text-left">
           <div className="space-y-3">
-            <span className="framework-intro-item inline-block font-jetbrains text-accent text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold border border-blue-100 bg-blue-50 px-3.5 py-1 rounded-full shadow-xs">
+            <span className="framework-intro-item inline-block font-jetbrains text-accent text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold border border-[#d1fae5] bg-[#ecfdf5] px-3.5 py-1 rounded-md shadow-xs">
               {sectionSubtitle}
             </span>
             <h2 className="framework-intro-item font-newsreader italic text-3xl md:text-5xl text-slate-900 font-light tracking-tight leading-[1.05]">

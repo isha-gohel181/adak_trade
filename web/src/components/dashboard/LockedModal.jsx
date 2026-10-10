@@ -15,7 +15,7 @@ const LockedModal = ({ isOpen, onClose, title = 'Locked Lesson', message = '' })
                     <button onClick={onClose} className="text-slate-400 hover:text-slate-900 text-lg">✕</button>
                 </div>
                 <div className="mt-6 flex justify-end">
-                    <button onClick={onClose} className="px-6 py-2.5 bg-accent text-slate-950 font-black uppercase tracking-widest rounded-full shadow-accent-soft">Close</button>
+                    <button onClick={onClose} className="px-6 py-2.5 bg-accent text-slate-950 font-black uppercase tracking-widest rounded-md shadow-accent-soft">Close</button>
                 </div>
             </div>
         </div>

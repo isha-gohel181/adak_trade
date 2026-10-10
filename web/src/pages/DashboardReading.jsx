@@ -156,7 +156,7 @@ const DashboardReading = () => {
             </main>
 
             <style>{`
-                .dashboard-reading-content a { color: var(--accent-color, #017DC3); text-decoration: underline; text-underline-offset: 4px; }
+                .dashboard-reading-content a { color: var(--accent-color, #047857); text-decoration: underline; text-underline-offset: 4px; }
                 .dashboard-reading-content strong { color: white; font-weight: 600; }
                 .dashboard-reading-content ul { list-style: disc; padding-left: 1.5rem; }
                 .dashboard-reading-content ol { list-style: decimal; padding-left: 1.5rem; }

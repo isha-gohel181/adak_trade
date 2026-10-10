@@ -42,66 +42,115 @@ const AboutSnapshot = () => {
    }, []);
 
    return (
-      <section ref={containerRef} className="py-16 md:py-20 bg-white text-slate-900 relative overflow-hidden border-b border-slate-100">
-         <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <section ref={containerRef} className="py-20 bg-white text-slate-900 relative overflow-hidden font-inter">
+         
+         {/* Decorative Dots Background (top right) */}
+         <div className="absolute top-10 right-10 opacity-20 hidden lg:block">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <circle cx="10" cy="10" r="2" fill="#047857"/>
+               <circle cx="30" cy="10" r="2" fill="#047857"/>
+               <circle cx="50" cy="10" r="2" fill="#047857"/>
+               <circle cx="70" cy="10" r="2" fill="#047857"/>
+               <circle cx="90" cy="10" r="2" fill="#047857"/>
+               <circle cx="10" cy="30" r="2" fill="#047857"/>
+               <circle cx="30" cy="30" r="2" fill="#047857"/>
+               <circle cx="50" cy="30" r="2" fill="#047857"/>
+               <circle cx="70" cy="30" r="2" fill="#047857"/>
+               <circle cx="90" cy="30" r="2" fill="#047857"/>
+               <circle cx="10" cy="50" r="2" fill="#047857"/>
+               <circle cx="30" cy="50" r="2" fill="#047857"/>
+               <circle cx="50" cy="50" r="2" fill="#047857"/>
+               <circle cx="70" cy="50" r="2" fill="#047857"/>
+               <circle cx="90" cy="50" r="2" fill="#047857"/>
+            </svg>
+         </div>
+
+         <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             
-            {/* Left: Plain Image without badges or wrapper cards */}
-            <div ref={imageRef} className="lg:col-span-6 flex items-center justify-center min-w-0">
+            {/* Left: Image Collage / Large Image */}
+            <div ref={imageRef} className="relative w-full max-w-[500px] mx-auto lg:mx-0 flex items-center justify-center min-w-0">
+               {/* Background colored block behind image */}
+               <div className="absolute -left-6 -bottom-6 w-3/4 h-3/4 bg-slate-100 -z-10 rounded-lg"></div>
+               
+               {/* Main Image */}
                <img 
-                  src="/landing_book.png" 
-                  alt="IAS Knowledge & Statistical Research" 
-                  className="w-full max-w-md lg:max-w-lg h-auto max-h-[360px] md:max-h-[400px] object-contain drop-shadow-md"
+                  src="https://adaktradeeffort.com/assets/images/post-2.jpg" 
+                  alt="ADAK TRADE Class" 
+                  className="w-full h-auto object-cover rounded-md shadow-xl z-10 border-4 border-white"
                />
+               
+               {/* Floating secondary image (Optional, creates collage effect) */}
+               <div className="absolute -right-8 -top-8 w-1/3 bg-white p-2 shadow-lg rounded-sm z-20 hidden sm:block">
+                  <img src="https://adaktradeeffort.com/assets/images/post-3.jpg" alt="ADAK Trade Seminar" className="w-full h-auto object-cover" />
+               </div>
             </div>
 
-            {/* Right: Text Content */}
-            <div ref={textRef} className="lg:col-span-6 flex flex-col items-start min-w-0">
-               <div className="snapshot-text inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest mb-3 font-jetbrains">
-                  <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse shadow-[0_0_6px_#BFD419]" />
-                  About IAS DCS
+            {/* Right: Text Content & Features */}
+            <div ref={textRef} className="flex flex-col items-start min-w-0">
+               <div className="snapshot-text text-[#047857] text-xs font-bold uppercase tracking-widest mb-2">
+                  Learn The Stock Market Anytime, Anywhere!
                </div>
                
-               <h2 className="snapshot-text text-2xl sm:text-3xl md:text-[2.2rem] lg:text-[2.35rem] font-extrabold text-slate-900 leading-[1.22] mb-4">
-                  Advancing the Science & Application of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#017DC3] via-[#028DDb] to-[#005B8E]">Statistics.</span>
+               <h2 className="snapshot-text text-3xl sm:text-4xl md:text-[2.5rem] font-bold text-[#1a202c] leading-tight mb-8">
+                  Know About ADAK TRADE EFFORT
                </h2>
                
-               <p className="snapshot-text text-sm sm:text-base text-slate-600 mb-5 leading-relaxed font-normal">
-                  The Institute of Applied Statistics (IAS), a corporate division of DCS Pvt. Ltd., is a premier institution committed to advancing the science and application of statistics in research, policy, and practice. Established with the vision of bridging knowledge and practice, IAS plays a pivotal role in capacity building and multidisciplinary research.
-               </p>
+               <div className="snapshot-text space-y-8 mb-8 w-full">
+                  {/* Feature 1 */}
+                  <div className="flex items-start gap-5">
+                     <div className="flex-shrink-0 w-16 h-16 rounded-full bg-[#f0f7fb] flex items-center justify-center border border-[#e0eff8]">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <h3 className="text-xl font-semibold text-[#1a202c] mb-2">Trusted Mentorship</h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                           Professional Trader Mentorship & structured courses bridging theoretical analysis and practical trading.
+                        </p>
+                     </div>
+                  </div>
 
-               <ul className="snapshot-text space-y-2.5 mb-6 w-full">
-                  {[
-                     "Human Resource Development & structured training in data science & analytics",
-                     "Multidisciplinary research in public health, medicine, agriculture & AI",
-                     "Consultancy for governments, organizations & NGOs in survey design & impact analysis"
-                  ].map((item, index) => (
-                     <li key={index} className="flex items-start gap-2.5 text-slate-700 text-xs sm:text-sm font-normal">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#F6F9D7] border border-[#BFD419]/40 text-[#7D8D0C] flex items-center justify-center mt-0.5">
-                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="20 6 9 17 4 12" />
-                           </svg>
-                        </div>
-                        <span className="break-words">{item}</span>
-                     </li>
-                  ))}
-               </ul>
+                  {/* Feature 2 */}
+                  <div className="flex items-start gap-5">
+                     <div className="flex-shrink-0 w-16 h-16 rounded-full bg-[#fffcf5] flex items-center justify-center border border-[#ffecd1]">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f6ad55" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                     </div>
+                     <div>
+                        <h3 className="text-xl font-semibold text-[#1a202c] mb-2">Years of Excellence</h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                           Empowering students to achieve financial success through advanced quantitative trading setups and risk management.
+                        </p>
+                     </div>
+                  </div>
 
-               <div className="snapshot-text flex flex-wrap gap-3.5">
+                  {/* Feature 3 */}
+                  <div className="flex items-start gap-5">
+                     <div className="flex-shrink-0 w-16 h-16 rounded-full bg-[#f4f7d4] flex items-center justify-center border border-[#e8eed1]">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7D8D0C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                           <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                     </div>
+                     <div>
+                        <h3 className="text-xl font-semibold text-[#1a202c] mb-2">Powerful Program</h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">
+                           Every market course module is thoughtfully designed and includes consultancy for retail and institutional traders.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+
+               <div className="snapshot-text">
                   <Link 
                      to="/about-us" 
-                     className="inline-flex items-center justify-center gap-2 bg-[#017DC3] text-white px-7 py-3 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-[#006AA7] transition-all duration-300 shadow-[0_4px_20px_rgba(1,125,195,0.35)] hover:scale-105 active:scale-95 group"
+                     className="inline-flex items-center justify-center gap-2 bg-[#047857] text-white px-8 py-3.5 rounded-md font-semibold text-sm hover:bg-[#047857] transition-all duration-300 shadow-md group"
                   >
-                     Discover Our Vision & Mission
-                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
+                     Know About Us
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
                      </svg>
-                  </Link>
-                  <Link 
-                     to="/courses" 
-                     className="inline-flex items-center justify-center gap-2 bg-slate-100 border border-slate-200 text-slate-800 px-6 py-3 rounded-full font-bold uppercase tracking-wider text-xs hover:bg-slate-200 transition-all duration-300"
-                  >
-                     Explore Courses
                   </Link>
                </div>
             </div>

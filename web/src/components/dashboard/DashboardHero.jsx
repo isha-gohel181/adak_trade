@@ -25,7 +25,7 @@ const DashboardHero = () => {
       
       {/* Top Section: Header & Progress Ring */}
       <div className="flex justify-between items-center z-10">
-         <div className="flex items-center gap-3 px-3.5 py-1 bg-amber-100 border border-amber-300 rounded-full">
+         <div className="flex items-center gap-3 px-3.5 py-1 bg-amber-100 border border-amber-300 rounded-md">
             <div className="w-2 h-2 bg-amber-600 rounded-full animate-pulse" />
             <span className="font-jetbrains text-[10px] text-amber-900 font-black uppercase tracking-wider">{t('systemActive')}</span>
          </div>

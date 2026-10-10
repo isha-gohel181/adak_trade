@@ -90,7 +90,7 @@ const AcademicInfo = () => {
                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><path d="M12 2L2 7l10 5l10-5l-10-5z M2 17l10 5l10-5 M2 12l10 5l10-5" /></svg>
                {t('academic') || 'Education'} <span className="text-slate-400 italic font-normal">History</span>
             </h2>
-            <button className="px-5 py-2 border border-slate-200 font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-[0.2em] hover:bg-slate-100 transition-all rounded-full">{t('viewAll') || 'VIEW ALL'}</button>
+            <button className="px-5 py-2 border border-slate-200 font-jetbrains text-xs text-slate-700 font-bold uppercase tracking-[0.2em] hover:bg-slate-100 transition-all rounded-md">{t('viewAll') || 'VIEW ALL'}</button>
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -145,7 +145,7 @@ const AcademicInfo = () => {
             <button 
                onClick={handleUploadClick}
                disabled={updateLoading}
-               className="px-8 py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-105 transition-all rounded-full shadow-accent-soft disabled:opacity-50"
+               className="px-8 py-3.5 bg-accent text-slate-950 font-jetbrains text-xs font-black uppercase tracking-[0.3em] hover:scale-105 transition-all rounded-md shadow-accent-soft disabled:opacity-50"
             >
                {updateLoading ? 'Uploading...' : (t('uploadFile') || 'UPLOAD FILE')}
             </button>

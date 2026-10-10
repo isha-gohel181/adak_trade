@@ -134,7 +134,7 @@ const StackingBanners = () => {
           <div className="flex items-center gap-6 shrink-0 self-start lg:self-end">
             
             {/* Slide Index Badge & Arrows */}
-            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-full px-5 py-2.5 shadow-sm">
+            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-md px-5 py-2.5 shadow-sm">
               <span className="font-jetbrains text-xs font-bold text-slate-700 tracking-wider">
                 0{activeIndex + 1} <span className="text-slate-300">/</span> 0{items.length || 1}
               </span>
@@ -162,7 +162,7 @@ const StackingBanners = () => {
             {/* Explore All Button */}
             <button
               onClick={() => navigate('/courses')}
-              className="px-8 py-4 rounded-full font-montserrat text-xs font-black tracking-[0.25em] bg-accent text-slate-950 hover:scale-105 active:scale-95 transition-all shadow-accent-soft shrink-0"
+              className="px-8 py-4 rounded-md font-montserrat text-xs font-black tracking-[0.25em] bg-accent text-slate-950 hover:scale-105 active:scale-95 transition-all shadow-accent-soft shrink-0"
             >
               <RollingText text={t('exploreAll')} className="relative z-10" />
             </button>
@@ -189,7 +189,7 @@ const StackingBanners = () => {
               }`}
             >
               {/* Top Category Badge */}
-              <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-white/90 backdrop-blur-md rounded-full border border-slate-200/80 shadow-md flex items-center gap-2">
+              <div className="absolute top-6 left-6 z-20 px-4 py-2 bg-white/90 backdrop-blur-md rounded-md border border-slate-200/80 shadow-md flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
                 <span className="font-jetbrains text-[10px] font-bold tracking-widest text-slate-900 uppercase">
                   {banner.type === 'job' || banner.type === 'all_jobs' ? t('careerSpotlight') : t('curatedModule')}
@@ -197,7 +197,7 @@ const StackingBanners = () => {
               </div>
 
               {/* Top Slide Number Badge */}
-              <div className="absolute top-6 right-6 z-20 px-4 py-1.5 bg-slate-950/80 backdrop-blur-md rounded-full border border-amber-400/40 text-amber-400 font-jetbrains text-xs font-bold tracking-widest shadow-md">
+              <div className="absolute top-6 right-6 z-20 px-4 py-1.5 bg-slate-950/80 backdrop-blur-md rounded-md border border-amber-400/40 text-amber-400 font-jetbrains text-xs font-bold tracking-widest shadow-md">
                 0{i + 1}
               </div>
 
@@ -229,7 +229,7 @@ const StackingBanners = () => {
                 </div>
 
                 <button
-                  className="px-8 py-4 rounded-full font-montserrat text-xs font-black tracking-[0.25em] transition-all hover:scale-105 active:scale-95 bg-accent text-slate-950 w-fit shadow-accent-soft shrink-0"
+                  className="px-8 py-4 rounded-md font-montserrat text-xs font-black tracking-[0.25em] transition-all hover:scale-105 active:scale-95 bg-accent text-slate-950 w-fit shadow-accent-soft shrink-0"
                   onClick={(e) => {
                     e.stopPropagation()
                     handleCardClick(banner)

@@ -194,7 +194,7 @@ const PersonalityTest = () => {
                   </p>
                   <div className="flex flex-wrap justify-center md:justify-start gap-4">
                     {resultData.tags.map((tag, i) => (
-                        <span key={i} className="px-6 py-2 border border-white/10 rounded-full font-jetbrains text-[9px] font-bold text-accent tracking-[0.2em] bg-white/5 uppercase">
+                        <span key={i} className="px-6 py-2 border border-white/10 rounded-md font-jetbrains text-[9px] font-bold text-accent tracking-[0.2em] bg-white/5 uppercase">
                             {tag}
                         </span>
                     ))}
@@ -207,7 +207,7 @@ const PersonalityTest = () => {
                 {/* Left: Traits */}
                 <div className="lg:col-span-5 space-y-10 result-reveal">
                    <div className="flex items-center gap-6 mb-12">
-                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#017DC3]" />
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse shadow-[0_0_10px_#047857]" />
                       <h3 className="font-montserrat text-[14px] font-bold tracking-[0.5em] text-normal uppercase">Biological Calibration</h3>
                    </div>
                    {resultData.traits.map((trait, i) => (
@@ -218,7 +218,7 @@ const PersonalityTest = () => {
                         </div>
                         <div className="h-[2px] bg-white/5 rounded-full relative overflow-hidden">
                             <div 
-                              className="absolute h-full bg-accent shadow-[0_0_20px_#017DC3] transition-all duration-[2000ms] ease-out-quart"
+                              className="absolute h-full bg-accent shadow-[0_0_20px_#047857] transition-all duration-[2000ms] ease-out-quart"
                               style={{ width: `${trait.score}%`, left: trait.activeSide === 'right' ? 'auto' : 0, right: trait.activeSide === 'right' ? 0 : 'auto' }}
                             />
                         </div>
@@ -242,7 +242,7 @@ const PersonalityTest = () => {
                             >
                                 {tabKey}
                                 {activeTab === tabKey && (
-                                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-accent shadow-[0_0_10px_#017DC3]" />
+                                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-accent shadow-[0_0_10px_#047857]" />
                                 )}
                             </button>
                         ))}
@@ -293,7 +293,7 @@ const PersonalityTest = () => {
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-12 border-t border-white/5">
                    <button 
                       onClick={() => { setTestState('intro'); setCurrentIndex(0); setAnswers({}); }}
-                      className="group flex items-center gap-6 px-12 py-5 border border-white/10 font-montserrat text-[14px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-full"
+                      className="group flex items-center gap-6 px-12 py-5 border border-white/10 font-montserrat text-[14px] font-bold tracking-[0.4em] uppercase text-description/80 hover:text-normal hover:bg-white/5 transition-all duration-500 rounded-md"
                    >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="group-hover:rotate-180 transition-transform duration-700 opacity-40"><path d="M2.5 2v6h6M21.5 22v-6h-6M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.3" /></svg>
                       RESET TEST PROTOCOL
@@ -382,7 +382,7 @@ const PersonalityTest = () => {
                     </span>
                     <div className="h-[1.5px] bg-white/5 w-full md:w-2/3 lg:w-1/2 relative overflow-hidden">
                         <div 
-                          className="h-full bg-accent transition-all duration-1000 ease-out shadow-[0_0_15px_#017DC3]" 
+                          className="h-full bg-accent transition-all duration-1000 ease-out shadow-[0_0_15px_#047857]" 
                           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
                         />
                     </div>
@@ -419,13 +419,13 @@ const PersonalityTest = () => {
                                           onMouseLeave={(e) => {
                                             gsap.to(e.currentTarget.querySelector('.dot-inner'), { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
                                           }}
-                                          className={`${sizes[level-1]} rounded-full border border-white/20 transition-all duration-500 flex items-center justify-center group/btn-circle relative overflow-hidden cursor-pointer
+                                          className={`${sizes[level-1]} rounded-md border border-white/20 transition-all duration-500 flex items-center justify-center group/btn-circle relative overflow-hidden cursor-pointer
                                             ${answers[questions[currentIndex].id] === level 
                                                 ? 'border-accent bg-accent/20 scale-110 shadow-accent-small' 
                                                 : 'hover:border-accent/60 hover:scale-110'}`}
                                         >
                                             <div className={`absolute inset-0 bg-accent/10 transition-all duration-500 ${answers[questions[currentIndex].id] === level ? 'opacity-100' : 'opacity-0 scale-50 group-hover/btn-circle:opacity-100 group-hover/btn-circle:scale-100'}`} />
-                                            <div className={`dot-inner w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-accent shadow-[0_0_20px_#017DC3] transition-all duration-500 relative z-10 
+                                            <div className={`dot-inner w-2.5 h-2.5 md:w-3 md:h-3 rounded-md bg-accent shadow-[0_0_20px_#047857] transition-all duration-500 relative z-10 
                                                 ${answers[questions[currentIndex].id] === level ? 'scale-100 opacity-100' : 'scale-0 opacity-0 group-hover/btn-circle:scale-125 group-hover/btn-circle:opacity-100'}`} 
                                             />
                                         </button>
@@ -461,7 +461,7 @@ const PersonalityTest = () => {
                         ${!answers[questions[currentIndex].id] ? 'opacity-0 pointer-events-none' : 'text-accent hover:tracking-[0.8em]'}`}
                     >
                         {currentIndex === questions.length - 1 ? 'Calculate' : 'Next Step'}
-                        <div className="w-8 md:w-12 h-[1px] bg-accent transition-transform group-hover:scale-x-150 origin-right shadow-[0_0_10px_#017DC3]" />
+                        <div className="w-8 md:w-12 h-[1px] bg-accent transition-transform group-hover:scale-x-150 origin-right shadow-[0_0_10px_#047857]" />
                     </button>
                 </div>
             </div>

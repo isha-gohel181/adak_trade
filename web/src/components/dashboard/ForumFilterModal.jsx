@@ -184,7 +184,7 @@ const ForumFilterModal = ({ stats, tags, discourseTags, onStartTopic }) => {
               <span className="font-jetbrains text-[8px] text-slate-400 tracking-[0.8em] uppercase">Calibration protocol v2.10.4</span>
               <div className="flex gap-6">
                  <button onClick={handleClose} className="font-montserrat text-[14px] font-black text-slate-500 hover:text-slate-900 uppercase tracking-[0.3em] transition-colors">Abort</button>
-                 <button onClick={handleClose} className="font-montserrat text-[14px] font-black px-6 py-2.5 bg-accent text-slate-950 rounded-full shadow-accent-soft uppercase tracking-[0.3em]">Apply Filters</button>
+                 <button onClick={handleClose} className="font-montserrat text-[14px] font-black px-6 py-2.5 bg-accent text-slate-950 rounded-md shadow-accent-soft uppercase tracking-[0.3em]">Apply Filters</button>
               </div>
            </div>
         </div>

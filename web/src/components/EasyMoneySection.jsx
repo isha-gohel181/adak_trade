@@ -141,7 +141,7 @@ const EasyMoneySection = () => {
           {outcomes.map((o, i) => (
             <div key={i} className="em-outcome group flex items-start gap-5 px-6 py-5 bg-accent/[0.05] border-l-2 border-accent shadow-[0_0_30px_rgba(1, 125, 195,0.08)] transition-all duration-500">
               <div className="w-8 h-8 rounded-full border border-accent/60 flex items-center justify-center shrink-0 bg-accent/20 shadow-[0_0_15px_rgba(1, 125, 195,0.5)]">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
               </div>
               <span className="font-Montserrat text-sm text-accent font-normal tracking-wide leading-relaxed uppercase">{o}</span>
             </div>
@@ -155,13 +155,13 @@ const EasyMoneySection = () => {
           Stand Out from Your <span className="text-accent underline-lime">Competitors</span>
         </h3>
         <div className="flex items-center justify-center gap-8">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="1.5" className="opacity-30 hidden md:block"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="1.5" className="opacity-30 hidden md:block"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           <button className="group relative bg-accent px-16 py-8 overflow-hidden transition-all duration-500 hover:scale-[1.03] active:scale-95 flex flex-col items-center gap-2">
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             <span className="relative z-10 font-Montserrat text-dark text-sm font-black tracking-[0.4em] uppercase">YES, I WANT TO BE CEO OF MY LIFE</span>
             <span className="relative z-10 font-Montserrat text-dark/50 text-[9px] tracking-[0.2em] italic">(with Expert Guidance)</span>
           </button>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="1.5" className="opacity-30 hidden md:block rotate-180"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="1.5" className="opacity-30 hidden md:block rotate-180"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
         </div>
       </div>
 

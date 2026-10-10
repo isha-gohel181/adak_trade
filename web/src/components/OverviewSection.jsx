@@ -86,7 +86,7 @@ const OverviewSection = ({ course, section }) => {
         {/* Category / Subtitle pill */}
         {displaySubtitle && (
           <div className="overview-heading inline-block">
-            <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold border border-blue-100 bg-blue-50 px-4 py-1.5 rounded-full shadow-xs">
+            <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold border border-[#d1fae5] bg-[#ecfdf5] px-4 py-1.5 rounded-md shadow-xs">
               {displaySubtitle}
             </span>
           </div>
@@ -122,7 +122,7 @@ const OverviewSection = ({ course, section }) => {
         <div className="overview-image-wrap relative group overflow-hidden max-w-3xl mx-auto rounded-2xl bg-white border border-slate-200/90 p-2 shadow-xl shadow-slate-200/50">
           <div className="relative rounded-xl overflow-hidden aspect-video bg-slate-100">
             {/* Badge */}
-            <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-md">
+            <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-md shadow-md">
               <div className="w-2 h-2 bg-accent rounded-full animate-pulse shadow-xs" />
               <span className="font-jetbrains text-[9px] text-white tracking-[0.25em] uppercase font-bold">COURSE SPOTLIGHT</span>
             </div>

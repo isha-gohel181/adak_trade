@@ -47,8 +47,8 @@ input, textarea, [contenteditable="true"] {
   --font-signature: "Mrs Saint Delafield", cursive;
 
   /* IAS DCS Brand Color Palette derived exactly from Logo */
-  --color-accent: #017DC3; /* Logo Cerulean / Azure Blue (The 'D') */
-  --color-accent-hover: #006AA7;
+  --color-accent: #047857; /* Logo Cerulean / Azure Blue (The 'D') */
+  --color-accent-hover: #064e3b;
   --color-accent-light: #EBF5FA;
   --color-accent-secondary: #BFD419; /* Logo Lime Green (The Dynamic Figure) */
   --color-accent-green: #BFD419;
@@ -67,16 +67,16 @@ input, textarea, [contenteditable="true"] {
   --shadow-green-soft: 0 4px 20px -2px rgba(191, 212, 25, 0.35);
 
   /* Override color palettes dynamically */
-  --color-amber-50: #EBF5FA;
-  --color-amber-100: #D0EAF7;
-  --color-amber-200: #A2D5EF;
-  --color-amber-300: #5BB7E5;
-  --color-amber-400: #017DC3;
-  --color-amber-500: #016AA7;
-  --color-amber-600: #005688;
-  --color-amber-700: #00446D;
-  --color-amber-800: #003657;
-  --color-amber-900: #00253D;
+  --color-amber-50: #ecfdf5;
+  --color-amber-100: #d1fae5;
+  --color-amber-200: #a7f3d0;
+  --color-amber-300: #6ee7b7;
+  --color-amber-400: #34d399;
+  --color-amber-500: #10b981;
+  --color-amber-600: #059669;
+  --color-amber-700: #047857;
+  --color-amber-800: #065f46;
+  --color-amber-900: #064e3b;
 
   --color-yellow-50: #F6F9D7;
   --color-yellow-100: #EDF5B2;
@@ -99,6 +99,11 @@ input, textarea, [contenteditable="true"] {
 }
 
 @layer base {
+  :root {
+    --color-accent: #047857;
+    --color-accent-hover: #064e3b;
+    --color-accent-secondary: #BFD419;
+  }
   body {
     background-color: var(--color-dark);
     color: var(--color-normal);
@@ -439,6 +444,6 @@ button{
 
 /* Specific button and input focus outlines to use IAS logo blue */
 input:focus, textarea:focus, select:focus {
-  border-color: #017DC3 !important;
+  border-color: #047857 !important;
 }
 

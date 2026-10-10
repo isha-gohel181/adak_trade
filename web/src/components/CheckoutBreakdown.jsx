@@ -23,7 +23,7 @@ const CheckoutBreakdown = ({
           <p className="text-xs text-slate-500 mt-0.5">Price & tax breakdown</p>
         </div>
         {couponData?.code && (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-bold uppercase tracking-wider">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-bold uppercase tracking-wider">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             {couponData.code}
           </span>
@@ -57,7 +57,7 @@ const CheckoutBreakdown = ({
 
         <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline">
           <dt className="text-base font-extrabold text-slate-900">Total Amount</dt>
-          <dd className="text-2xl font-black text-[#017DC3] tracking-tight">{format(total)}</dd>
+          <dd className="text-2xl font-black text-[#047857] tracking-tight">{format(total)}</dd>
         </div>
       </dl>
 

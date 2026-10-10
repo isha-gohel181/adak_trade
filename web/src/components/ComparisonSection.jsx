@@ -83,7 +83,7 @@ const ComparisonSection = ({ course, section }) => {
       {/* Top divider label */}
       <div className="flex items-center gap-6 mb-16 opacity-80">
         <div className="flex-1 h-[1px] bg-slate-200" />
-        <span className="font-jetbrains text-[10px] md:text-xs tracking-[0.35em] uppercase text-accent font-bold px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full shadow-xs">
+        <span className="font-jetbrains text-[10px] md:text-xs tracking-[0.35em] uppercase text-accent font-bold px-4 py-1.5 bg-[#ecfdf5] border border-[#d1fae5] rounded-md shadow-xs">
           COMPARISON MATRIX
         </span>
         <div className="flex-1 h-[1px] bg-slate-200" />
@@ -118,7 +118,7 @@ const ComparisonSection = ({ course, section }) => {
           <div className="comp-header grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 text-center">
             {/* Traditional Header Card */}
             <div className="p-6 rounded-2xl bg-white border border-rose-100 shadow-sm shadow-rose-100/50 space-y-3">
-              <span className="inline-block font-jetbrains text-[10px] text-rose-700 tracking-[0.25em] uppercase font-bold px-3 py-1 bg-rose-50 border border-rose-200 rounded-full">
+              <span className="inline-block font-jetbrains text-[10px] text-rose-700 tracking-[0.25em] uppercase font-bold px-3 py-1 bg-rose-50 border border-rose-200 rounded-md">
                 STATUS: OUTDATED & RIGID
               </span>
               <h3 className="font-newsreader italic text-2xl md:text-3xl text-slate-800 font-normal">
@@ -127,8 +127,8 @@ const ComparisonSection = ({ course, section }) => {
             </div>
 
             {/* Our Program Header Card */}
-            <div className="p-6 rounded-2xl bg-blue-50/70 border border-blue-200 shadow-sm shadow-blue-100 space-y-3">
-              <span className="inline-block font-jetbrains text-[10px] text-white tracking-[0.25em] uppercase font-bold px-3.5 py-1 bg-accent rounded-full shadow-xs">
+            <div className="p-6 rounded-2xl bg-[#ecfdf5]/70 border border-[#a7f3d0] shadow-sm shadow-blue-100 space-y-3">
+              <span className="inline-block font-jetbrains text-[10px] text-white tracking-[0.25em] uppercase font-bold px-3.5 py-1 bg-accent rounded-md shadow-xs">
                 STATUS: OPTIMAL & PRACTICAL
               </span>
               <h3 className="font-newsreader italic text-2xl md:text-3xl text-accent font-medium">
@@ -155,7 +155,7 @@ const ComparisonSection = ({ course, section }) => {
                 </div>
 
                 {/* Our Program Point */}
-                <div className="flex items-center gap-4 px-6 py-5 bg-white border border-blue-100 border-l-4 border-l-accent rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50/20 transition-all duration-300">
+                <div className="flex items-center gap-4 px-6 py-5 bg-white border border-[#d1fae5] border-l-4 border-l-accent rounded-xl shadow-xs hover:shadow-md hover:bg-[#ecfdf5]/20 transition-all duration-300">
                   <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center shrink-0 text-white shadow-sm shadow-accent/30">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">
                       <path d="M20 6L9 17l-5-5" />

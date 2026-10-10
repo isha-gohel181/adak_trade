@@ -67,7 +67,7 @@ const Footer = () => {
   ]
 
   const serviceLinks = [
-    { name: 'Applied Statistics Training', path: '/courses' },
+    { name: 'Capital Markets & Trading Courses', path: '/courses' },
     { name: 'Personality & Level Test', path: '/personality-test' },
     { name: '1-on-1 Expert Mentorship', path: '/contact' },
     { name: 'Peer Learning Community', path: '/forum' },
@@ -97,21 +97,41 @@ const Footer = () => {
         <div className="footer-reveal lg:col-span-4 flex flex-col items-start text-left">
           <Link to="/" className="flex items-center gap-3.5 group mb-4">
             <img
-              src="/logo/iasdcs-logo.png"
-              alt="IAS DCS Logo"
+              src="/adka_trade_logo.png"
+              alt="ADAK TRADE Logo"
               className="h-11 md:h-12 w-auto object-contain rounded-xl shadow-xs group-hover:scale-105 transition-transform duration-300 bg-white p-1 border border-slate-200"
             />
             <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-black tracking-tight text-slate-900 font-inter">IAS DCS</span>
-              <span className="text-[10px] md:text-[11px] font-bold text-[#017DC3] tracking-[0.18em] uppercase">Institute of Applied Statistics</span>
+              <span className="text-xl md:text-2xl font-black tracking-tight text-slate-900 font-inter">ADAK TRADE</span>
+              <span className="text-[10px] md:text-[11px] font-bold text-[#047857] tracking-[0.18em] uppercase">Trade Effort Academy</span>
             </div>
           </Link>
 
           <p className="text-sm text-slate-700 leading-relaxed max-w-sm mb-4 font-normal">
-            Empowering scholars and institutions to master Applied Statistics, Data Science, and Research Analytics with practical fluency and expert mentorship.
+            Empowering traders, investors, and institutions to master Capital Markets, Technical Trading, and Financial Analytics with practical fluency and expert mentorship.
           </p>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#BFD419]/50 shadow-xs mb-6">
+          <div className="flex flex-col gap-2.5 mb-6">
+            <a href="tel:+917908927127" className="flex items-center gap-3 text-sm text-slate-700 hover:text-[#047857] transition-colors font-medium">
+              <div className="w-8 h-8 rounded-full bg-[#EBF5FA] flex items-center justify-center text-[#047857]">
+                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                 </svg>
+              </div>
+              +91 7908927127
+            </a>
+            <a href="mailto:info@adaktradeeffort.com" className="flex items-center gap-3 text-sm text-slate-700 hover:text-[#047857] transition-colors font-medium">
+              <div className="w-8 h-8 rounded-full bg-[#EBF5FA] flex items-center justify-center text-[#047857]">
+                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                 </svg>
+              </div>
+              info@adaktradeeffort.com
+            </a>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white border border-[#BFD419]/50 shadow-xs mb-6">
             <span className="w-2 h-2 rounded-full bg-[#BFD419] shadow-[0_0_6px_#BFD419] animate-pulse" />
             <span className="text-[10px] text-slate-800 font-jetbrains uppercase tracking-wider font-bold">DPIIT Recognized • ISO Certified</span>
           </div>
@@ -127,7 +147,7 @@ const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-[#017DC3] hover:border-[#017DC3]/60 hover:bg-[#EBF5FA] transition-all duration-300 shadow-xs hover:scale-110 active:scale-95"
+                  className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-[#047857] hover:border-[#047857]/60 hover:bg-[#EBF5FA] transition-all duration-300 shadow-xs hover:scale-110 active:scale-95"
                   aria-label={social.name}
                 >
                   <svg
@@ -166,7 +186,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block capitalize font-medium"
+                  className="text-sm text-slate-700 hover:text-[#047857] transition-colors duration-200 block capitalize font-medium"
                 >
                   {link.name}
                 </Link>
@@ -185,7 +205,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block font-medium"
+                  className="text-sm text-slate-700 hover:text-[#047857] transition-colors duration-200 block font-medium"
                 >
                   {link.name}
                 </Link>
@@ -204,7 +224,7 @@ const Footer = () => {
               <li key={idx}>
                 <Link
                   to={link.path}
-                  className="text-sm text-slate-700 hover:text-[#017DC3] transition-colors duration-200 block font-medium"
+                  className="text-sm text-slate-700 hover:text-[#047857] transition-colors duration-200 block font-medium"
                 >
                   {link.name}
                 </Link>
@@ -221,7 +241,7 @@ const Footer = () => {
         {/* Copyright & Slogan */}
         <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
           <p className="font-jetbrains font-bold text-slate-700">
-            © 2026 IAS DCS (Institute of Applied Statistics). All rights reserved.
+            © 2026 ADAK TRADE EFFORT. All rights reserved.
           </p>
           <span className="hidden md:inline text-slate-400">•</span>
           <p className="font-jetbrains text-slate-600 italic">
@@ -231,15 +251,15 @@ const Footer = () => {
 
         {/* Legal Links */}
         <div className="flex items-center gap-4 font-jetbrains text-xs">
-          <Link to="/privacy-policy" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
+          <Link to="/privacy-policy" className="text-slate-700 hover:text-[#047857] transition-colors font-medium">
             Privacy Policy
           </Link>
           <span className="text-slate-400">•</span>
-          <Link to="/terms-conditions" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
+          <Link to="/terms-conditions" className="text-slate-700 hover:text-[#047857] transition-colors font-medium">
             Terms & Conditions
           </Link>
           <span className="text-slate-400">•</span>
-          <Link to="/refund-policy" className="text-slate-700 hover:text-[#017DC3] transition-colors font-medium">
+          <Link to="/refund-policy" className="text-slate-700 hover:text-[#047857] transition-colors font-medium">
             Refund Policy
           </Link>
         </div>

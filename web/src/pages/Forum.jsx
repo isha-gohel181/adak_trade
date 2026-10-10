@@ -264,7 +264,7 @@ const QuestionCard = ({ question }) => {
               {question.allTags && question.allTags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {question.allTags.map((tag, idx) => (
-                    <span key={idx} className="px-3 py-0.5 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-full">
+                    <span key={idx} className="px-3 py-0.5 bg-amber-100 border border-amber-300 text-amber-900 font-jetbrains text-[10px] font-black uppercase tracking-wider rounded-md">
                       {tag}
                     </span>
                   ))}
@@ -337,7 +337,7 @@ const QuestionCard = ({ question }) => {
               {/* Replies Toggle Counter */}
               <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200/70 border border-slate-200 rounded-full font-montserrat text-xs font-bold text-slate-700 transition-all"
+                className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200/70 border border-slate-200 rounded-md font-montserrat text-xs font-bold text-slate-700 transition-all"
               >
                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-600"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                  <span>{repliesCount} REPLIES</span>
@@ -463,7 +463,7 @@ const QuestionCard = ({ question }) => {
               <div className="flex items-center justify-between">
                 <h4 className="font-montserrat text-[14px] font-bold tracking-[0.3em] uppercase text-normal">{t('postReply')}</h4>
                 {replyingTo && (
-                  <div className="flex items-center gap-3 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
+                  <div className="flex items-center gap-3 px-4 py-2 bg-accent/10 border border-accent/20 rounded-md">
                     <span className="font-jetbrains text-[9px] text-accent tracking-widest uppercase">REPLYING TO @{replyingTo.name}</span>
                     <button onClick={() => setReplyingTo(null)} className="text-accent hover:text-white transition-colors">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12"/></svg>

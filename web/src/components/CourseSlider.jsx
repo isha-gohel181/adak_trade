@@ -160,12 +160,11 @@ const CourseSlider = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-xs font-bold tracking-wider uppercase mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-xs font-bold tracking-wider uppercase mb-3">
               Empower Your Career
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-              Featured <span className="text-[#017DC3]">Courses</span>
+              LIVE Stock Market Training Program by <span className="text-[#047857]">Adak Trade</span>
             </h2>
             <p className="text-slate-600 text-sm sm:text-base max-w-2xl mt-2 font-normal">
               Industry-aligned comprehensive programs curated by domain experts to elevate your practical skillset.
@@ -175,7 +174,7 @@ const CourseSlider = () => {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               to="/courses"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs font-bold tracking-wider uppercase hover:border-[#017DC3] hover:text-[#017DC3] shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-white border border-slate-200 text-slate-800 text-xs font-bold tracking-wider uppercase hover:border-[#047857] hover:text-[#047857] shadow-sm hover:shadow transition-all"
             >
               <span>{t('ourCourses') || 'View All Courses'}</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -191,7 +190,7 @@ const CourseSlider = () => {
                 aria-label="Previous courses"
                 className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
                   showLeftArrow
-                    ? 'bg-white border-slate-300 text-slate-800 hover:bg-[#017DC3] hover:text-white hover:border-[#017DC3] shadow-sm'
+                    ? 'bg-white border-slate-300 text-slate-800 hover:bg-[#047857] hover:text-white hover:border-[#047857] shadow-sm'
                     : 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
                 }`}
               >
@@ -205,7 +204,7 @@ const CourseSlider = () => {
                 aria-label="Next courses"
                 className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all ${
                   showRightArrow
-                    ? 'bg-white border-slate-300 text-slate-800 hover:bg-[#017DC3] hover:text-white hover:border-[#017DC3] shadow-sm'
+                    ? 'bg-white border-slate-300 text-slate-800 hover:bg-[#047857] hover:text-white hover:border-[#047857] shadow-sm'
                     : 'bg-slate-100 border-slate-200 text-slate-300 cursor-not-allowed'
                 }`}
               >
@@ -226,9 +225,9 @@ const CourseSlider = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap ${
+                  className={`px-4 py-2 rounded-md text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-[#017DC3] text-white shadow-md shadow-[#017DC3]/25 scale-105'
+                      ? 'bg-[#047857] text-white shadow-md shadow-[#047857]/25 scale-105'
                       : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300 hover:text-slate-900'
                   }`}
                 >
@@ -268,12 +267,12 @@ const CourseSlider = () => {
               return (
                 <div
                   key={courseId}
-                  className="snap-start flex-shrink-0 w-[300px] sm:w-[350px] md:w-[380px] cursor-pointer group/card flex flex-col"
+                  className="snap-start flex-shrink-0 w-[300px] sm:w-[320px] md:w-[350px] cursor-pointer group/card flex flex-col relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200/80 transition-all duration-300"
                   onClick={() => navigate(`/course-detail/${course._id || course.id || course.slug}`)}
                 >
-                  <div className="h-full bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 flex flex-col shadow-sm hover:shadow-xl hover:border-[#017DC3]/40 transition-all duration-300 hover:-translate-y-1.5">
-                    {/* Thumbnail */}
-                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-slate-100 mb-4 shrink-0 border border-slate-100">
+                  {/* Default State (.inner) */}
+                  <div className="h-full bg-white flex flex-col">
+                    <div className="relative aspect-[16/10] bg-slate-100 shrink-0">
                       <img
                         src={resolveImageUrl(course)}
                         alt={sanitizeDisplay(course.title)}
@@ -283,8 +282,6 @@ const CourseSlider = () => {
                         }}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
-
                       {/* Top Badges */}
                       <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                         <span className="px-2.5 py-1 rounded-md bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-extrabold uppercase tracking-wider shadow-sm">
@@ -297,33 +294,48 @@ const CourseSlider = () => {
                         )}
                       </div>
                     </div>
-
-                    {/* Course Content */}
-                    <div className="flex flex-col flex-grow">
-                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover/card:text-[#017DC3] transition-colors line-clamp-2 leading-snug tracking-tight mb-2">
+                    
+                    <div className="p-5 flex flex-col flex-grow">
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 line-clamp-2 leading-snug tracking-tight mb-4">
                         {sanitizeDisplay(course.title)}
                       </h3>
-
-                      <p className="text-xs sm:text-sm text-slate-500 line-clamp-2 leading-relaxed mb-4 flex-grow">
-                        {course.shortDescription || course.description || 'Comprehensive curriculum designed to master real-world skills.'}
-                      </p>
-
-                      {/* Card Footer: Price & CTA */}
-                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between mt-auto">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-base sm:text-lg font-black text-slate-900">{priceDisplay}</span>
-                          {originalPrice && (
-                            <span className="text-xs text-slate-400 line-through font-semibold">{originalPrice}</span>
-                          )}
+                      
+                      <div className="flex items-center gap-4 text-sm text-slate-500 font-medium mt-auto">
+                        <div className="flex items-center gap-1.5">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                          <span>{course.language || 'English'}</span>
                         </div>
-
-                        <div className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center group-hover/card:bg-[#017DC3] group-hover/card:text-white transition-all shadow-sm">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
+                        <div className="flex items-center gap-1.5">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                          <span>{course.lessonsCount || '10'} Lessons</span>
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Hover State (.card-hover-action) */}
+                  <div className="absolute inset-0 bg-[#047857] opacity-0 invisible group-hover/card:opacity-100 group-hover/card:visible transition-all duration-300 p-6 flex flex-col z-10">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white line-clamp-2 leading-snug tracking-tight mb-4">
+                      {sanitizeDisplay(course.title)}
+                    </h3>
+                    
+                    <p className="text-sm text-white/80 line-clamp-4 leading-relaxed mb-6 flex-grow">
+                      {course.shortDescription || course.description || 'Comprehensive curriculum designed to master real-world skills.'}
+                    </p>
+                    
+                    <div className="flex items-baseline gap-3 mb-6">
+                      <span className="text-xl font-bold text-white">{priceDisplay}</span>
+                      {originalPrice && (
+                        <span className="text-sm text-white/50 line-through font-semibold">{originalPrice}</span>
+                      )}
+                    </div>
+                    
+                    <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-white text-[#047857] text-sm font-bold tracking-wider hover:bg-slate-100 transition-colors shadow-sm self-start">
+                      View Details
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               )

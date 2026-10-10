@@ -42,7 +42,7 @@ const FeatureHighlightBar = () => {
         </svg>
       ),
       bg: "bg-[#EBF5FA]",
-      iconColor: "text-[#017DC3]"
+      iconColor: "text-[#047857]"
     },
     {
       title: "Curated Study Materials",
@@ -71,7 +71,7 @@ const FeatureHighlightBar = () => {
         </svg>
       ),
       bg: "bg-[#EBF5FA]",
-      iconColor: "text-[#017DC3]"
+      iconColor: "text-[#047857]"
     }
   ]
 
@@ -102,7 +102,7 @@ const FeatureHighlightBar = () => {
 
                 {/* Text Content */}
                 <div className="flex flex-col min-w-0">
-                  <h3 className="font-inter font-bold text-slate-900 text-base md:text-[17px] tracking-tight leading-snug mb-1.5 group-hover:text-[#017DC3] transition-colors">
+                  <h3 className="font-inter font-bold text-slate-900 text-base md:text-[17px] tracking-tight leading-snug mb-1.5 group-hover:text-[#047857] transition-colors">
                     {feat.title}
                   </h3>
                   <p className="font-inter text-xs text-slate-600 leading-relaxed font-normal">

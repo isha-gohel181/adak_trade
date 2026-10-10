@@ -81,7 +81,7 @@ const Profile = () => {
                      <p className="font-newsreader italic text-xl text-red-700">{error}</p>
                      <button 
                         onClick={() => dispatch(fetchUserProfile())}
-                        className="px-8 py-3 bg-red-100 text-red-700 font-jetbrains text-xs font-bold uppercase tracking-widest hover:bg-red-200 transition-all rounded-full"
+                        className="px-8 py-3 bg-red-100 text-red-700 font-jetbrains text-xs font-bold uppercase tracking-widest hover:bg-red-200 transition-all rounded-md"
                      >
                         Retry
                      </button>
@@ -118,7 +118,7 @@ const Profile = () => {
                               </div>
                               <div className="pt-6 border-t border-slate-100 flex justify-between items-center">
                                  <span className="font-jetbrains text-xs text-slate-900 uppercase tracking-widest font-black">Level</span>
-                                 <span className="px-4 py-1.5 bg-amber-100 text-amber-900 border border-amber-300/60 font-jetbrains text-[10px] uppercase tracking-widest rounded-full font-black">{user.leaderboard.level || 'Novice'}</span>
+                                 <span className="px-4 py-1.5 bg-amber-100 text-amber-900 border border-amber-300/60 font-jetbrains text-[10px] uppercase tracking-widest rounded-md font-black">{user.leaderboard.level || 'Novice'}</span>
                               </div>
                            </div>
                         </div>
@@ -186,7 +186,7 @@ const Profile = () => {
                               <p className="font-jetbrains text-[10px] text-slate-500 uppercase tracking-[0.3em] font-black italic">{t('badgesTitle') || 'Badges'}</p>
                               <div className="flex flex-wrap gap-2">
                                  {[t('earlyAdopter') || 'Early Adopter', t('verifiedUser') || 'Verified User'].map((badge, i) => (
-                                    <div key={i} className="px-4 py-1.5 bg-amber-50 border border-amber-200 text-[10px] font-jetbrains text-amber-900 uppercase tracking-widest font-black rounded-full">
+                                    <div key={i} className="px-4 py-1.5 bg-amber-50 border border-amber-200 text-[10px] font-jetbrains text-amber-900 uppercase tracking-widest font-black rounded-md">
                                        {badge}
                                     </div>
                                  ))}

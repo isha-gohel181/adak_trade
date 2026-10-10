@@ -20,7 +20,7 @@ const DashboardMessages = () => {
     const [volumes, setVolumes] = useState(new Array(30).fill(2));
     const [messages, setMessages] = useState({
         support: [
-            { id: 1, text: "👋 Welcome to IAS-DCS! How can we help you today?", sender: "Support Agent", time: "10:30 AM", isSent: false },
+            { id: 1, text: "👋 Welcome to ADAK TRADE! How can we help you today?", sender: "Support Agent", time: "10:30 AM", isSent: false },
             { id: 2, text: "I'm having some trouble with the course module.", sender: "You", time: "10:32 AM", isSent: true },
             { id: 3, text: "Sure, could you send a screenshot of the issue?", sender: "Support Agent", time: "10:35 AM", isSent: false }
         ]
@@ -611,7 +611,7 @@ const DashboardMessages = () => {
                                 className={`w-full p-3.5 rounded-xl flex items-center gap-3.5 transition-all group ${selectedChat === chat.id ? 'bg-amber-50 border border-amber-200 shadow-sm' : 'hover:bg-slate-50'}`}
                             >
                                 <div className="relative shrink-0">
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-jetbrains text-xs font-bold shrink-0 ${chat.isSupport ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-amber-100 text-amber-900 border-amber-300'} border`}>
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-jetbrains text-xs font-bold shrink-0 ${chat.isSupport ? 'bg-[#d1fae5] text-[#047857] border-[#a7f3d0]' : 'bg-amber-100 text-amber-900 border-amber-300'} border`}>
                                         {chat.initials}
                                     </div>
                                     {chat.status === 'online' && (
@@ -930,7 +930,7 @@ const DashboardMessages = () => {
                             )}
 
                             {isRecording ? (
-                                <div className="bg-slate-50 border border-amber-300 rounded-full p-1.5 flex items-center gap-4 shadow-lg animate-reveal-message h-11 px-4">
+                                <div className="bg-slate-50 border border-amber-300 rounded-md p-1.5 flex items-center gap-4 shadow-lg animate-reveal-message h-11 px-4">
                                     <button
                                         onClick={() => stopRecording(false)}
                                         className="text-slate-400 hover:text-red-600 transition-colors"

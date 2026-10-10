@@ -204,7 +204,7 @@ const Navbar = ({ isLoaded }) => {
         >
 
           <Link to="/" ref={logoRef} className="flex items-center hover:opacity-80 transition-opacity gap-2.5 text-slate-900">
-            <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-11 w-auto object-contain rounded-lg" />
+            <img src="/adka_trade_logo.png" alt="ADAK TRADE Logo" className="h-10 md:h-11 w-auto object-contain rounded-lg" />
           </Link>
 
           <div
@@ -215,7 +215,7 @@ const Navbar = ({ isLoaded }) => {
             {/* Active Highlight Indicator */}
             <div
               ref={pillRef}
-              className="absolute top-1/2 -translate-y-1/2 h-8 bg-[#EBF5FA] border border-[#017DC3]/30 rounded-lg pointer-events-none transition-all duration-300 z-0 opacity-0"
+              className="absolute top-1/2 -translate-y-1/2 h-8 bg-[#EBF5FA] border border-[#047857]/30 rounded-lg pointer-events-none transition-all duration-300 z-0 opacity-0"
             />
 
             {navLinks.map((link) => (
@@ -224,7 +224,7 @@ const Navbar = ({ isLoaded }) => {
                 to={link.path}
                 onMouseEnter={handleHover}
                 className={({ isActive }) =>
-                  `nav-link-item group px-4 py-2 rounded-lg font-inter text-[11px] font-bold uppercase transition-all duration-300 tracking-[0.15em] relative z-10 ${isActive ? 'text-[#017DC3] font-black' : 'text-slate-700 hover:text-[#017DC3]'
+                  `nav-link-item group px-4 py-2 rounded-lg font-inter text-[11px] font-bold uppercase transition-all duration-300 tracking-[0.15em] relative z-10 ${isActive ? 'text-[#047857] font-black' : 'text-slate-700 hover:text-[#047857]'
                   }`
                 }
               >
@@ -235,9 +235,20 @@ const Navbar = ({ isLoaded }) => {
 
           <div ref={buttonsWrapRef} className="flex items-center gap-3">
 
+            {/* Phone Button */}
+            <a
+              href="tel:+917908927127"
+              className="hidden sm:flex w-10 h-10 rounded-full bg-white border border-[#047857]/30 items-center justify-center text-[#047857] hover:bg-[#047857] hover:text-white transition-colors duration-300 shadow-sm group"
+              title="Call Us"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:scale-110 transition-transform">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </a>
+
             <Link
               to={token ? "/dashboard" : "/login"}
-              className="relative group bg-[#017DC3] hover:bg-[#006AA7] text-white font-bold px-6 py-2.5 rounded-full font-inter text-[11px] uppercase tracking-[0.15em] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-[0_4px_15px_rgba(1,125,195,0.35)] flex items-center justify-center gap-2"
+              className="relative group bg-[#047857] hover:bg-[#064e3b] text-white font-bold px-6 py-2.5 rounded-none font-inter text-[11px] uppercase tracking-[0.15em] overflow-hidden transition-all duration-300 hover:scale-[1.05] active:scale-95 shadow-[0_4px_15px_rgba(4,120,87,0.35)] flex items-center justify-center gap-2"
             >
               <span className="relative z-10">{token ? t('dashboard') : t('signIn')}</span>
               <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-12" />
@@ -245,11 +256,11 @@ const Navbar = ({ isLoaded }) => {
 
             <button
               onClick={toggleMenu}
-              className="xl:hidden w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center gap-[5px] relative z-[130] group hover:bg-[#EBF5FA] hover:border-[#017DC3]/40 transition-colors"
+              className="xl:hidden w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center gap-[5px] relative z-[130] group hover:bg-[#EBF5FA] hover:border-[#047857]/40 transition-colors"
             >
-              <span ref={line1Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
-              <span ref={line2Ref} className="w-5 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
-              <span ref={line3Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#017DC3]" />
+              <span ref={line1Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#047857]" />
+              <span ref={line2Ref} className="w-5 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#047857]" />
+              <span ref={line3Ref} className="w-4 h-[2px] bg-slate-800 transition-colors group-hover:bg-[#047857]" />
             </button>
           </div>
         </div>
@@ -261,14 +272,14 @@ const Navbar = ({ isLoaded }) => {
         className="fixed inset-0 z-[110] h-[100dvh] overflow-hidden opacity-0 invisible"
       >
         <div ref={shutter1Ref} className="absolute inset-0 bg-slate-50 translate-x-full" />
-        <div ref={shutter2Ref} className="absolute inset-0 bg-[#EBF5FA]/80 translate-x-full border-r border-[#017DC3]/30 backdrop-blur-xl" />
+        <div ref={shutter2Ref} className="absolute inset-0 bg-[#EBF5FA]/80 translate-x-full border-r border-[#047857]/30 backdrop-blur-xl" />
         <div ref={shutter3Ref} className="absolute inset-0 bg-white translate-x-full overflow-hidden">
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] [background-size:200px_200px]" />
 
           {/* Internal Menu Header */}
           <header className="menu-header absolute top-0 left-0 w-full px-8 md:px-12 py-8 md:py-10 flex items-center justify-between z-50">
             <Link to="/" onClick={toggleMenu} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src="/logo/iasdcs-logo.png" alt="IAS DCS Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
+              <img src="/adka_trade_logo.png" alt="ADAK TRADE Logo" className="h-10 md:h-12 w-auto object-contain rounded-lg" />
             </Link>
 
             <button
@@ -337,7 +348,7 @@ const Navbar = ({ isLoaded }) => {
                 </div>
                 <div className="flex flex-col gap-2 items-center text-center w-full">
                   <p className="font-jetbrains text-[9px] tracking-[0.3em] sm:tracking-[0.6em] text-slate-500 uppercase italic whitespace-normal">Where Ambition Meets Execution</p>
-                  <p className="font-jetbrains text-[8px] tracking-[0.1em] sm:tracking-[0.2em] text-slate-400 uppercase whitespace-normal">© 2026 IAS DCS</p>
+                  <p className="font-jetbrains text-[8px] tracking-[0.1em] sm:tracking-[0.2em] text-slate-400 uppercase whitespace-normal">© 2026 ADAK TRADE EFFORT</p>
                 </div>
               </div>
             </div>

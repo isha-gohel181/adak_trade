@@ -86,7 +86,7 @@ const SolutionSection = ({ course, section }) => {
 
       {/* Main Header & Narrative */}
       <div className="sol-header text-center space-y-5 max-w-4xl mx-auto mb-16">
-        <span className="inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold border border-blue-100 bg-blue-50 px-3.5 py-1 rounded-full shadow-xs">
+        <span className="inline-block font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold border border-[#d1fae5] bg-[#ecfdf5] px-3.5 py-1 rounded-md shadow-xs">
           PROBLEM $\rightarrow$ SOLUTION TRANSFORMATION
         </span>
         <h2 className="font-newsreader italic text-[clamp(2.2rem,5vw,4.2rem)] text-slate-900 font-light tracking-tight leading-[1.05]">
@@ -114,7 +114,7 @@ const SolutionSection = ({ course, section }) => {
       {(problems.length > 0 || outcomeHeading || outcomeDescBlocks.length > 0) && (
         <div className="mb-16 space-y-6">
           <div className="text-center space-y-2">
-            <span className="font-jetbrains text-[10px] text-rose-700 tracking-[0.25em] uppercase font-bold px-3 py-1 bg-rose-50 border border-rose-200 rounded-full inline-block">
+            <span className="font-jetbrains text-[10px] text-rose-700 tracking-[0.25em] uppercase font-bold px-3 py-1 bg-rose-50 border border-rose-200 rounded-md inline-block">
               PHASE 01: ELIMINATE THE FRICTION
             </span>
             {outcomeHeading && (
@@ -155,7 +155,7 @@ const SolutionSection = ({ course, section }) => {
       {(outcomes.length > 0 || solutionHeading || solutionDescBlocks.length > 0) && (
         <div className="space-y-6">
           <div className="text-center space-y-2">
-            <span className="font-jetbrains text-[10px] text-white tracking-[0.25em] uppercase font-bold px-3.5 py-1 bg-accent rounded-full inline-block shadow-xs">
+            <span className="font-jetbrains text-[10px] text-white tracking-[0.25em] uppercase font-bold px-3.5 py-1 bg-accent rounded-md inline-block shadow-xs">
               PHASE 02: THE TANGIBLE OUTCOMES
             </span>
             {solutionHeading && (
@@ -175,7 +175,7 @@ const SolutionSection = ({ course, section }) => {
               {outcomes.map((o, i) => (
                 <div 
                   key={i} 
-                  className="sol-outcome-card flex items-center gap-4 px-6 py-5 bg-white border border-blue-100 border-l-4 border-l-accent rounded-xl shadow-xs hover:shadow-md hover:bg-blue-50/20 transition-all duration-300"
+                  className="sol-outcome-card flex items-center gap-4 px-6 py-5 bg-white border border-[#d1fae5] border-l-4 border-l-accent rounded-xl shadow-xs hover:shadow-md hover:bg-[#ecfdf5]/20 transition-all duration-300"
                 >
                   <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center shrink-0 text-white shadow-sm shadow-accent/30">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">

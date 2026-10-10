@@ -16,7 +16,7 @@ const RefundPolicy = () => {
         
         <div className="refund-animate space-y-6 text-base leading-relaxed">
           <p>
-            Thank you for choosing the Institute of Applied Statistics (IAS-DCS) for your professional development and statistical research training. We strive to provide the highest quality educational content. Please read our refund policy carefully.
+            Thank you for choosing ADAK TRADE EFFORT for your professional trading education and market skill development. We strive to provide the highest quality educational content. Please read our refund policy carefully.
           </p>
           
           <h2 className="text-xl font-bold text-amber-600 mt-6">1. Digital Products & Live Courses</h2>
@@ -35,7 +35,7 @@ const RefundPolicy = () => {
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">3. How to Request a Refund</h2>
           <p>
-            If you believe you are eligible for a refund, please contact our support team at <a href="mailto:support@ias-dcs.com" className="text-amber-700 font-bold hover:underline">support@ias-dcs.com</a> within 48 hours of purchase with your transaction ID and a description of the issue.
+            If you believe you are eligible for a refund, please contact our support team at <a href="mailto:support@adaktrade.com" className="text-amber-700 font-bold hover:underline">support@adaktrade.com</a> within 48 hours of purchase with your transaction ID and a description of the issue.
           </p>
           
           <h2 className="text-xl font-bold text-amber-600 mt-6">4. Processing Time</h2>

@@ -68,7 +68,7 @@ const BenefitsSection = ({ course, section }) => {
         
         {/* Left Sticky Title */}
         <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
-          <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-blue-50 border border-blue-100 rounded-full inline-block">
+          <span className="font-jetbrains text-[10px] md:text-xs text-accent tracking-[0.3em] uppercase font-bold px-3.5 py-1 bg-[#ecfdf5] border border-[#d1fae5] rounded-md inline-block">
             CORE ADVANTAGES
           </span>
           <h2 className="font-newsreader italic text-[clamp(2.2rem,5vw,3.8rem)] text-slate-900 font-light tracking-tight leading-[1.1]">

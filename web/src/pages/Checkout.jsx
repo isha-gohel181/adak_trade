@@ -39,8 +39,8 @@ const Checkout = () => {
   const course =
     location.state?.course ||
     (urlCourseId
-      ? { id: urlCourseId, _id: urlCourseId, title: 'IAS DCS Course Enrollment' }
-      : { id: 'default', title: 'IAS DCS Professional Program', thumbnail: '/courses/curator.png' })
+      ? { id: urlCourseId, _id: urlCourseId, title: 'ADAK TRADE Course Enrollment' }
+      : { id: 'default', title: 'ADAK TRADE Professional Program', thumbnail: '/courses/curator.png' })
 
   const accParam = urlAcc || location.state?.acc || ''
 
@@ -205,7 +205,7 @@ const Checkout = () => {
         key: rKey,
         amount: rAmount,
         currency: razor.currency || 'INR',
-        name: 'IAS DCS - Institute of Applied Statistics',
+        name: 'ADAK TRADE EFFORT',
         description: course.title || 'Course Enrollment',
         order_id: order.id,
         handler: async function (response) {
@@ -244,7 +244,7 @@ const Checkout = () => {
           courseId: course._id || course.id || '',
           planId: selectedPlan.id || '',
         },
-        theme: { color: '#017DC3' },
+        theme: { color: '#047857' },
         modal: {
           ondismiss: () => {
             setIsProcessing(false)
@@ -359,7 +359,7 @@ const Checkout = () => {
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
             <span>Course</span>
             <span className="text-slate-300">/</span>
-            <span className="text-[#017DC3]">Secure Checkout</span>
+            <span className="text-[#047857]">Secure Checkout</span>
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-bold">
@@ -375,12 +375,12 @@ const Checkout = () => {
       {/* Main Checkout Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-xs font-bold uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-xs font-bold uppercase tracking-wider mb-2">
             <span className="w-2 h-2 rounded-full bg-[#BFD419]" />
-            Official IAS DCS Enrollment
+            Official ADAK TRADE Enrollment
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-            Complete Your <span className="text-[#017DC3]">Enrollment</span>
+            Complete Your <span className="text-[#047857]">Enrollment</span>
           </h1>
           <p className="text-slate-600 text-sm sm:text-base mt-1">
             Fill in your details below to activate instant access to your course and learning dashboard.
@@ -393,7 +393,7 @@ const Checkout = () => {
             {/* Step 1: Student Details */}
             <section className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="flex items-center gap-3 pb-5 border-b border-slate-100 mb-6">
-                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#017DC3] font-bold flex items-center justify-center text-sm border border-[#017DC3]/30">
+                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#047857] font-bold flex items-center justify-center text-sm border border-[#047857]/30">
                   1
                 </span>
                 <div>
@@ -413,7 +413,7 @@ const Checkout = () => {
                     placeholder="e.g. Rahul Sharma"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#017DC3] focus:ring-2 focus:ring-[#017DC3]/20 outline-none transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/20 outline-none transition-all"
                   />
                 </div>
 
@@ -429,7 +429,7 @@ const Checkout = () => {
                       value={formData.email}
                       disabled={isVerified}
                       onChange={handleChange}
-                      className={`w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#017DC3] focus:ring-2 focus:ring-[#017DC3]/20 outline-none transition-all ${
+                      className={`w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/20 outline-none transition-all ${
                         isVerified ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : ''
                       }`}
                     />
@@ -451,7 +451,7 @@ const Checkout = () => {
                           className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-all ${
                             sendingOtp || !formData.email
                               ? 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
-                              : 'bg-[#EBF5FA] text-[#017DC3] border-[#017DC3]/30 hover:bg-[#017DC3] hover:text-white'
+                              : 'bg-[#EBF5FA] text-[#047857] border-[#047857]/30 hover:bg-[#047857] hover:text-white'
                           }`}
                         >
                           {sendingOtp ? 'Sending OTP...' : 'Verify Email'}
@@ -475,7 +475,7 @@ const Checkout = () => {
                         placeholder="9876543210"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="flex-1 bg-slate-50 border border-slate-200 rounded-r-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#017DC3] focus:ring-2 focus:ring-[#017DC3]/20 outline-none transition-all"
+                        className="flex-1 bg-slate-50 border border-slate-200 rounded-r-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/20 outline-none transition-all"
                       />
                     </div>
                   </div>
@@ -486,7 +486,7 @@ const Checkout = () => {
             {/* Step 2: Billing & GST (Optional) */}
             <section className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="flex items-center gap-3 pb-5 border-b border-slate-100 mb-6">
-                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#017DC3] font-bold flex items-center justify-center text-sm border border-[#017DC3]/30">
+                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#047857] font-bold flex items-center justify-center text-sm border border-[#047857]/30">
                   2
                 </span>
                 <div>
@@ -506,7 +506,7 @@ const Checkout = () => {
                     placeholder="e.g. Acme Corp / University"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#017DC3] focus:ring-2 focus:ring-[#017DC3]/20 outline-none transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:bg-white focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/20 outline-none transition-all"
                   />
                 </div>
 
@@ -520,7 +520,7 @@ const Checkout = () => {
                     placeholder="e.g. 27AAAAA0000A1Z5"
                     value={formData.gst}
                     onChange={handleChange}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 uppercase focus:bg-white focus:border-[#017DC3] focus:ring-2 focus:ring-[#017DC3]/20 outline-none transition-all"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 uppercase focus:bg-white focus:border-[#047857] focus:ring-2 focus:ring-[#047857]/20 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -529,7 +529,7 @@ const Checkout = () => {
             {/* Step 3: Promo / Coupon Code */}
             <section className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="flex items-center gap-3 pb-5 border-b border-slate-100 mb-6">
-                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#017DC3] font-bold flex items-center justify-center text-sm border border-[#017DC3]/30">
+                <span className="w-8 h-8 rounded-full bg-[#EBF5FA] text-[#047857] font-bold flex items-center justify-center text-sm border border-[#047857]/30">
                   3
                 </span>
                 <div>
@@ -548,7 +548,7 @@ const Checkout = () => {
                       name="coupon"
                       value={formData.coupon}
                       onChange={handleChange}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:bg-white focus:border-[#017DC3] outline-none transition-all"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:bg-white focus:border-[#047857] outline-none transition-all"
                     >
                       <option value="">-- Choose a Coupon Code --</option>
                       {coupons.map((c) => (
@@ -567,7 +567,7 @@ const Checkout = () => {
                     placeholder="Enter Coupon Code"
                     value={formData.coupon}
                     onChange={handleChange}
-                    className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm uppercase text-slate-900 focus:bg-white focus:border-[#017DC3] outline-none transition-all font-mono"
+                    className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm uppercase text-slate-900 focus:bg-white focus:border-[#047857] outline-none transition-all font-mono"
                   />
                   <button
                     type="button"
@@ -576,7 +576,7 @@ const Checkout = () => {
                     className={`px-6 rounded-xl font-bold text-xs uppercase tracking-wider transition-all ${
                       couponLoading || !formData.coupon
                         ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
-                        : 'bg-[#017DC3] text-white hover:bg-[#006AA7] shadow-sm'
+                        : 'bg-[#047857] text-white hover:bg-[#064e3b] shadow-sm'
                     }`}
                   >
                     {couponLoading ? 'Checking...' : 'Apply'}
@@ -598,7 +598,7 @@ const Checkout = () => {
                 onClick={handlePayment}
                 disabled={isProcessing}
                 type="button"
-                className={`w-full py-5 rounded-2xl bg-[#017DC3] hover:bg-[#006AA7] text-white font-black text-base uppercase tracking-widest shadow-lg shadow-[#017DC3]/25 hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 ${
+                className={`w-full py-5 rounded-2xl bg-[#047857] hover:bg-[#064e3b] text-white font-black text-base uppercase tracking-widest shadow-lg shadow-[#047857]/25 hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 ${
                   isProcessing ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.01] active:scale-[0.99]'
                 }`}
               >
@@ -640,7 +640,7 @@ const Checkout = () => {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <span className="inline-block px-2 py-0.5 rounded-md bg-[#EBF5FA] text-[#017DC3] text-[10px] font-extrabold uppercase tracking-wider border border-[#017DC3]/20 mb-1.5">
+                  <span className="inline-block px-2 py-0.5 rounded-md bg-[#EBF5FA] text-[#047857] text-[10px] font-extrabold uppercase tracking-wider border border-[#047857]/20 mb-1.5">
                     {course.categoryId?.name || course.category?.name || 'Professional Course'}
                   </span>
                   <h4 className="text-sm font-bold text-slate-900 line-clamp-2 leading-snug">
@@ -664,25 +664,25 @@ const Checkout = () => {
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Included with this course</h4>
               <ul className="space-y-2.5 text-xs text-slate-600">
                 <li className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span>Complete curriculum & interactive lesson materials</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                  <span>Verified IAS DCS Certificate of Completion</span>
+                  <span>Verified ADAK TRADE Certificate of Completion</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span>Access to discussion forums and community Q&A</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#017DC3" strokeWidth="3">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" strokeWidth="3">
                     <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span>Lifetime learning updates on course content</span>
@@ -697,7 +697,7 @@ const Checkout = () => {
       {showOTPModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4">
           <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-12 h-12 rounded-full bg-[#EBF5FA] text-[#017DC3] flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-[#EBF5FA] text-[#047857] flex items-center justify-center mb-4">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                 <polyline points="22,6 12,13 2,6" />
@@ -715,7 +715,7 @@ const Checkout = () => {
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter 6-digit OTP"
               maxLength={6}
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-center text-lg font-mono tracking-widest text-slate-900 focus:bg-white focus:border-[#017DC3] outline-none mb-4"
+              className="w-full bg-slate-50 border border-slate-300 rounded-xl p-3.5 text-center text-lg font-mono tracking-widest text-slate-900 focus:bg-white focus:border-[#047857] outline-none mb-4"
             />
 
             {otpMessage && <p className="text-xs text-slate-500 mb-4">{otpMessage}</p>}
@@ -736,8 +736,8 @@ const Checkout = () => {
                 type="button"
                 onClick={verifyOtp}
                 disabled={verifyingOtp || !otp}
-                className={`px-6 py-2.5 rounded-xl bg-[#017DC3] text-white text-xs font-bold uppercase transition-all ${
-                  verifyingOtp || !otp ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#006AA7] shadow-sm'
+                className={`px-6 py-2.5 rounded-xl bg-[#047857] text-white text-xs font-bold uppercase transition-all ${
+                  verifyingOtp || !otp ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#064e3b] shadow-sm'
                 }`}
               >
                 {verifyingOtp ? 'Verifying...' : 'Verify OTP'}
@@ -757,7 +757,7 @@ const Checkout = () => {
               </svg>
             </div>
 
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-md border border-emerald-200">
               Enrollment Confirmed
             </span>
 
@@ -768,7 +768,7 @@ const Checkout = () => {
 
             <button
               onClick={() => navigate('/dashboard/my-courses')}
-              className="w-full py-4 rounded-xl bg-[#017DC3] hover:bg-[#006AA7] text-white font-bold text-sm uppercase tracking-wider shadow-lg shadow-[#017DC3]/25 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-xl bg-[#047857] hover:bg-[#064e3b] text-white font-bold text-sm uppercase tracking-wider shadow-lg shadow-[#047857]/25 transition-all flex items-center justify-center gap-2"
             >
               <span>Go to My Learning Dashboard</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

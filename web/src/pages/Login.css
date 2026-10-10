@@ -68,7 +68,7 @@
   border: 1px solid rgba(15, 23, 42, 0.12);
   color: var(--color-normal);
   padding: 0.85rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,9 +172,9 @@
   font-weight: 800;
   font-size: 0.75rem;
   letter-spacing: 0.18em;
-  border-radius: 9999px;
+  border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(1, 125, 195, 0.35);
+  box-shadow: 0 4px 15px rgba(4, 120, 87, 0.35);
   transition: all 0.3s ease;
   margin-top: 1rem;
   text-transform: uppercase;
@@ -223,14 +223,14 @@
   gap: 0.8rem;
   font-size: 0.65rem;
   letter-spacing: 0.2em;
-  color: #017DC3;
+  color: #047857;
   font-weight: 800;
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
-  background-color: #017DC3;
+  background-color: #047857;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(1, 23, 83, 0.6);
   animation: pulse 2s infinite;
@@ -301,7 +301,7 @@
 .stat-value {
   font-size: 3rem;
   font-weight: 800;
-  color: #017DC3;
+  color: #047857;
   margin-bottom: 0.3rem;
   font-family: var(--font-newsreader);
 }
@@ -481,7 +481,7 @@
 
 .forgot-modal__eyebrow {
   margin: 0 0 0.35rem;
-  color: #017DC3;
+  color: #047857;
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -567,7 +567,7 @@
 
 .forgot-modal__input:focus {
   outline: none;
-  border-color: #017DC3;
+  border-color: #047857;
 }
 
 .forgot-modal__input::placeholder {
@@ -606,13 +606,13 @@
 }
 
 .forgot-modal__primary {
-  background: #017DC3;
+  background: #047857;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(1, 23, 83, 0.25);
 }
 
 .forgot-modal__primary:hover {
-  background: #006AA7;
+  background: #064e3b;
 }
 
 .forgot-modal__secondary:disabled,

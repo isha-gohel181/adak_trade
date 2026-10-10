@@ -1,45 +1,62 @@
 const fs = require('fs');
 const path = require('path');
+const directory = 'c:/Users/DELL/Desktop/projects/adaktrade/adaktrade/adaktrade/web/src';
 
-function walk(dir) {
-    let results = [];
-    const list = fs.readdirSync(dir);
-    list.forEach(function(file) {
-        file = path.resolve(dir, file);
-        const stat = fs.statSync(file);
-        if (stat && stat.isDirectory()) { 
-            results = results.concat(walk(file));
-        } else { 
-            if (file.endsWith('.jsx') || file.endsWith('.js') || file.endsWith('.css') || file.endsWith('.html')) {
-                results.push(file);
-            }
+function walk(dir, done) {
+  let results = [];
+  fs.readdir(dir, function(err, list) {
+    if (err) return done(err);
+    let i = 0;
+    (function next() {
+      let file = list[i++];
+      if (!file) return done(null, results);
+      file = path.resolve(dir, file);
+      fs.stat(file, function(err, stat) {
+        if (stat && stat.isDirectory()) {
+          walk(file, function(err, res) {
+            results = results.concat(res);
+            next();
+          });
+        } else {
+          results.push(file);
+          next();
         }
-    });
-    return results;
+      });
+    })();
+  });
 }
 
-const targetDir = path.resolve(__dirname, 'src');
-const files = walk(targetDir);
-let count = 0;
-
-files.forEach(file => {
+walk(directory, function(err, results) {
+  if (err) throw err;
+  results.filter(f => f.endsWith('.jsx') || f.endsWith('.css')).forEach(file => {
     let content = fs.readFileSync(file, 'utf8');
+    let original = content;
     
-    // Replace hex
-    let newContent = content
-        .replace(/#b1e346/gi, '#8B5CF6')
-        // Replace rgb/rgba variants
-        .replace(/163,\s*230,\s*53/g, '139, 92, 246')
-        .replace(/177,\s*227,\s*70/g, '139, 92, 246')
-        // Replace bg-[#b1e346] classes with bg-accent or exact hex
-        .replace(/bg-\[#b1e346\]/gi, 'bg-accent')
-        .replace(/text-\[#b1e346\]/gi, 'text-accent')
-        .replace(/border-\[#b1e346\]/gi, 'border-accent');
+    // Replace hex colors with `#1900fb` and variations
+    content = content.replace(/#017DC3/ig, '#1900fb');
+    content = content.replace(/#006AA7/ig, '#1100aa');
+    content = content.replace(/#141261/ig, '#1900fb');
+    content = content.replace(/#1d1b84/ig, '#1900fb');
     
-    if (content !== newContent) {
-        fs.writeFileSync(file, newContent, 'utf8');
-        console.log('Updated:', file);
-        count++;
+    // Replace rounded-full with rounded-md in classNames that seem to belong to buttons or pads
+    content = content.replace(/className=(["'])(.*?)\1/g, function(match, quote, classes) {
+      if (classes.includes('px-') || classes.includes('py-') || classes.includes('btn')) {
+        return 'className=' + quote + classes.replace(/rounded-full/g, 'rounded-md') + quote;
+      }
+      return match;
+    });
+
+    // Also replace rounded-full inside backticks (template literals for classes)
+    content = content.replace(/className=\{`([^`]+)`\}/g, function(match, classes) {
+      if (classes.includes('px-') || classes.includes('py-') || classes.includes('btn')) {
+        return 'className={`' + classes.replace(/rounded-full/g, 'rounded-md') + '`}';
+      }
+      return match;
+    });
+    
+    if (content !== original) {
+      fs.writeFileSync(file, content);
+      console.log('Updated', file);
     }
+  });
 });
-console.log(`Successfully updated colors in ${count} files.`);

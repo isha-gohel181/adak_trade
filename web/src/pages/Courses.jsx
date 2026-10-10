@@ -166,9 +166,9 @@ const Courses = () => {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`course-filter-reveal opacity-0 px-5 py-2.5 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${
+                  className={`course-filter-reveal opacity-0 px-5 py-2.5 rounded-md font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${
                     activeFilter.toUpperCase() === filter.toUpperCase()
-                      ? 'bg-accent text-white border-accent shadow-sm shadow-[#017DC3]/25'
+                      ? 'bg-accent text-white border-accent shadow-sm shadow-[#047857]/25'
                       : 'text-slate-600 bg-white border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
@@ -185,7 +185,7 @@ const Courses = () => {
 
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className={`flex items-center gap-2.5 px-4 py-2 rounded-full border border-slate-200 bg-white font-montserrat text-[11px] font-bold tracking-[0.15em] transition-all duration-300 group/filters ${showAdvanced ? 'text-accent border-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:border-accent/50'}`}
+                className={`flex items-center gap-2.5 px-4 py-2 rounded-md border border-slate-200 bg-white font-montserrat text-[11px] font-bold tracking-[0.15em] transition-all duration-300 group/filters ${showAdvanced ? 'text-accent border-accent bg-accent/5' : 'text-slate-600 hover:text-accent hover:border-accent/50'}`}
               >
                 <svg width="16" height="12" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-300 ${showAdvanced ? 'rotate-180 scale-105 text-accent' : 'group-hover/filters:scale-105'}`}>
                   <path d="M4 4H20M7 8H17M10 12H14" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
@@ -217,7 +217,7 @@ const Courses = () => {
                     <button
                       key={level}
                       onClick={() => setSelectedDifficulty(level)}
-                      className={`px-5 py-2 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${selectedDifficulty === level
+                      className={`px-5 py-2 rounded-md font-montserrat text-[11px] font-bold tracking-[0.15em] border transition-all duration-300 uppercase ${selectedDifficulty === level
                         ? 'bg-accent text-white border-accent shadow-sm'
                         : 'text-slate-600 bg-slate-50 border-slate-200 hover:border-accent/50 hover:text-slate-900 hover:bg-white'
                         }`}
@@ -269,7 +269,7 @@ const Courses = () => {
               </span>
               <button
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-white font-jetbrains text-[9px] font-bold tracking-[0.15em] transition-colors ${showAdvanced ? 'text-accent border-accent' : 'text-slate-600'}`}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-md border border-slate-200 bg-white font-jetbrains text-[9px] font-bold tracking-[0.15em] transition-colors ${showAdvanced ? 'text-accent border-accent' : 'text-slate-600'}`}
               >
                 <svg width="12" height="8" viewBox="0 0 24 16" fill="none" className={`transition-transform duration-300 ${showAdvanced ? 'rotate-180 scale-110' : ''}`}>
                   <path d="M4 4H20M7 8H17M10 12H14" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
@@ -281,7 +281,7 @@ const Courses = () => {
             <div className="relative group">
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="w-full flex items-center justify-between px-5 py-3.5 bg-white border border-slate-200 rounded-full font-montserrat text-[11px] font-bold tracking-[0.15em] shadow-sm"
+                className="w-full flex items-center justify-between px-5 py-3.5 bg-white border border-slate-200 rounded-md font-montserrat text-[11px] font-bold tracking-[0.15em] shadow-sm"
               >
                 <span>CATEGORY: {activeFilter}</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={`transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} stroke="currentColor">
@@ -328,7 +328,7 @@ const Courses = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <div>
               <h2 className="font-newsreader text-5xl md:text-6xl italic text-normal mb-4">Upcoming Events</h2>
-              <p className="font-montserrat text-[11px] text-description uppercase tracking-[0.2em]">Curated masterclasses & intensive workshops by IAS-DCS.</p>
+              <p className="font-montserrat text-[11px] text-description uppercase tracking-[0.2em]">Curated masterclasses & intensive workshops by ADAK TRADE EFFORT.</p>
             </div>
             <div className="flex items-center gap-4 text-[10px] font-jetbrains text-description">
               <span className="text-accent">•</span> <span>NEW DELHI NCR / NOIDA</span>
@@ -351,26 +351,26 @@ const Courses = () => {
                   <div
                     key={event._id || event.id}
                     onClick={() => setSelectedEvent(event)}
-                    className="bg-white border border-slate-200/80 hover:border-[#017DC3]/50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full group cursor-pointer relative overflow-hidden"
+                    className="bg-white border border-slate-200/80 hover:border-[#047857]/50 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-6 flex flex-col h-full group cursor-pointer relative overflow-hidden"
                   >
                     {/* Header Badges */}
                     <div className="flex items-center justify-between gap-2 mb-4">
                       <span className="px-3 py-1 rounded-md bg-[#EFF7CE] text-[#0F172A] font-jetbrains text-[10px] font-bold tracking-wider uppercase border border-[#1E293B]/20">
                         {event.category || 'WORKSHOP'}
                       </span>
-                      <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 font-jetbrains text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-0.5 rounded-md bg-[#ecfdf5] text-[#047857] font-jetbrains text-[10px] font-bold uppercase">
                         {event.type === 'online' ? '💻 Online' : event.type === 'hybrid' ? '🌐 Hybrid' : '📍 In-Person'}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-newsreader text-2xl text-slate-900 group-hover:text-[#017DC3] transition-colors duration-300 font-bold tracking-tight leading-snug line-clamp-2 mb-3">
+                    <h3 className="font-newsreader text-2xl text-slate-900 group-hover:text-[#047857] transition-colors duration-300 font-bold tracking-tight leading-snug line-clamp-2 mb-3">
                       {sanitizeDisplay(event.title || 'Event')}
                     </h3>
 
                     {/* Date / Time */}
                     <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-3 font-montserrat">
-                      <svg className="w-4 h-4 text-[#017DC3] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 text-[#047857] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <span>{formatDateRange(event.startDate, event.endDate)}</span>
@@ -378,7 +378,7 @@ const Courses = () => {
 
                     {/* Description */}
                     <p className="font-montserrat text-xs text-slate-600 leading-relaxed mb-6 flex-grow line-clamp-3">
-                      {cleanDesc || 'Join us for this comprehensive session led by the Institute of Applied Statistics.'}
+                      {cleanDesc || 'Join us for this comprehensive session led by ADAK TRADE EFFORT.'}
                     </p>
 
                     {/* Card Footer */}
@@ -393,7 +393,7 @@ const Courses = () => {
                           e.stopPropagation();
                           setSelectedEvent(event);
                         }}
-                        className="px-5 py-2.5 bg-[#017DC3] text-white group-hover:bg-[#006AA7] rounded-full font-jetbrains text-xs font-bold tracking-wider uppercase transition shadow-sm hover:scale-105"
+                        className="px-5 py-2.5 bg-[#047857] text-white group-hover:bg-[#064e3b] rounded-md font-jetbrains text-xs font-bold tracking-wider uppercase transition shadow-sm hover:scale-105"
                       >
                         Register Now
                       </button>
@@ -423,7 +423,7 @@ const Courses = () => {
               <span className="px-3 py-1 rounded-md bg-[#EFF7CE] text-[#0F172A] font-jetbrains text-[10px] font-bold tracking-wider uppercase border border-[#1E293B]/20">
                 {selectedEvent.category || 'EVENT'}
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 font-jetbrains text-[10px] font-bold uppercase">
+              <span className="px-2.5 py-0.5 rounded-md bg-[#ecfdf5] text-[#047857] font-jetbrains text-[10px] font-bold uppercase">
                 {selectedEvent.type === 'online' ? '💻 Online Session' : selectedEvent.type === 'hybrid' ? '🌐 Hybrid Workshop' : '📍 In-Person Conference'}
               </span>
             </div>
@@ -475,24 +475,24 @@ const Courses = () => {
             {/* Action CTA */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-slate-200">
               <div className="text-xs text-slate-500 font-montserrat text-center sm:text-left">
-                Organized by <strong className="text-slate-800">Institute of Applied Statistics (IAS-DCS)</strong>
+                Organized by <strong className="text-slate-800">ADAK TRADE EFFORT</strong>
               </div>
               {selectedEvent.onlineLink?.url ? (
                 <a
                   href={selectedEvent.onlineLink.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-3.5 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#047857] hover:bg-[#064e3b] text-white rounded-md font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
                 >
                   Join Meeting / Register
                 </a>
               ) : (
                 <button
                   onClick={() => {
-                    alert('Thank you for your interest! Please contact support@ias-dcs.com for event enrollment.');
+                    alert('Thank you for your interest! Please contact support@adaktrade.com for event enrollment.');
                     setSelectedEvent(null);
                   }}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-[#017DC3] hover:bg-[#006AA7] text-white rounded-full font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-[#047857] hover:bg-[#064e3b] text-white rounded-md font-jetbrains text-xs font-bold tracking-widest uppercase transition text-center shadow-lg hover:scale-105"
                 >
                   Confirm Registration
                 </button>

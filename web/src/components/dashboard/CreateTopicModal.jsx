@@ -151,7 +151,7 @@ const CreateTopicModal = ({ isOpen, onClose, onSubmit }) => {
                     <button 
                       key={tag}
                       onClick={() => toggleTag(tag)}
-                      className={`px-4 py-2 border font-jetbrains text-[8px] font-bold uppercase tracking-widest transition-all duration-300 rounded-full
+                      className={`px-4 py-2 border font-jetbrains text-[8px] font-bold uppercase tracking-widest transition-all duration-300 rounded-md
                         ${selectedTags.includes(tag) ? 'bg-accent border-amber-400 text-slate-950 font-black shadow-sm' : 'border-slate-200 text-slate-700 hover:border-amber-400 hover:text-slate-900 bg-white'}`}
                     >
                        #{tag}
@@ -224,7 +224,7 @@ const CreateTopicModal = ({ isOpen, onClose, onSubmit }) => {
             <button 
               onClick={handleSubmit}
               disabled={!title.trim() || !content.trim() || isSubmitting}
-              className="bg-accent text-slate-950 font-black px-10 py-5 font-montserrat text-[11px] uppercase tracking-[0.4em] flex items-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-accent-soft disabled:opacity-50 disabled:grayscale min-w-[200px] justify-center rounded-full"
+              className="bg-accent text-slate-950 font-black px-10 py-5 font-montserrat text-[11px] uppercase tracking-[0.4em] flex items-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-accent-soft disabled:opacity-50 disabled:grayscale min-w-[200px] justify-center rounded-md"
             >
                {isSubmitting ? (
                  <div className="w-4 h-4 border-2 border-slate-950/30 border-t-slate-950 rounded-full animate-spin" />

@@ -137,17 +137,17 @@ const MissionPillars = () => {
         
         {/* Header */}
         <div className="mission-header text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF5FA] border border-[#017DC3]/20 text-[#017DC3] text-[11px] font-bold uppercase tracking-widest font-jetbrains">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-md bg-[#EBF5FA] border border-[#047857]/20 text-[#047857] text-[11px] font-bold uppercase tracking-widest font-jetbrains">
             <span className="w-2 h-2 rounded-full bg-[#BFD419] animate-pulse shadow-[0_0_6px_#BFD419]" />
             Core Mandate
           </div>
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-tight tracking-tight">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#017DC3] via-[#028DDb] to-[#005B8E]">Mission</span>
+            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#047857] via-[#028DDb] to-[#005B8E]">Mission</span>
           </h2>
           
           <p className="text-sm md:text-base text-slate-600 leading-relaxed font-normal">
-            The mission of IAS is to nurture, empower, and advance statistical expertise for addressing the growing challenges of the modern research and professional landscape. We achieve this by:
+            The mission of ADAK TRADE EFFORT is to nurture, empower, and advance financial and trading expertise for addressing the dynamic challenges of modern capital markets and investment landscapes. We achieve this by:
           </p>
         </div>
 
@@ -160,10 +160,10 @@ const MissionPillars = () => {
             >
               <div className="min-w-0 space-y-3.5">
                 <div className="flex items-center justify-between">
-                  <div className="w-11 h-11 rounded-xl bg-white border-[1.5px] border-slate-800 text-[#017DC3] flex items-center justify-center flex-shrink-0 group-hover:bg-slate-900 group-hover:text-[#BFD419] transition-colors duration-300 shadow-[1.5px_1.5px_0px_0px_#1E293B]">
+                  <div className="w-11 h-11 rounded-xl bg-white border-[1.5px] border-slate-800 text-[#047857] flex items-center justify-center flex-shrink-0 group-hover:bg-slate-900 group-hover:text-[#BFD419] transition-colors duration-300 shadow-[1.5px_1.5px_0px_0px_#1E293B]">
                     {pillar.icon}
                   </div>
-                  <span className="font-jetbrains text-sm font-bold text-slate-800 group-hover:text-[#017DC3] transition-colors">
+                  <span className="font-jetbrains text-sm font-bold text-slate-800 group-hover:text-[#047857] transition-colors">
                     {pillar.num}
                   </span>
                 </div>
@@ -172,7 +172,7 @@ const MissionPillars = () => {
                   {pillar.badge}
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#017DC3] transition-colors">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#047857] transition-colors">
                   {pillar.title}
                 </h3>
 

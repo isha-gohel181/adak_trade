@@ -17,20 +17,20 @@ const PrivacyPolicy = () => {
         <div className="privacy-animate space-y-6 text-base leading-relaxed">
           <p><strong>Effective Date:</strong> January 1, 2026</p>
           <p>
-            At the Institute of Applied Statistics (IAS-DCS, operated as a corporate division of DCS Pvt. Ltd.), we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal and research information when you use our educational and research platform.
+            At ADAK TRADE EFFORT, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your personal and account information when you use our educational and trading mentorship platform.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">1. Information We Collect</h2>
           <p>
-            We may collect personal information such as your name, email address, phone number, academic affiliation, and payment details when you register for an account, enroll in statistical training, or interact with our platform.
+            We may collect personal information such as your name, email address, phone number, professional background, and payment details when you register for an account, enroll in trading courses, or interact with our platform.
           </p>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">2. How We Use Your Information</h2>
           <ul className="list-disc pl-6 space-y-2">
-            <li>To provide and maintain our executive education, workshops, and research services.</li>
+            <li>To provide and maintain our trading masterclasses, workshops, and mentorship services.</li>
             <li>To process your course enrollments, certifications, and consultations.</li>
-            <li>To communicate with you regarding curriculum updates, academic events, and support.</li>
-            <li>To improve the research capabilities and user experience of our platform.</li>
+            <li>To communicate with you regarding curriculum updates, market events, and support.</li>
+            <li>To improve the platform experience and educational features.</li>
           </ul>
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">3. Data Security</h2>
@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
 
           <h2 className="text-xl font-bold text-amber-600 mt-6">5. Contact Us</h2>
           <p>
-            If you have any questions regarding this Privacy Policy, please contact our support team at <a href="mailto:support@ias-dcs.com" className="text-amber-700 font-bold hover:underline">support@ias-dcs.com</a>.
+            If you have any questions regarding this Privacy Policy, please contact our support team at <a href="mailto:support@adaktrade.com" className="text-amber-700 font-bold hover:underline">support@adaktrade.com</a>.
           </p>
         </div>
       </div>

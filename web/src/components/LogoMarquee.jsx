@@ -71,8 +71,8 @@ const LogoMarquee = () => {
       className="relative py-16 md:py-20 bg-white z-10 select-none cursor-default overflow-hidden border-y border-slate-200/80" 
     >
       <div className="text-center mb-8">
-        <span className="font-jetbrains text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-[0.25em]">
-          Media Coverage & Institutional Insights
+        <span className="font-inter text-lg sm:text-xl text-slate-800 font-bold uppercase tracking-wide">
+          Featured In:
         </span>
       </div>
 

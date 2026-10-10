@@ -64,7 +64,7 @@ const Purchases = () => {
                </h1>
             </div>
             <p className="max-w-md font-jetbrains text-xs text-slate-600 font-medium leading-relaxed uppercase tracking-[0.15em] text-left md:text-right">
-               {t('purchasesLedgerSub') || 'Persistent record of intellectual acquisitions and institutional investments across the IAS-DCS network.'}
+               {t('purchasesLedgerSub') || 'Persistent record of educational acquisitions and course investments across the ADAK TRADE network.'}
             </p>
           </div>
 
@@ -124,7 +124,7 @@ const Purchases = () => {
                               {item.course?.title || (item.error ? 'Legacy Module (Deleted)' : 'Protocol Error')}
                            </h3>
                            <div className="flex items-center gap-3">
-                              <span className={`text-[9px] font-jetbrains font-bold px-3 py-0.5 rounded-full border ${
+                              <span className={`text-[9px] font-jetbrains font-bold px-3 py-0.5 rounded-md border ${
                                 item.status === 'active' || item.status === 'COMPLETED'
                                   ? 'border-amber-300 bg-amber-100 text-amber-900' 
                                   : 'border-slate-200 bg-slate-100 text-slate-700'
@@ -156,12 +156,12 @@ const Purchases = () => {
                                 href={`https://ias-dcs-lms.onrender.com/${item.certificate.certificate_url}`} 
                                 target="_blank" 
                                 rel="noreferrer"
-                                className="font-jetbrains text-xs font-bold text-amber-700 hover:text-slate-950 uppercase tracking-wider transition-colors bg-amber-100 px-3 py-1.5 rounded-full border border-amber-300/60"
+                                className="font-jetbrains text-xs font-bold text-amber-700 hover:text-slate-950 uppercase tracking-wider transition-colors bg-amber-100 px-3 py-1.5 rounded-md border border-amber-300/60"
                               >
                                 Certificate
                               </a>
                            ) : (
-                              <button className="font-jetbrains text-xs font-bold text-amber-800 hover:text-slate-950 uppercase tracking-wider transition-colors px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200">{t('receipt') || 'Receipt'}</button>
+                              <button className="font-jetbrains text-xs font-bold text-amber-800 hover:text-slate-950 uppercase tracking-wider transition-colors px-3 py-1.5 rounded-md bg-slate-100 border border-slate-200">{t('receipt') || 'Receipt'}</button>
                            )}
                            <button className="font-jetbrains text-xs font-bold text-slate-400 hover:text-red-600 uppercase tracking-wider transition-colors">{t('refund') || 'Refund'}</button>
                         </div>
@@ -179,7 +179,7 @@ const Purchases = () => {
                    <button 
                      onClick={() => currentPage > 1 && paginate(currentPage - 1)}
                      disabled={currentPage === 1}
-                     className={`font-jetbrains text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full border transition-all ${currentPage === 1 ? 'border-slate-200 text-slate-300 cursor-not-allowed' : 'border-slate-300 bg-white text-slate-700 hover:bg-accent hover:border-amber-400 hover:text-slate-950'}`}
+                     className={`font-jetbrains text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-md border transition-all ${currentPage === 1 ? 'border-slate-200 text-slate-300 cursor-not-allowed' : 'border-slate-300 bg-white text-slate-700 hover:bg-accent hover:border-amber-400 hover:text-slate-950'}`}
                    >
                      Prev
                    </button>
@@ -203,7 +203,7 @@ const Purchases = () => {
                    <button 
                      onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
                      disabled={currentPage === totalPages}
-                     className={`font-jetbrains text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full border transition-all ${currentPage === totalPages ? 'border-slate-200 text-slate-300 cursor-not-allowed' : 'border-slate-300 bg-white text-slate-700 hover:bg-accent hover:border-amber-400 hover:text-slate-950'}`}
+                     className={`font-jetbrains text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-md border transition-all ${currentPage === totalPages ? 'border-slate-200 text-slate-300 cursor-not-allowed' : 'border-slate-300 bg-white text-slate-700 hover:bg-accent hover:border-amber-400 hover:text-slate-950'}`}
                    >
                      Next
                    </button>
