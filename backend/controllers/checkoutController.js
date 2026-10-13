@@ -2896,14 +2896,17 @@ export const buyNow = async (req, res) => {
     const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
       await Token.generateTokens(guestUser);
 
-    const redis = await initRedis();
+    try {
+      const redis = await initRedis();
+      if (redis && redis.isOpen && redis.isReady) {
+        const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
+        const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
 
-    if (redis) {
-      const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
-      const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
-
-      await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
-      await redis.set(`refreshToken:${refreshToken}`, userId.toString(), { EX: refreshTTL });
+        await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
+        await redis.set(`refreshToken:${refreshToken}`, userId.toString(), { EX: refreshTTL });
+      }
+    } catch (redisErr) {
+      console.warn("Redis unavailable during checkout token caching (non-critical):", redisErr.message);
     }
 
     Token.setTokensCookies(res, accessToken, refreshToken);

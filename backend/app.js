@@ -108,6 +108,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(helmet({
   crossOriginResourcePolicy: false,
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
 }));
 
 // Increase body parser limits and timeouts for large file uploads

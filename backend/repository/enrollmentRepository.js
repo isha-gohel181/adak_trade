@@ -385,15 +385,20 @@ class EnrollmentRepository {
         const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
           await Token.generateTokens(guestUser, oldAccessToken, oldAccessTokenExp);
 
-        const redis = await initRedis();
+        try {
+          const redis = await initRedis();
+          if (redis && redis.isOpen && redis.isReady) {
+            let accessTTL = Math.floor((accessTokenExp - Date.now()) / 1000);
+            let refreshTTL = Math.floor((refreshTokenExp - Date.now()) / 1000);
+            accessTTL = Number.isFinite(accessTTL) && accessTTL > 0 ? accessTTL : 1;
+            refreshTTL = Number.isFinite(refreshTTL) && refreshTTL > 0 ? refreshTTL : 1;
 
-        let accessTTL = Math.floor((accessTokenExp - Date.now()) / 1000);
-        let refreshTTL = Math.floor((refreshTokenExp - Date.now()) / 1000);
-        accessTTL = Number.isFinite(accessTTL) && accessTTL > 0 ? accessTTL : 1;
-        refreshTTL = Number.isFinite(refreshTTL) && refreshTTL > 0 ? refreshTTL : 1;
-
-        await redis.setEx(`accessToken:${accessToken}`, accessTTL, "valid");
-        await redis.setEx(`refreshToken:${refreshToken}`, refreshTTL, userId.toString());
+            await redis.setEx(`accessToken:${accessToken}`, accessTTL, "valid");
+            await redis.setEx(`refreshToken:${refreshToken}`, refreshTTL, userId.toString());
+          }
+        } catch (redisErr) {
+          console.warn("Redis unavailable during enrollment token caching (non-critical):", redisErr.message);
+        }
 
         const currentTime = Date.now();
         const accessMaxAge = Math.max(1000, accessTokenExp - currentTime); // At least 1 second

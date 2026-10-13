@@ -95,37 +95,38 @@ export const signup = async (req, res) => {
     // Generate tokens
     const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } = await Token.generateTokens(newUser, req.body.platform || "web", req.body.deviceId);
 
-    // Connect to Redis
-    const redis = await initRedis();
+    // Connect to Redis (optional caching)
+    try {
+      const redis = await initRedis();
+      if (redis && redis.isOpen && redis.isReady) {
+        const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
+        const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
 
-    // Store tokens in Redis with TTL
-    if (redis) {
-      const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
-      const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
+        await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
+        await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
 
-      await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
-      await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
+        await redis.setEx(
+          `user:${userId}`,
+          3600,
+          JSON.stringify({
+            _id: newUser._id,
+            email: newUser.email,
+            fullName: newUser.fullName,
+            roles: newUser.roles,
+            profilePicture: newUser.profilePicture,
+            bio: newUser.bio,
+            phone: newUser.phone,
+            address: newUser.address,
+            company: newUser.company,
+            createdAt: newUser.createdAt,
+            updatedAt: newUser.updatedAt,
+            is_verify: newUser.is_verify, // Include is_verify in cache
+          })
+        );
+      }
+    } catch (redisErr) {
+      console.warn("Redis unavailable during registerUser (non-critical):", redisErr.message);
     }
-
-    // Cache user data in Redis (expires in 1 hour)
-    await redis.setEx(
-      `user:${userId}`,
-      3600,
-      JSON.stringify({
-        _id: newUser._id,
-        email: newUser.email,
-        fullName: newUser.fullName,
-        roles: newUser.roles,
-        profilePicture: newUser.profilePicture,
-        bio: newUser.bio,
-        phone: newUser.phone,
-        address: newUser.address,
-        company: newUser.company,
-        createdAt: newUser.createdAt,
-        updatedAt: newUser.updatedAt,
-        is_verify: newUser.is_verify, // Include is_verify in cache
-      })
-    );
 
     // Set tokens as HTTP-only cookies (no maxAge)
     Token.setTokensCookies(res, accessToken, refreshToken);
@@ -965,39 +966,36 @@ export const login = async (req, res) => {
 
     // Connect to Redis (optional — login must not fail or hang if Redis is
     // unreachable/unconfigured, e.g. a firewall blocking the production IP)
-    let redis = null;
     try {
-      redis = await initRedis();
+      const redis = await initRedis();
+      if (redis && redis.isOpen && redis.isReady) {
+        const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
+        const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
+
+        await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
+        await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
+
+        // Cache user data in Redis (expires in 1 hour)
+        await redis.setEx(
+          `user:${userId}`,
+          3600,
+          JSON.stringify({
+            _id: user._id,
+            email: user.email,
+            fullName: user.fullName,
+            roles: user.roles,
+            profilePicture: user.profilePicture,
+            bio: user.bio,
+            phone: user.phone,
+            address: user.address,
+            company: user.company,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+          })
+        );
+      }
     } catch (err) {
-      console.error("Redis unavailable during login:", err.message);
-    }
-
-    // Store tokens + cache user in Redis with TTL (optional)
-    if (redis) {
-      const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
-      const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
-
-      await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
-      await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
-
-      // Cache user data in Redis (expires in 1 hour)
-      await redis.setEx(
-        `user:${userId}`,
-        3600,
-        JSON.stringify({
-          _id: user._id,
-          email: user.email,
-          fullName: user.fullName,
-          roles: user.roles,
-          profilePicture: user.profilePicture,
-          bio: user.bio,
-          phone: user.phone,
-          address: user.address,
-          company: user.company,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        })
-      );
+      console.warn("Redis unavailable during login (non-critical):", err.message);
     }
 
     // Set tokens as HTTP-only cookies (no maxAge)
@@ -2348,39 +2346,36 @@ export const googleLogin = async (req, res) => {
 
     // Connect to Redis (optional — login must not fail or hang if Redis is
     // unreachable/unconfigured, e.g. a firewall blocking the production IP)
-    let redis = null;
     try {
-      redis = await initRedis();
+      const redis = await initRedis();
+      if (redis && redis.isOpen && redis.isReady) {
+        const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
+        const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
+
+        await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
+        await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
+
+        await redis.setEx(
+          `user:${userId}`,
+          3600,
+          JSON.stringify({
+            _id: newUser._id,
+            email: newUser.email,
+            fullName: newUser.fullName,
+            roles: newUser.roles,
+            profilePicture: newUser.profilePicture,
+            bio: newUser.bio,
+            phone: newUser.phone,
+            address: newUser.address,
+            company: newUser.company,
+            createdAt: newUser.createdAt,
+            updatedAt: newUser.updatedAt,
+            is_verify: newUser.is_verify,
+          })
+        );
+      }
     } catch (err) {
-      console.error("Redis unavailable during google login:", err.message);
-    }
-
-    // Store tokens + cache user in Redis with TTL (optional)
-    if (redis) {
-      const accessTTL = Math.max(1, Math.floor((accessTokenExp - Date.now()) / 1000));
-      const refreshTTL = Math.max(1, Math.floor((refreshTokenExp - Date.now()) / 1000));
-
-      await redis.set(`accessToken:${accessToken}`, "valid", { EX: accessTTL });
-      await redis.set(`refreshToken:${refreshToken}`, userId, { EX: refreshTTL });
-
-      await redis.setEx(
-        `user:${userId}`,
-        3600,
-        JSON.stringify({
-          _id: newUser._id,
-          email: newUser.email,
-          fullName: newUser.fullName,
-          roles: newUser.roles,
-          profilePicture: newUser.profilePicture,
-          bio: newUser.bio,
-          phone: newUser.phone,
-          address: newUser.address,
-          company: newUser.company,
-          createdAt: newUser.createdAt,
-          updatedAt: newUser.updatedAt,
-          is_verify: newUser.is_verify,
-        })
-      );
+      console.warn("Redis unavailable during google login (non-critical):", err.message);
     }
 
     Token.setTokensCookies(res, accessToken, refreshToken);
