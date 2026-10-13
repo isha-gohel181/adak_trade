@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const TrackerContext = createContext(null);
 
-const rawBase = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
+const rawBase = import.meta.env.VITE_BASE_URL || 'https://adak-trade-1.onrender.com';
 const BASE = rawBase.includes('/api/v1') ? rawBase : `${rawBase}`;
 
 export const useTracker = () => {

@@ -71,7 +71,7 @@ interface StudentState {
   };
 }
 
-const API_BASE_URL = import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_BASE_URL || "https://adak-trade-1.onrender.com";
 
 export const fetchAllStudents = createAsyncThunk<
   { students: Student[]; pagination: StudentState["pagination"] },

@@ -72,7 +72,7 @@ const NewsDetail = () => {
     image: (() => {
         const url = articleData.imageUrl || articleData.coverImage || articleData.image;
         if (!url) return '/news_placeholder.png';
-        const rawBase = import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://ias-dcs-lms.onrender.com';
+        const rawBase = import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://adak-trade-1.onrender.com';
         const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '');
         return encodeURI(url.startsWith('http') ? url : `${baseUrl}/uploads/news/${url}`);
     })(),

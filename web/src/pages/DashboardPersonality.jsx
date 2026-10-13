@@ -173,7 +173,7 @@ const DashboardPersonality = () => {
         category: c.categoryId?.name?.toUpperCase() || "SKILL",
         title: c.title,
         description: c.description,
-        image: c.thumbnail ? (c.thumbnail.startsWith('http') ? c.thumbnail : `https://ias-dcs-lms.onrender.com/${c.thumbnail}`) : "/news_placeholder.png"
+        image: c.thumbnail ? (c.thumbnail.startsWith('http') ? c.thumbnail : `https://adak-trade-1.onrender.com/${c.thumbnail}`) : "/news_placeholder.png"
     })) || resultData.recommendedCourses
   }
 

@@ -118,7 +118,7 @@ const emailTemplate = `
                     <div class="section-body">
                         <div class="step-item">
                             <div class="step-number">1</div>
-                            <div class="step-text">Visit <b>ias-dcs-lms.vercel.app</b>.</div>
+                            <div class="step-text">Visit <b>adak-trade.vercel.app</b>.</div>
                         </div>
                         <div class="step-item">
                             <div class="step-number">2</div>
@@ -162,7 +162,7 @@ const emailTemplate = `
                 </div>
 
                 <div class="btn-container">
-                    <a href="https://ias-dcs-lms.vercel.app" class="main-btn">Go to Dashboard</a>
+                    <a href="https://adak-trade.vercel.app" class="main-btn">Go to Dashboard</a>
                 </div>
 
                 <!-- HELP SECTION -->
@@ -183,7 +183,7 @@ const emailTemplate = `
             <div class="social-hub">
                 <a href="https://play.google.com/store/apps/details?id=com.iasdcs.app" class="social-link">Android App</a> |
                 <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="social-link">iOS App</a> |
-                <a href="https://ias-dcs-lms.vercel.app" class="social-link">Web Portal</a>
+                <a href="https://adak-trade.vercel.app" class="social-link">Web Portal</a>
             </div>
 
             <footer class="footer">

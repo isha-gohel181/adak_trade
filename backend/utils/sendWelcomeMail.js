@@ -252,7 +252,7 @@ function getWelcomeEmailHTML(name, email) {
     <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" alt="App Store" width="20" style="vertical-align:middle; margin-right:5px;">
     App Store
   </a>
-  <a href="https://ias-dcs-lms.vercel.app/login" class="download-btn" target="_blank">🌐 Web App</a>
+  <a href="https://adak-trade.vercel.app/login" class="download-btn" target="_blank">🌐 Web App</a>
 </div>
 
             </div>

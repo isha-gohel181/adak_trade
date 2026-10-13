@@ -42,7 +42,7 @@ import Editor from "../../components/Editor";
 import LandingPageSections from "./LandingPageSections";
 import AddReview from "./AddReview";
 
-const baseUrl = import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com/";
+const baseUrl = import.meta.env.VITE_BASE_URL || "https://adak-trade-1.onrender.com/";
 
 // Success Popup Component (unchanged)
 const SuccessPopup = ({

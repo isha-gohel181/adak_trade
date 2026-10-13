@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://adak-trade-1.onrender.com';
 
 export const fetchMyThreads = createAsyncThunk(
   'forum/fetchMyThreads',
@@ -174,7 +174,7 @@ export const createThread = createAsyncThunk(
         attachments.forEach(file => formData.append('attachments', file));
       }
 
-      const response = await fetch(`https://ias-dcs-lms.onrender.com/forum/create`, {
+      const response = await fetch(`https://adak-trade-1.onrender.com/forum/create`, {
         method: 'POST',
         headers,
         body: formData

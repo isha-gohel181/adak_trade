@@ -51,7 +51,7 @@ const TestimonialsScroll = ({ reviews = [] }) => {
     return validReviews.map(r => {
       let avatar = null;
       if (r.image) {
-        const rawBase = import.meta.env.VITE_IMAGE_URL || import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://ias-dcs-lms.onrender.com';
+        const rawBase = import.meta.env.VITE_IMAGE_URL || import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://adak-trade-1.onrender.com';
         const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '');
         avatar = `${baseUrl}${r.image.startsWith('/') ? '' : '/'}${r.image}`;
       }

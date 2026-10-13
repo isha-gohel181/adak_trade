@@ -135,7 +135,7 @@ const emailTemplate = `
             <div class="section">
                 <div class="section-header navy-theme">🚀 HOW TO JOIN LIVE CLASSES</div>
                 <div class="section-body navy-body">
-                    <div class="step-li"><div class="step-bubble">1</div><div>Visit <b>ias-dcs-lms.vercel.app</b></div></div>
+                    <div class="step-li"><div class="step-bubble">1</div><div>Visit <b>adak-trade.vercel.app</b></div></div>
                     <div class="step-li"><div class="step-bubble">2</div><div>Log in using your registered email and password</div></div>
                     <div class="step-li"><div class="step-bubble">3</div><div>Go to the <b>"Live Classes"</b> tab</div></div>
                     <div class="step-li"><div class="step-bubble">4</div><div>Select the scheduled session</div></div>
@@ -153,7 +153,7 @@ const emailTemplate = `
                 <a href="https://apps.apple.com/in/app/ias-dcs-app/id6751890495" class="hub-btn">
                     <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png">Apple iOS
                 </a>
-                <a href="https://ias-dcs-lms.vercel.app" class="hub-btn">
+                <a href="https://adak-trade.vercel.app" class="hub-btn">
                     <img src="https://img.icons8.com/ios-filled/50/000000/internet.png">Web Portal
                 </a>
             </div>

@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { RootState } from "../../store";
 
-const BASE_URL = import.meta.env.VITE_IMAGE_URL || "https://ias-dcs-lms.onrender.com";
+const BASE_URL = import.meta.env.VITE_IMAGE_URL || "https://adak-trade-1.onrender.com";
 
 const ForumDetails: React.FC = () => {
   const { threadId } = useParams<{ threadId: string }>();

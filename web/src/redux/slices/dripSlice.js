@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
+const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://adak-trade-1.onrender.com';
 
 // Helper: simple concurrency limiter
 const runWithConcurrency = async (items, worker, concurrency = 5) => {

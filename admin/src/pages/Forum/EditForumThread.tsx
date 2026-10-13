@@ -7,7 +7,7 @@ import { ArrowLeft, Upload, X, Loader2, Save, Paperclip } from "lucide-react";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
 
-const BASE_URL = import.meta.env.VITE_IMAGE_URL || "https://ias-dcs-lms.onrender.com";
+const BASE_URL = import.meta.env.VITE_IMAGE_URL || "https://adak-trade-1.onrender.com";
 
 const EditForumThread: React.FC = () => {
   const { threadId } = useParams<{ threadId: string }>();

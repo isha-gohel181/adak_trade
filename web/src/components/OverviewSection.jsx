@@ -66,7 +66,7 @@ const OverviewSection = ({ course, section }) => {
   const getImageSrc = (img) => {
     if (!img) return ''
     if (img.startsWith('http') || img.startsWith('blob:') || img.startsWith('data:')) return img
-    const rawBase = import.meta.env.VITE_IMAGE_URL || import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://ias-dcs-lms.onrender.com'
+    const rawBase = import.meta.env.VITE_IMAGE_URL || import.meta.env.VITE_BASE_URL || import.meta.env.VITE_API_BASE || 'https://adak-trade-1.onrender.com'
     const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '')
     let cleanPath = img
     if (cleanPath.includes('\\uploads\\') || cleanPath.includes('/uploads/')) {

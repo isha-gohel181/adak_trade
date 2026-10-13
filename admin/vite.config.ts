@@ -21,6 +21,6 @@ export default defineConfig({
   server: {
     host: true,
     port: 5174,
-    allowedHosts: ["ias-dcs-lms-admin.vercel.app"],
+    allowedHosts: ["adarek-trade-admin.vercel.app"],
   },
 });

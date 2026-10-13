@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 // API base URL
-const API_BASE_URL = (import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com').replace(/\/+$/, '');
+const API_BASE_URL = (import.meta.env.VITE_BASE_URL || 'https://adak-trade-1.onrender.com').replace(/\/+$/, '');
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

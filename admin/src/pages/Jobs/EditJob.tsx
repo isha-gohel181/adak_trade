@@ -49,7 +49,7 @@ const EditJob: React.FC = () => {
   });
   // Base URL for images
   const IMAGE_BASE_URL =
-    import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com/";
+    import.meta.env.VITE_BASE_URL || "https://adak-trade-1.onrender.com/";
 
   const [formData, setFormData] = useState<JobFormData>({
     title: "",

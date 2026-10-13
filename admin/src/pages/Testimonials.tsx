@@ -155,7 +155,7 @@ const TestimonialsPage: React.FC = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [videoPreview, setVideoPreview] = useState<string | null>(null);
 
-    const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://ias-dcs-lms.onrender.com';
+    const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://adak-trade-1.onrender.com';
     const getMediaUrl = (path: string) => {
         if (!path) return '';
         if (path.startsWith('http')) return path;

@@ -24,7 +24,7 @@ import {
   updateAssignment,
   fetchAssignmentById,
 } from "../../../store/slices/assignment";
-const baseUrl = import.meta.env.VITE_BASE_URL || "https://ias-dcs-lms.onrender.com/";
+const baseUrl = import.meta.env.VITE_BASE_URL || "https://adak-trade-1.onrender.com/";
 
 // Enhanced popup component similar to TextLesson component
 interface EnhancedPopupProps {

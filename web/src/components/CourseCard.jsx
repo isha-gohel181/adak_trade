@@ -8,7 +8,7 @@ const resolveImageUrl = (item) => {
   const imgPath = item?.image || item?.thumbnail || item?.coverImage || item?.horizontalCarouselImage || item?.verticalCarouselImage
   if (!imgPath || typeof imgPath !== 'string') return '/courses/curator.png'
   if (imgPath.startsWith('http://') || imgPath.startsWith('https://')) {
-    if (imgPath.includes('ias-dcs-lms.onrender.com')) {
+    if (imgPath.includes('adak-trade-1.onrender.com')) {
       const filename = imgPath.split('/').pop()
       return `/courses/${filename}`
     }
