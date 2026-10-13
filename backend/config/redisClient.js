@@ -14,8 +14,13 @@ const initRedis = async () => {
       socket: {
         host: process.env.REDIS_HOST,
         port: Number(process.env.REDIS_PORT),
+        // Bound the initial connection so an unreachable/firewalled Redis host
+        // fails fast (10s) instead of leaving requests pending forever.
+        connectTimeout: 10000,
+        reconnectStrategy: (retries) => Math.min(retries * 1000, 5000),
       },
       password: process.env.REDIS_PASSWORD,
+      disableOfflineQueue: true,
     });
 
     redisClient.on('error', (err) => {

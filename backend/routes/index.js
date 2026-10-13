@@ -74,6 +74,12 @@ router.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// Lightweight health endpoint for uptime monitors / keep-alive pings.
+// Avoids DB/Redis/auth so a ping can wake a sleeping instance as fast as possible.
+router.get("/health", (req, res) => {
+  res.status(200).json({ success: true, status: "ok", time: new Date().toISOString() });
+});
+
 // User routes
 router.use("/", userRouter);
 // Student routes
